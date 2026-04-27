@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/internal/points/release",
+      "schedule": "0 15 * * *"
+    },
+    {
+      "path": "/api/internal/subscriptions/renew",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}

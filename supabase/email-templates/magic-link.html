@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>로그인 링크 안내 — OPINION</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fa;
+      font-family:
+        -apple-system, BlinkMacSystemFont, &quot;Apple SD Gothic Neo&quot;,
+        &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    "
+  >
+    <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; color: #f4f7fa">
+      OPINION 로그인 링크가 도착했어요. 버튼 하나로 바로 로그인하세요.
+    </div>
+
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="background-color: #f4f7fa; min-height: 100vh"
+    >
+      <tr>
+        <td align="center" style="padding: 48px 16px 64px">
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            style="max-width: 520px"
+          >
+            <!-- 로고 -->
+            <tr>
+              <td style="padding-bottom: 32px">
+                <table role="presentation" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="vertical-align: middle; padding-right: 8px">
+                      <span
+                        style="
+                          display: inline-block;
+                          width: 32px;
+                          height: 32px;
+                          border-radius: 50%;
+                          background-color: #3182f6;
+                          text-align: center;
+                          line-height: 32px;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          letter-spacing: -0.5px;
+                        "
+                        >O</span
+                      >
+                    </td>
+                    <td style="vertical-align: middle">
+                      <span
+                        style="
+                          font-size: 18px;
+                          font-weight: 700;
+                          color: #2d3a4a;
+                          letter-spacing: -0.03em;
+                        "
+                        >OPINION</span
+                      >
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- 메인 카드 -->
+            <tr>
+              <td
+                style="
+                  background-color: #ffffff;
+                  border-radius: 20px;
+                  padding: 48px 48px 40px;
+                  box-shadow:
+                    0 1px 3px rgba(45, 58, 74, 0.06),
+                    0 1px 2px rgba(45, 58, 74, 0.04);
+                "
+              >
+                <!-- 아이콘 -->
+                <div
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 14px;
+                    background-color: #ebf3fe;
+                    text-align: center;
+                    line-height: 48px;
+                    margin-bottom: 24px;
+                    font-size: 22px;
+                  "
+                >
+                  ✉️
+                </div>
+
+                <h1
+                  style="
+                    margin: 0 0 20px;
+                    font-size: 26px;
+                    font-weight: 700;
+                    color: #2d3a4a;
+                    letter-spacing: -0.025em;
+                    line-height: 1.35;
+                  "
+                >
+                  로그인 링크가 도착했어요
+                </h1>
+
+                <p
+                  style="
+                    margin: 0 0 8px;
+                    font-size: 15px;
+                    font-weight: 400;
+                    color: #4a5c6e;
+                    line-height: 1.65;
+                  "
+                >
+                  아래 버튼을 누르면 비밀번호 없이 바로 로그인할 수 있어요.
+                </p>
+                <p
+                  style="
+                    margin: 0 0 36px;
+                    font-size: 15px;
+                    font-weight: 400;
+                    color: #4a5c6e;
+                    line-height: 1.65;
+                  "
+                >
+                  링크는 <strong style="color: #2d3a4a; font-weight: 600">10분</strong> 동안만
+                  유효해요. 만료되면 다시 요청해 주세요.
+                </p>
+
+                <!-- CTA -->
+                <table
+                  role="presentation"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="margin-bottom: 36px"
+                >
+                  <tr>
+                    <td>
+                      <a
+                        href="{{ .MagicLink }}"
+                        style="
+                          display: inline-block;
+                          background-color: #3182f6;
+                          color: #ffffff;
+                          font-size: 15px;
+                          font-weight: 600;
+                          text-decoration: none;
+                          padding: 14px 28px;
+                          border-radius: 12px;
+                          letter-spacing: -0.01em;
+                          line-height: 1;
+                        "
+                      >
+                        로그인하기
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <hr style="border: none; border-top: 1px solid #e6e7e9; margin: 0 0 28px" />
+
+                <p style="margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #2d3a4a">
+                  본인이 요청하지 않으셨나요?
+                </p>
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 13px;
+                    font-weight: 400;
+                    color: #6b7d8e;
+                    line-height: 1.6;
+                  "
+                >
+                  이 메일을 무시해도 괜찮아요. 링크를 클릭하지 않으면 아무 일도 일어나지 않아요.
+                </p>
+              </td>
+            </tr>
+
+            <!-- URL 직접 입력 -->
+            <tr>
+              <td style="padding: 24px 0 0">
+                <p
+                  style="
+                    margin: 0 0 8px;
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: #9db0bc;
+                    line-height: 1.6;
+                  "
+                >
+                  버튼이 눌리지 않으면 아래 링크를 복사해 브라우저에 붙여넣어 주세요.
+                </p>
+                <p style="margin: 0">
+                  <a
+                    href="{{ .MagicLink }}"
+                    style="
+                      font-size: 12px;
+                      color: #3182f6;
+                      text-decoration: none;
+                      word-break: break-all;
+                    "
+                    >{{ .MagicLink }}</a
+                  >
+                </p>
+              </td>
+            </tr>
+
+            <!-- 푸터 -->
+            <tr>
+              <td style="padding: 40px 0 0">
+                <hr style="border: none; border-top: 1px solid #e6e7e9; margin: 0 0 24px" />
+                <p style="margin: 0 0 4px; font-size: 12px; font-weight: 600; color: #4a5c6e">
+                  OPINION
+                </p>
+                <p
+                  style="
+                    margin: 0 0 16px;
+                    font-size: 11px;
+                    font-weight: 400;
+                    color: #9db0bc;
+                    line-height: 1.7;
+                  "
+                >
+                  본 메일은 발신 전용이에요. 회신 내용은 확인할 수 없어요.
+                </p>
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 11px;
+                    font-weight: 400;
+                    color: #9db0bc;
+                    line-height: 1.7;
+                  "
+                >
+                  © 2026 OPINION. All rights reserved.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "env": {
+    "ENABLE_TOOL_SEARCH": "true",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "model": "sonnet",
+  "enabledMcpjsonServers": ["context7", "stitch"],
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run dev)",
+      "Bash(npm run lint)",
+      "Bash(npm run smoke)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push)",
+      "Bash(curl -s -H*api.figma.com*)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git checkout -- .)",
+      "Bash(git clean -f*)",
+      "Bash(rm -rf*)",
+      "Bash(sudo*)",
+      "Bash(psql*)",
+      "Bash(DROP TABLE*)",
+      "Bash(DELETE FROM*)",
+      "Bash(TRUNCATE*)",
+      "Bash(npx supabase db reset*)",
+      "Bash(kill -9*)"
+    ]
+  },
+  "hooks": {}
+}

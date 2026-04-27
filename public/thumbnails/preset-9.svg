@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220" fill="none">
+  <rect width="340" height="220" fill="#1A9B8A"/>
+  <circle cx="50" cy="220" r="100" fill="white" fill-opacity="0.07"/>
+  <circle cx="310" cy="10" r="80" fill="white" fill-opacity="0.07"/>
+  <!-- lightbulb body -->
+  <path d="M170 44 C140 44 118 66 118 94 C118 112 128 128 142 138 L142 158 L198 158 L198 138 C212 128 222 112 222 94 C222 66 200 44 170 44 Z" fill="white" fill-opacity="0.3"/>
+  <!-- lightbulb base -->
+  <rect x="146" y="158" width="48" height="10" rx="5" fill="white" fill-opacity="0.4"/>
+  <rect x="150" y="170" width="40" height="10" rx="5" fill="white" fill-opacity="0.35"/>
+  <rect x="155" y="182" width="30" height="8" rx="4" fill="white" fill-opacity="0.3"/>
+  <!-- inner glow -->
+  <ellipse cx="170" cy="100" rx="28" ry="32" fill="white" fill-opacity="0.2"/>
+  <ellipse cx="164" cy="88" rx="8" ry="10" fill="white" fill-opacity="0.4"/>
+  <!-- sparkles -->
+  <circle cx="88" cy="72" r="5" fill="white" fill-opacity="0.7"/>
+  <circle cx="78" cy="88" r="3" fill="white" fill-opacity="0.5"/>
+  <circle cx="100" cy="60" r="3" fill="white" fill-opacity="0.5"/>
+  <circle cx="252" cy="72" r="5" fill="white" fill-opacity="0.7"/>
+  <circle cx="264" cy="88" r="3" fill="white" fill-opacity="0.5"/>
+  <circle cx="242" cy="58" r="3" fill="white" fill-opacity="0.5"/>
+  <!-- rays -->
+  <line x1="170" y1="24" x2="170" y2="10" stroke="white" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+  <line x1="220" y1="38" x2="232" y2="26" stroke="white" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+  <line x1="120" y1="38" x2="108" y2="26" stroke="white" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+  <line x1="232" y1="90" x2="248" y2="90" stroke="white" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+  <line x1="108" y1="90" x2="92" y2="90" stroke="white" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+</svg>
