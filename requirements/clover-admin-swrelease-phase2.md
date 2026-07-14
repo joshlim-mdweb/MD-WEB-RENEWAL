@@ -1,11 +1,18 @@
-# CLOver Admin SW Release UX 개선 — Phase 2
+# CLOver Admin SW Release — Phase 2
 
-Epic Key: `CLOVER-SW-EP02` | 출처: Slack CEV7QB151 (2026-03-05 ~ 2026-04-01)
-Phase 1(2026-03) 릴리즈 후 추가 요구사항 수집
+Epic Key: `CLOVER-SW-EP02` | 출처: Slack CEV7QB151 (2026-03-05 ~ 2026-04-01) | Admin: https://staging1-admin1.clo3d.com/md/clo3d/swrelease
+
+Phase 1(2026-03) 릴리즈 후 운영자 피드백 21건 수집. #1~#8, #16, #17 해결 완료. 미해결 7건 + 신규 개발 3건 처리.
+
+> 영향 정책: (미정) Confluence 정리 예정
 
 ---
 
-### S1 — Import Excel Overwrite 모달 `P1`
+## Part A. UX 개선
+
+*Slack 피드백 기반. 기존 기능의 운영 마찰 해소.*
+
+### S1 — Import Excel Overwrite 다이얼로그 `P1`
 *기능 등록 상태에서 엑셀 재Import 시 에러 출력, 로드 차단됨.*
 
 - [ ] 기능 1건 이상일 때 Confirmation Dialog 표시
@@ -68,3 +75,48 @@ Phase 1(2026-03) 릴리즈 후 추가 요구사항 수집
 
 - [ ] 다국어 Manual URL 필드 높이 2행으로 변경
 - [ ] 2행 초과 시 필드 내 스크롤 처리 (자동 확장 없음)
+
+---
+
+## Part B. 신규 개발
+
+*현재 연동 갭 해소. 우선순위 및 작업 순서 논의 필요.*
+
+### 연동 현황
+
+| 구간 | MD | CLO |
+|---|---|---|
+| Admin 등록 | ✅ 완료 | ⚠️ UI만 있음 (한국어 우선 등록 필요) |
+| Admin → Web | ✅ 완료 | ❌ 미작업 |
+| Web → WelcomeWindow | ❌ 미작업 | ❌ 미작업 |
+
+### 미결 사항
+
+- (논의 필요) CLO Renewal 라이브 시기에 맞춰 작업해야 하는지
+- (논의 필요) WelcomeWindow 연동 작업 순서 및 방식 (MD 먼저 vs MD·CLO 동시)
+
+---
+
+### S8 — CLO Admin 등록 프로세스 `P?`
+*CLO는 MD와 달리 한국어를 우선 등록하는 프로세스가 필요. 현재 UI만 있고 실제 등록 불가.*
+
+- [ ] CLO Admin에서 한국어 우선 등록 프로세스 구현
+- [ ] MD와 CLO 등록 프로세스 차이 명세 (논의 필요)
+
+---
+
+### S9 — Admin → Web CLO 연동 `P?`
+*MD는 완료. CLO Admin 등록 데이터가 CLO 클라이언트 페이지에 노출되지 않음.*
+
+- [ ] CLO SW Release 데이터를 CLO 클라이언트 페이지에서 렌더링
+- [ ] S8 완료 후 진행
+
+---
+
+### S10 — Web → WelcomeWindow 연동 `P?`
+*MD·CLO 모두 미작업. SW에서 웹 데이터를 WelcomeWindow로 받아야 함.*
+
+- [ ] MD 클라이언트 → WelcomeWindow 데이터 전달
+- [ ] CLO 클라이언트 → WelcomeWindow 데이터 전달
+- [ ] MD·CLO 작업 순서 결정 (논의 필요)
+- [ ] CLO Renewal 라이브 일정과 조율 (논의 필요)

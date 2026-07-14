@@ -12,21 +12,21 @@
 
 ## 아이디어 모드
 
-### Step 1 — opin-pm: 티켓 생성
+### Step 1 — md-pm: 티켓 생성
 
 아래를 순서대로 수행한다.
 
 1. `docs/backlog/index.md` 읽어 다음 ID 확인
-2. `docs/policy/` 관련 파일 읽기
+2. `docs/policy/` 관련 파일 읽기 (존재하는 경우)
 3. WebSearch로 UX 레퍼런스 리서치 (쿼리: `"[기능명] UX pattern best practice 2024"`)
 4. `docs/backlog/_template.md` 기반으로 티켓 작성
-5. `docs/backlog/todo/OPIN-{id}.md` 저장
+5. `docs/backlog/todo/MD-WEB-{id}.md` 저장
 6. `docs/backlog/index.md` 업데이트
 
 티켓 작성 후 출력:
 
 ```
-티켓 생성 완료: docs/backlog/todo/OPIN-{id}.md
+티켓 생성 완료: docs/backlog/todo/MD-WEB-{id}.md
 제목: {title}
 담당: {agents}
 
@@ -39,7 +39,7 @@
 
 ## 티켓 실행 모드
 
-### Step 2 — opin-pm: 에이전트 배정
+### Step 2 — md-pm: 에이전트 배정
 
 티켓 frontmatter의 `agents` 필드 읽기.
 Full Cycle / Fast Track 판단 (`/route` 기준 동일).
@@ -50,19 +50,19 @@ Full Cycle / Fast Track 판단 (`/route` 기준 동일).
 #### Full Cycle
 
 ```
-① opin-design — UX 검증, 상태 정의 (티켓의 UX 리서치 섹션 활용)
-② opin-fe + opin-be — 병렬 구현
+① md-design — UX 검증, 상태 정의 (티켓의 UX 리서치 섹션 활용)
+② md-fe + md-be — 병렬 구현
    - 티켓의 "구현 힌트" 섹션 필수 참고
    - design-tokens.ts COLOR 토큰 준수
    - TypeScript strict, any 금지
-③ opin-qa — 검증 + QA 리포트 작성
+③ md-qa — 검증 + QA 리포트 작성
 ```
 
 #### Fast Track
 
 ```
-① opin-fe / opin-be — 구현
-② opin-qa — 검증 + QA 리포트 작성
+① md-fe / md-be — 구현
+② md-qa — 검증 + QA 리포트 작성
 ```
 
 ### Step 4 — 빌드 게이트 (HARD STOP)
@@ -76,17 +76,17 @@ npm run build
 ```
 
 **셋 중 하나라도 실패하면 STOP.** QA로 넘기지 않는다.
-실패 시: 구현 에이전트(opin-fe/opin-be)에게 정확한 에러 출력을 전달 → 수정 후 Step 4 재시도.
+실패 시: 구현 에이전트(md-fe/md-be)에게 정확한 에러 출력을 전달 → 수정 후 Step 4 재시도.
 
 이유: 빌드가 깨진 코드를 QA하는 건 의미가 없다. 빌드 게이트는 QA 비용을 아끼는 가장 빠른 방법이다.
 
-### Step 5 — opin-qa: QA 리포트 작성 (별도 에이전트 컨텍스트)
+### Step 5 — md-qa: QA 리포트 작성 (별도 에이전트 컨텍스트)
 
-**중요:** opin-qa는 구현 단계의 결정과 이유를 전달받지 않는다. 독립적으로 판단한다.
+**중요:** md-qa는 구현 단계의 결정과 이유를 전달받지 않는다. 독립적으로 판단한다.
 
-opin-qa에게 전달하는 것:
+md-qa에게 전달하는 것:
 
-- 티켓 경로 (`docs/backlog/todo/OPIN-{id}.md`)
+- 티켓 경로 (`docs/backlog/todo/MD-WEB-{id}.md`)
 - 변경된 파일 목록
 
 전달하지 않는 것:
@@ -98,12 +98,12 @@ opin-qa에게 전달하는 것:
 리포트 저장 경로:
 
 ```
-docs/backlog/reports/OPIN-{id}-qa.md
+docs/backlog/reports/MD-WEB-{id}-qa.md
 ```
 
 리포트 포맷은 `docs/backlog/reports/_template.md` 사용.
 
-### Step 6 — opin-pm: 루프 판단
+### Step 6 — md-pm: 루프 판단
 
 QA 리포트 읽기 → 아래 기준으로 판단:
 
@@ -131,7 +131,7 @@ QA 리포트 읽기 → 아래 기준으로 판단:
 4. 완료 요약 출력
 
 ```
-✅ OPIN-{id} 완료
+✅ MD-WEB-{id} 완료
 구현 파일: [목록]
 커밋: [해시]
 다음 추천 티켓: [index.md 기준 다음 ready 항목]

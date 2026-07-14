@@ -1,11 +1,16 @@
-# CLOver Admin SW Release UX 개선 — Phase 2
+# [MD|ADMIN] CLOver Admin SW Release UX 개선 — Phase 2
 
-Epic Key: `CLOVER-SW-EP02` | 출처: Slack CEV7QB151 (2026-03-05 ~ 2026-04-01)
-Phase 1(2026-03) 릴리즈 후 추가 요구사항 수집
+Epic Key: `CLOVER-SW-EP02` | 요청: Jeongsu Lim (SW QA) | 출처: [Slack CEV7QB151](https://clo3d.slack.com/archives/CEV7QB151/p1772687620249109) | 작성일: 2026-04-27
+
+## 배경
+
+2026년 3월 MD 12 릴리즈 후 CLOver Admin SW Release 관리 페이지에 대한 내부 운영자 피드백 21건이 수집됐다. 이 중 #1~#8, #16, #17은 3/24 배포 및 Hotfix로 해결됐고, 나머지 7건은 작업 중단·반복 수동 작업·데이터 수정 불가 등 운영 워크플로우에 직접 영향을 주는 미결 항목으로 남았다. Phase 2에서 이를 일괄 처리한다.
+
+> 영향 정책: (미정) Confluence 정리 예정
 
 ---
 
-### S1 — Import Excel Overwrite 모달 `P1`
+### S1 — Import Excel Overwrite 다이얼로그 `P1`
 *기능 등록 상태에서 엑셀 재Import 시 에러 출력, 로드 차단됨.*
 
 - [ ] 기능 1건 이상일 때 Confirmation Dialog 표시

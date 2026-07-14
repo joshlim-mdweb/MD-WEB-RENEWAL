@@ -33,15 +33,15 @@
 ```
 트랙: Full Cycle
 
-① opin-pm — [할 일]
-② opin-analyze — [할 일]
-③ opin-design + ui-ux-designer — UX 검증, 상태 정의, 인터랙션 명세
+① md-pm — [할 일]
+② md-analyze — [할 일]
+③ md-design + ui-ux-designer — UX 검증, 상태 정의, 인터랙션 명세
    └─ /ui-ux-pro-max 로 레퍼런스 패턴 확인
-④ opin-fe — [할 일]
-   └─ /frontend-design 으로 컴포넌트 구현 (OPINION 디자인 시스템 기반)
+④ md-fe — [할 일]
+   └─ /frontend-design 으로 컴포넌트 구현 (MD 디자인 시스템 기반)
    └─ design-tokens.ts COLOR 토큰 필수, TYPOGRAPHY는 main/mypage만
-④ opin-be — [할 일] (FE와 병렬 가능 시 동시 실행)
-⑤ opin-qa — [검증 범위]
+④ md-be — [할 일] (FE와 병렬 가능 시 동시 실행)
+⑤ md-qa — [검증 범위]
 ```
 
 ### Fast Track 출력 형식
@@ -49,10 +49,10 @@
 ```
 트랙: Fast Track
 
-① opin-fe — [할 일]
+① md-fe — [할 일]
    └─ /frontend-design 으로 구현 (디자인 시스템 준수)
-① opin-be — [할 일] (FE와 병렬 가능 시 동시 실행)
-② opin-qa — 선택 (이유: [판단 근거])
+① md-be — [할 일] (FE와 병렬 가능 시 동시 실행)
+② md-qa — 선택 (이유: [판단 근거])
 ```
 
 ### 디자인 시스템 체크리스트 (FE 단계 필수)
@@ -78,16 +78,16 @@ NO면 사용자 피드백 반영 후 재계획.
 
 ## 에이전트 역할표
 
-| 에이전트         | 역할                                           |
-| ---------------- | ---------------------------------------------- |
-| `opin-pm`        | 업무 할당, 기능 정의, 정책 결정, PRD           |
-| `opin-analyze`   | 요구사항 분석, 엣지케이스, 이벤트 로깅 설계    |
-| `opin-design`    | UX 검증, 상태 정의, 인터랙션 명세              |
-| `ui-ux-designer` | opin-design 보조 — 레퍼런스, 접근성, 시각 패턴 |
-| `opin-fe`        | React, Tailwind, zustand, dnd-kit 구현         |
-| `opin-be`        | Supabase 스키마, API routes, RLS               |
-| `opin-qa`        | 버그 진단, 테스트 케이스, regression 검증      |
-| `opin-security`  | 보안·어뷰징 리뷰 (on-demand)                   |
-| `opin-devops`    | 인프라·배포·CI/CD (on-demand)                  |
+| 에이전트         | 역할                                          |
+| ---------------- | --------------------------------------------- |
+| `md-pm`          | 업무 할당, 기능 정의, 정책 결정, PRD          |
+| `md-analyze`     | 요구사항 분석, 엣지케이스, 이벤트 로깅 설계   |
+| `md-design`      | UX 검증, 상태 정의, 인터랙션 명세             |
+| `ui-ux-designer` | md-design 보조 — 레퍼런스, 접근성, 시각 패턴  |
+| `md-fe`          | React, Tailwind, zustand, dnd-kit 구현        |
+| `md-be`          | Supabase 스키마, API routes, RLS              |
+| `md-qa`          | 버그 진단, 테스트 케이스, regression 검증     |
+| `md-security`    | 보안·어뷰징 리뷰 (on-demand)                  |
+| `md-devops`      | 인프라·배포·CI/CD (on-demand)                 |
 
 작업 내용: $ARGUMENTS

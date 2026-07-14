@@ -1,4 +1,4 @@
-OPINION 하루 마감 루틴을 실행한다. CLAUDE.md의 End-of-Day Review를 따른다.
+MD RENEWAL 하루 마감 루틴을 실행한다. CLAUDE.md의 규칙 준수를 확인한다.
 
 ## Step 1 — CLAUDE.md 준수 확인
 

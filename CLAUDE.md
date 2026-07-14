@@ -1,4 +1,11 @@
+@../../md-shared/CLAUDE.md
+
 # MD RENEWAL – Claude Code Rules
+
+PROJECT_PREFIX: MD-WEB
+JIRA_PROJECT_KEY: MDWEB
+TICKET_FORMAT: MD-WEB-{id}
+BACKLOG_PATH: docs/backlog
 
 Update this file when new rules are established. All rules are mandatory.
 
@@ -6,33 +13,22 @@ Update this file when new rules are established. All rules are mandatory.
 
 ## Team & Workflow
 
-Agents: `.claude/agents/` · Rules: `.claude/rules/` (경로별 자동 적용)
+Agents: `~/.claude/agents/` (global md-*) · Rules: `.claude/rules/` (경로별 자동 적용)
 
 ### Agents
 
-| Agent           | Role                                                            |
-| --------------- | --------------------------------------------------------------- |
-| `opin-pm`       | PM — 업무 할당, 기능 정의, 플로우 설계, 정책, PRD               |
-| `opin-analyze`  | 요구사항 분석 — 이벤트 로깅, 퍼널, A/B 테스트                   |
-| `opin-design`   | UX 검증 — 플로우 리뷰, 상태 정의, 인터랙션 패턴 (Figma 없음)    |
-| `opin-fe`       | 프론트엔드 — React, Tailwind, zustand, dnd-kit                  |
-| `opin-be`       | 백엔드 — Supabase, RLS, API routes                              |
-| `opin-qa`       | QA — 버그 트리아지, 테스트 케이스 (버그 시 MANDATORY 먼저 호출) |
-| `opin-security` | 보안 리뷰, 어뷰즈 방지 (on-demand)                              |
-| `opin-devops`   | 인프라, 배포, CI/CD (on-demand)                                 |
+| Agent          | Role                                                           |
+| -------------- | -------------------------------------------------------------- |
+| `md-pm`        | PM — 업무 할당, 기능 정의, 플로우 설계, 정책, PRD              |
+| `md-analyze`   | 요구사항 분석 — 이벤트 로깅, 퍼널, A/B 테스트                  |
+| `md-design`    | UX 검증 — 플로우 리뷰, 상태 정의, 인터랙션 패턴 (Figma 없음)   |
+| `md-fe`        | 프론트엔드 — React, Tailwind, zustand, dnd-kit                 |
+| `md-be`        | 백엔드 — Supabase, RLS, API routes                             |
+| `md-qa`        | QA — 버그 트리아지, 테스트 케이스 (버그 시 MANDATORY 먼저 호출)|
+| `md-security`  | 보안 리뷰, 어뷰즈 방지 (on-demand)                             |
+| `md-devops`    | 인프라, 배포, CI/CD (on-demand)                                |
 
-`ui-ux-designer` — opin-design 보조 역할
-
-### Workflow (mandatory order)
-
-```
-PM 업무 할당
-  → analyze 요구사항 분석
-  → opin-design + ui-ux-designer UX/UI 설계
-  → opin-fe / opin-be 개발
-  → opin-qa 검증
-  → 배포 (staging → live, 추후)
-```
+`ui-ux-designer` — md-design 보조 역할
 
 ### Rules (경로별 자동 로드)
 
@@ -46,20 +42,8 @@ PM 업무 할당
 | `ux-writing.md`    | `src/**/*.{ts,tsx}` — 한국어 UX Writing, 에러 메시지, 버튼 텍스트 |
 | `button.md`        | `src/**/*.{ts,tsx}` — 버튼 variant/size/pairing/상태/접근성 규칙  |
 | `prd-writing.md`   | `requirements/**/*.md` — PRD/기획서 문체, 문서 구조, 표기 규칙    |
-
----
-
-## Bug Triage (MANDATORY)
-
-버그 발생 시 순서 엄수. QA 없이 개발자에게 바로 넘기지 않는다.
-
-```
-opin-qa 진단 (재현 조건, 근본 원인, 영향 범위, 심각도)
-  → opin-fe / opin-be 수정 (타입 체크 + 빌드 확인)
-  → opin-qa 검증 (해결 확인 + regression 없는지)
-```
-
-예외: 오탈자, 1줄 텍스트 수정은 QA 생략 가능.
+| `atlassian.md`     | `requirements/**/*.md` — Jira·Confluence 스페이스, 티켓 계층 규칙 |
+| `jira-ticket.md`   | `requirements/**/*.md` — PRD → Jira Story 변환 형식               |
 
 ---
 
@@ -76,16 +60,7 @@ opin-qa 진단 (재현 조건, 근본 원인, 영향 범위, 심각도)
 
 1. **Backend is Supabase only.**
 2. **No local file-based storage.** `src/lib/store.ts` (JSON) 는 legacy.
-3. **디자인 프로세스:** Figma 드로잉 없음. PM 명세 → opin-design UX 검증 → opin-fe 구현 → 브라우저 확인.
-
----
-
-## Code Rules
-
-- Naming: `camelCase` 변수/함수, `PascalCase` 컴포넌트, `UPPER_SNAKE` 상수, `is/has/can/should` 불리언
-- 절대 모킹 금지 — 실제 동작 코드만
-- 타입 안전성: TypeScript strict 준수, `any` 금지
-- Comment: why만, what 금지
+3. **디자인 프로세스:** Figma 드로잉 없음. PM 명세 → md-design UX 검증 → md-fe 구현 → 브라우저 확인.
 
 ---
 
@@ -93,11 +68,11 @@ opin-qa 진단 (재현 조건, 근본 원인, 영향 범위, 심각도)
 
 Source of truth: `docs/policy/`
 
-| Role       | Load                              |
-| ---------- | --------------------------------- |
-| `opin-be`  | member.md · plan.md · mypage.md   |
-| `opin-fe`  | member.md · plan.md · plan-card.md · mypage.md |
-| `opin-qa`  | member.md · plan.md · plan-card.md · mypage.md |
+| Role      | Load                                                    |
+| --------- | ------------------------------------------------------- |
+| `md-be`   | member.md · plan.md · mypage.md                         |
+| `md-fe`   | member.md · plan.md · plan-card.md · mypage.md          |
+| `md-qa`   | member.md · plan.md · plan-card.md · mypage.md          |
 
 Key: MemberType 7종 (Non-Member / Personal / Student / CompanyID / Academic / Indie / License ID). 플랜 카드 5종 (Personal / Student / Enterprise / Academics / Indie). License ID는 조회 전용, 관리 책임은 Company ID.
 
@@ -109,7 +84,7 @@ Key: MemberType 7종 (Non-Member / Personal / Student / CompanyID / Academic / I
 - [2026-03-24] `QUESTION_TYPE_COLORS` 두 곳 정의 시 값 불일치 — `design-tokens.ts`만 수정
 - [2026-03-24] MCP 서버는 `.mcp.json`에 추가 (settings.json 아님)
 - [2026-03-24] `useEffect` 내 동기 setState → React 컴파일러 린트 에러 — tick counter 패턴 사용
-- [2026-04-03] opin-design Figma 드로잉 제거 — UX 검증 역할만 유지
+- [2026-04-03] md-design Figma 드로잉 제거 — UX 검증 역할만 유지
 
 ---
 
