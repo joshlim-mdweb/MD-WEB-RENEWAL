@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticlesForVersion, getCategories } from "@/lib/manual/db";
+import { getEditorEmail } from "@/lib/manual/auth";
+import { NewArticleButton } from "../../_editor/ArticleAdmin";
 
 export default async function CategoryPage({
   params,
@@ -9,9 +11,10 @@ export default async function CategoryPage({
 }) {
   const { version: rawV, category } = await params;
   const version = decodeURIComponent(rawV);
-  const [categories, articles] = await Promise.all([
+  const [categories, articles, editorEmail] = await Promise.all([
     getCategories(),
     getArticlesForVersion(version),
+    getEditorEmail(),
   ]);
   const cat = categories.find((c) => c.slug === category);
   if (!cat) notFound();
@@ -27,6 +30,7 @@ export default async function CategoryPage({
       <div className="mn-sub">
         {list.length} documents · valid in MD {version}
       </div>
+      {editorEmail && <NewArticleButton version={version} categorySlug={category} />}
       {list.length === 0 ? (
         <div className="mn-empty">이 버전에는 해당 카테고리 문서가 없어요.</div>
       ) : (

@@ -17,6 +17,8 @@ export type ManualArticle = {
   needs_attention: string | null;
   reviewed_by: string | null;
   review_note: string | null;
+  archived_at: string | null;
+  archived_by: string | null;
 };
 
 function client() {
@@ -51,6 +53,7 @@ export async function getArticlesForVersion(version: string) {
     .from("manual_articles")
     .select("canonical_id, slug, category_slug, title, versions")
     .contains("versions", [version])
+    .is("archived_at", null)
     .order("title");
   if (error) throw error;
   return data as Omit<ManualArticle, "body_md" | "videos" | "tobe_action" | "updated_at">[];

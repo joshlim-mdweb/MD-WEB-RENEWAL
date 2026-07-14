@@ -59,6 +59,70 @@ export async function saveArticle(input: {
   return { ok: true, rev: updated.rev };
 }
 
+export async function createArticle(input: {
+  title: string;
+  category_slug: string;
+  version: string;
+}): Promise<{ ok: true; slug: string } | { ok: false; message: string }> {
+  const email = await getEditorEmail();
+  if (!email) return { ok: false, message: "편집 권한이 없어요." };
+
+  const slugBase = input.title
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, "-") || "untitled";
+  const canonical_id = `new-${Date.now()}`;
+  const slug = slugBase;
+
+  const supabase = await manualServerClient();
+  const { error } = await supabase.from("manual_articles").insert({
+    canonical_id,
+    slug,
+    category_slug: input.category_slug,
+    title: input.title,
+    body_md: "",
+    versions: [input.version],
+    videos: [],
+    tobe_action: "new",
+    source_ids: [],
+    updated_by: email,
+  });
+  if (error) {
+    if (error.code === "23505") {
+      return { ok: false, message: "같은 제목의 문서가 이 카테고리에 이미 있어요." };
+    }
+    return { ok: false, message: error.message };
+  }
+  revalidatePath(`/manual/${input.version}/${input.category_slug}`);
+  return { ok: true, slug };
+}
+
+export async function setArchived(input: {
+  canonical_id: string;
+  archived: boolean;
+  version: string;
+  category_slug: string;
+  slug: string;
+}): Promise<{ ok: boolean; message?: string }> {
+  const email = await getEditorEmail();
+  if (!email) return { ok: false, message: "권한이 없어요." };
+
+  const supabase = await manualServerClient();
+  const { error } = await supabase
+    .from("manual_articles")
+    .update({
+      archived_at: input.archived ? new Date().toISOString() : null,
+      archived_by: input.archived ? email : null,
+    })
+    .eq("canonical_id", input.canonical_id);
+  if (error) return { ok: false, message: error.message };
+  revalidatePath(`/manual/${input.version}/${input.category_slug}`);
+  revalidatePath(`/manual/${input.version}/${input.category_slug}/${input.slug}`);
+  revalidatePath("/manual/review");
+  return { ok: true };
+}
+
 export async function setReviewStatus(input: {
   canonical_id: string;
   status: "approved" | "needs_fix" | "pending";

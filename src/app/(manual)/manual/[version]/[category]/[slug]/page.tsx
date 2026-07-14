@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { getArticle, getCategories } from "@/lib/manual/db";
 import { getEditorEmail } from "@/lib/manual/auth";
 import { ReviewBar } from "../../../_editor/ReviewBar";
+import { ArchiveButton } from "../../../_editor/ArticleAdmin";
 
 export default async function ArticlePage({
   params,
@@ -18,6 +19,7 @@ export default async function ArticlePage({
     getEditorEmail(),
   ]);
   if (!article) notFound();
+  if (article.archived_at && !editorEmail) notFound(); // 보관 문서는 편집자만 열람
   const cat = categories.find((c) => c.slug === category);
   const validHere = article.versions.includes(version);
   const html = await marked.parse(article.body_md, { gfm: true });
@@ -39,6 +41,22 @@ export default async function ArticlePage({
           </Link>
         )}
       </h1>
+      {editorEmail && article.archived_at && (
+        <div className="mn-notice">
+          보관된 문서예요 ({article.archived_at.slice(0, 10)} · {article.archived_by?.split("@")[0]}). 뷰어에서 숨겨져 있어요.
+        </div>
+      )}
+      {editorEmail && (
+        <div style={{ display: "flex", justifyContent: "flex-end", margin: "6px 0" }}>
+          <ArchiveButton
+            canonicalId={article.canonical_id}
+            archived={!!article.archived_at}
+            version={version}
+            categorySlug={category}
+            slug={article.slug}
+          />
+        </div>
+      )}
       {editorEmail && (
         <ReviewBar
           canonicalId={article.canonical_id}
