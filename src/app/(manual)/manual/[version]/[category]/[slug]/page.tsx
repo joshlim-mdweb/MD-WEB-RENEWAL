@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
 import { getArticle, getCategories } from "@/lib/manual/db";
+import { getEditorEmail } from "@/lib/manual/auth";
+import { ReviewBar } from "../../../_editor/ReviewBar";
 
 export default async function ArticlePage({
   params,
@@ -10,9 +12,10 @@ export default async function ArticlePage({
 }) {
   const { version: rawV, category, slug } = await params;
   const version = decodeURIComponent(rawV);
-  const [article, categories] = await Promise.all([
+  const [article, categories, editorEmail] = await Promise.all([
     getArticle(category, decodeURIComponent(slug)),
     getCategories(),
+    getEditorEmail(),
   ]);
   if (!article) notFound();
   const cat = categories.find((c) => c.slug === category);
@@ -25,7 +28,27 @@ export default async function ArticlePage({
         <Link href={`/manual/${version}`}>MD {version}</Link> ·{" "}
         <Link href={`/manual/${version}/${category}`}>{cat?.name ?? category}</Link>
       </div>
-      <h1 className="mn-title">{article.title}</h1>
+      <h1 className="mn-title">
+        {article.title}
+        {editorEmail && (
+          <Link
+            href={`/manual/${version}/${category}/${article.slug}/edit`}
+            style={{ fontSize: 13, fontWeight: 600, color: "var(--mn-accent)", marginLeft: 12, textDecoration: "none" }}
+          >
+            ✎ Edit
+          </Link>
+        )}
+      </h1>
+      {editorEmail && (
+        <ReviewBar
+          canonicalId={article.canonical_id}
+          status={article.review_status}
+          note={article.review_note}
+          attention={article.needs_attention}
+          reviewedBy={article.reviewed_by}
+          path={`/manual/${version}/${category}/${article.slug}`}
+        />
+      )}
       <div className="mn-metaband">
         <span className="k">Applies to</span>
         {article.versions.slice(0, 8).map((v) => (

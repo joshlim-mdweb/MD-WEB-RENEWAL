@@ -1,0 +1,63 @@
+/* Manual Editor — Tiptap 크롬 */
+.mn-editor-shell { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start; }
+@media (max-width: 1080px) { .mn-editor-shell { grid-template-columns: 1fr; } }
+
+.mn-toolbar { position: sticky; top: 56px; z-index: 10; display: flex; flex-wrap: wrap; gap: 4px;
+  padding: 8px; background: var(--mn-panel); border: 1px solid var(--mn-line); border-radius: 10px; margin-bottom: 14px; }
+.mn-toolbar button { border: 0; background: none; color: var(--mn-ink); font-size: 13px; font-weight: 600;
+  padding: 5px 9px; border-radius: 6px; cursor: pointer; font-family: inherit; min-width: 30px; }
+.mn-toolbar button:hover { background: var(--mn-hover); }
+.mn-toolbar button.on { background: var(--mn-accent-soft); color: var(--mn-accent); }
+.mn-toolbar .sep { width: 1px; background: var(--mn-line); margin: 2px 4px; }
+.mn-toolbar .spacer { flex: 1; }
+.mn-toolbar .save { background: var(--mn-accent); color: #fff; padding: 5px 16px; }
+.mn-toolbar .save:hover { background: var(--mn-accent); opacity: 0.9; }
+.mn-toolbar .save:disabled { opacity: 0.5; cursor: default; }
+
+.mn-editor { background: var(--mn-panel); border: 1px solid var(--mn-line); border-radius: 12px; padding: 8px 28px 28px; }
+.mn-editor .ProseMirror { outline: none; min-height: 60vh; font-size: 14.5px; line-height: 1.65; }
+.mn-editor .ProseMirror h1 { font-size: 24px; font-weight: 700; margin: 26px 0 8px; }
+.mn-editor .ProseMirror h2 { font-size: 18px; font-weight: 650; margin: 24px 0 8px; }
+.mn-editor .ProseMirror h3 { font-size: 15.5px; font-weight: 650; margin: 18px 0 6px; }
+.mn-editor .ProseMirror p { margin: 8px 0; }
+.mn-editor .ProseMirror ul, .mn-editor .ProseMirror ol { margin: 8px 0 8px 22px; padding: 0; }
+.mn-editor .ProseMirror img { max-width: 100%; border: 1px solid var(--mn-line); border-radius: 8px; }
+.mn-editor .ProseMirror img.ProseMirror-selectednode { outline: 2px solid var(--mn-accent); }
+.mn-editor .ProseMirror blockquote { border-left: 3px solid var(--mn-accent); padding: 6px 14px; margin: 12px 0;
+  background: var(--mn-accent-soft); border-radius: 0 8px 8px 0; }
+.mn-editor .ProseMirror pre { background: var(--mn-chip); border-radius: 8px; padding: 12px 14px;
+  font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; overflow-x: auto; }
+.mn-editor .ProseMirror code { background: var(--mn-chip); padding: 1px 5px; border-radius: 4px;
+  font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
+.mn-editor .ProseMirror table { border-collapse: collapse; margin: 12px 0; width: 100%; font-size: 13px; }
+.mn-editor .ProseMirror th, .mn-editor .ProseMirror td { border: 1px solid var(--mn-line); padding: 6px 10px;
+  vertical-align: top; position: relative; min-width: 48px; }
+.mn-editor .ProseMirror th { background: var(--mn-chip); font-weight: 600; text-align: left; }
+.mn-editor .ProseMirror .selectedCell::after { content: ""; position: absolute; inset: 0;
+  background: var(--mn-accent); opacity: 0.12; pointer-events: none; }
+.mn-editor .ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder);
+  color: var(--mn-muted); float: left; height: 0; pointer-events: none; }
+
+.mn-slash { position: absolute; z-index: 30; background: var(--mn-panel); border: 1px solid var(--mn-line);
+  border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.14); padding: 6px; width: 220px; }
+.mn-slash button { display: flex; gap: 8px; width: 100%; border: 0; background: none; color: var(--mn-ink);
+  font-size: 13px; padding: 7px 9px; border-radius: 6px; cursor: pointer; text-align: left; font-family: inherit; align-items: center; }
+.mn-slash button.sel, .mn-slash button:hover { background: var(--mn-accent-soft); color: var(--mn-accent); }
+.mn-slash .ic { width: 22px; text-align: center; font-weight: 700; color: var(--mn-muted); }
+
+.mn-side { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 56px; }
+.mn-side .box { background: var(--mn-panel); border: 1px solid var(--mn-line); border-radius: 12px; padding: 14px; }
+.mn-side label { display: block; font-size: 10.5px; color: var(--mn-muted); text-transform: uppercase;
+  letter-spacing: 0.14em; margin-bottom: 8px; }
+.mn-side input[type="text"], .mn-side select { width: 100%; padding: 7px 9px; border: 1px solid var(--mn-line);
+  border-radius: 7px; background: var(--mn-bg); color: var(--mn-ink); font-size: 13px; font-family: inherit; }
+.mn-verlist { max-height: 190px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; }
+.mn-verlist label { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--mn-ink);
+  text-transform: none; letter-spacing: 0; margin: 0; cursor: pointer; }
+.mn-rev { font-size: 12.5px; padding: 6px 0; border-bottom: 1px solid var(--mn-line); display: flex;
+  justify-content: space-between; gap: 8px; }
+.mn-rev button { border: 0; background: none; color: var(--mn-accent); font-size: 12px; cursor: pointer; font-family: inherit; }
+.mn-flash { padding: 10px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; }
+.mn-flash.ok { background: var(--mn-accent-soft); color: var(--mn-accent); }
+.mn-flash.err { background: #fdecec; color: #b3261e; border: 1px solid #f5c6c2; }
+[data-theme="dark"] .mn-flash.err { background: #3a1d1b; color: #ff8f86; border-color: #5c2b27; }

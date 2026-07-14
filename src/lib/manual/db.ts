@@ -12,6 +12,11 @@ export type ManualArticle = {
   videos: string[];
   tobe_action: string;
   updated_at: string;
+  rev: number;
+  review_status: "pending" | "approved" | "needs_fix";
+  needs_attention: string | null;
+  reviewed_by: string | null;
+  review_note: string | null;
 };
 
 function client() {
