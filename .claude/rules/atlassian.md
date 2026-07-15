@@ -26,14 +26,6 @@ Epic
 - Story: PRD의 S1, S2… 각각 = Story 1개
 - Sub-task 생성 금지 — Tasks는 Story 설명 내 `- [ ]` 체크리스트로 처리
 
-### 우선순위 매핑
-
-| PRD 표기 | Jira Priority |
-|---|---|
-| P1 | High |
-| P2 | Medium |
-| P3 | Low |
-
 ---
 
 ## 2. Confluence
@@ -68,7 +60,32 @@ MD Web Renewal          ← 최상위 섹션
 
 ---
 
-## 4. 금지
+## 4. MDWEB 유효 이슈 타입
+
+MDWEB 프로젝트에서 사용 가능한 이슈 타입 (ID 기준):
+
+| 이슈 타입 | 용도 |
+|---|---|
+| `Improvement(MD)` | 기존 기능 개선 |
+| `Task(MD)` | 일반 작업 |
+| `Feature Request(MD)` | 신규 기능 요청 |
+| `Bug(MD)` | 버그 |
+
+- **`Story` 타입 사용 금지** — MDWEB 프로젝트에 존재하지 않음
+- 이슈 타입 불명확 시 `Improvement(MD)` 기본 사용
+
+---
+
+## 5. Jira 수정 후 검증
+
+`editJiraIssue` 실행 후 반드시 `getJiraIssue`로 결과를 재확인한다.
+
+- Tasks 섹션 구조(디자인/개발 분리)가 유지됐는지 검증 필수
+- 특히 긴 description 업데이트 시 구조가 flatten되는 경우가 있음
+
+---
+
+## 6. 금지
 
 - `CWD` 프로젝트에 MD Web Renewal 티켓 생성 금지 — `MDWEB`만 사용
 - Confluence에 MD_Store(MDSTO) 스페이스 사용 금지 — `MD_TEAM(M)` 만 사용

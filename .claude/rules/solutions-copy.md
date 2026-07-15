@@ -7,7 +7,7 @@
 Solutions 페이지의 콘텐츠 구조, 페르소나 키워드, 카피 방향을 정의한다.
 
 Solutions 페이지 구성:
-1. Personal Designers
+1. Individual Designers
 2. Enterprise
 3. Academics — Students
 4. Academics — Institutions / Educators
@@ -49,9 +49,9 @@ Solutions 페이지 구성:
 
 | 시장성 축 | 메시지 방향 | 주요 페르소나 |
 |---|---|---|
-| **Industry Standard** | 대형 게임사·VFX 스튜디오·패션 하우스에서 쓰는 툴. 이력서에 올리는 순간 달라진다. | Personal, Students |
+| **Industry Standard** | 대형 게임사·VFX 스튜디오·패션 하우스에서 쓰는 툴. 이력서에 올리는 순간 달라진다. | Individual, Students |
 | **커리어 연결** | 배운 것이 포트폴리오로, 포트폴리오가 취업으로. 실무에서 쓰는 툴을 지금 쓰고 있다는 것. | Students |
-| **CONNECT 에셋** | MD CONNECT에서 의상 에셋을 바로 가져다 쓸 수 있다. 처음 시작하는 부담을 줄인다. | Personal, Students |
+| **CONNECT 에셋** | MD CONNECT에서 의상 에셋을 바로 가져다 쓸 수 있다. 처음 시작하는 부담을 줄인다. | Individual, Students |
 
 ### 2.4 카피 작성 원칙
 - 기능이 아닌 **사용자 가치** 중심
@@ -62,7 +62,7 @@ Solutions 페이지 구성:
 
 ---
 
-## 3. Personal Designers
+## 3. Individual Designers
 
 ### 페이지 목적
 **대부분이 프리랜서다.** 스튜디오 소속이 아닌 개인 작업자 — 프리랜서 3D 아티스트, 독립 패션 디자이너, 개인 크리에이터.
@@ -102,7 +102,7 @@ MD CONNECT 에셋으로 바로 시작하고, 대형 스튜디오와 같은 툴�
 
 ### Trial 정책: 14일 무료 → 종료 후 자동 Subscription 시작
 
-### CTA: Start Trial · Get Plan · See Personal Plan
+### CTA: Start Trial · Get Plan · See Individual Plan
 
 ---
 
@@ -214,7 +214,7 @@ Academic Annual: **$1,500/Copy/연간** (Copy당 단가)
 4. 설명이 1~2문장으로 혜택을 전달하는가?
 5. 한국어가 자연스러운가?
 6. 톤이 세련되면서도 직관적인가?
-7. Personal — result·portfolio·precision·project connection이 보이는가?
+7. Individual — result·portfolio·precision·project connection이 보이는가?
 8. Enterprise — operation·pipeline·automation·stability가 보이는가?
 9. Students — discount·professional tool·portfolio가 보이는가?
 10. Institutions — reasonable pricing·student management·education workflow가 보이는가?

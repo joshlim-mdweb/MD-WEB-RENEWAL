@@ -1,20 +1,25 @@
 ---
 name: md_planning
-description: "MD Web Renewal 기획 산출물 자동 생성 스킬 — /cowork으로 생성된 PRD를 받아 Jira 티켓 생성 + Figma에 IA 차트, 플로우 차트, 문서 페이지, 흑백 와이어프레임을 제작합니다. 'md_planning', 'planning', 'IA 그려줘', '플로우 그려줘', '와이어프레임 그려줘', 'Jira 티켓 만들어줘' 등에서 트리거."
-user_invocable: true
+description: "DEPRECATED — /md_figma_prd (PRD + IA + 플로우 + DOC) 또는 /md_figma_wireframe (와이어프레임) 사용."
+user_invocable: false
 ---
+
+> **DEPRECATED.** 이 스킬은 더 이상 사용하지 않습니다.
+> - PRD 작성 + IA 차트 + 플로우 차트 + DOC 페이지 → `/md_figma_prd`
+> - 와이어프레임 → `/md_figma_wireframe`
 
 # md_planning 스킬
 
 `/cowork`으로 생성된 PRD를 기반으로 **Jira 티켓 + Figma 기획 산출물 4종**을 자동 제작합니다.
 
-| 산출물 | 도구 | 내용 |
+| 산출물 | 도구 | 참조 |
 |--------|------|------|
-| Jira 티켓 | Atlassian MCP | Epic + Story (jira-ticket.md 규칙 준수) |
-| IA 차트 | Figma | 화면 계층 구조 |
-| 플로우 차트 | Figma | 화면 간 이동 흐름 + 분기 조건 |
-| 문서 페이지 | Figma | 정책·작업순서·히스토리 테이블 |
-| 와이어프레임 | Figma | 흑백 로우피델리티 화면 구조 |
+| Jira 티켓 | Atlassian MCP | `rules/jira-ticket.md`, `rules/atlassian.md` |
+| IA 차트 | Figma | `references/ia-patterns.md` |
+| 플로우 차트 | Figma | `references/flowchart-patterns.md` |
+| 문서 페이지 | Figma | `references/document.md` |
+| 와이어프레임 | Figma | `references/wireframe.md` |
+| 모달 컴포넌트 | Figma | `references/modal.md` |
 
 ---
 
@@ -88,11 +93,11 @@ PRD 하나로 Jira 티켓 생성 → Figma 기획 산출물 4종을 순서대로
 
 ## 1. IA 차트
 
-> 상세 패턴 레퍼런스: `references/ia-patterns.md`
+> 구현 코드: `references/ia-patterns.md`
 
 ### 핵심 원칙
 
-- 배경: **라이트(#FFFFFF)**
+- 배경: **화이트(#FFFFFF)**
 - 연결선: **없음** — 열 위치로 계층 암시
 - Depth 1: 상단 수평 배열
 - Depth 2: 부모 노드 바로 아래 수직 스택 (다열 가능)
@@ -104,68 +109,6 @@ PRD 하나로 Jira 티켓 생성 → Figma 기획 산출물 4종을 순서대로
 |-------|------|--------|------|--------|
 | 1 | `#1A1A1A` | 없음 | 100×32 | 12px SemiBold, `#FFF` |
 | 2 | `#FFFFFF` | `#D1D1D1` | 100×28 | 11px Regular, `#333` |
-
-### Figma 구현 패턴
-
-```javascript
-// IA 차트 캔버스 (라이트 배경)
-const iaFrame = figma.createFrame();
-iaFrame.name = "IA Chart";
-iaFrame.layoutMode = "NONE";
-iaFrame.resize(1440, canvasHeight);
-iaFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-
-// IA 뱃지 (좌상단)
-const badge = figma.createFrame();
-badge.resize(24, 18);
-badge.x = 20; badge.y = 20;
-badge.fills = [{ type: 'SOLID', color: { r: 0.31, g: 0.28, b: 0.90 } }]; // #4F46E5
-badge.cornerRadius = 4;
-const badgeText = figma.createText();
-badgeText.characters = "IA";
-badgeText.fontSize = 10;
-badgeText.fontName = { family: "Poppins", style: "SemiBold" };
-badgeText.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-badgeText.textAutoResize = "WIDTH_AND_HEIGHT";
-badge.appendChild(badgeText);
-badgeText.x = (24 - badgeText.width) / 2;
-badgeText.y = (18 - badgeText.height) / 2;
-iaFrame.appendChild(badge);
-
-// 노드 헬퍼 (depth: 1 | 2)
-function createIANode(parent, label, depth, x, y) {
-  const W = 100, H = depth === 1 ? 32 : 28;
-  const bg = depth === 1
-    ? { r: 0.10, g: 0.10, b: 0.10 }
-    : { r: 1, g: 1, b: 1 };
-  const textColor = depth === 1
-    ? { r: 1, g: 1, b: 1 }
-    : { r: 0.20, g: 0.20, b: 0.20 };
-  const fontWeight = depth === 1 ? "SemiBold" : "Regular";
-  const fontSize = depth === 1 ? 12 : 11;
-
-  const frame = figma.createFrame();
-  frame.resize(W, H);
-  frame.x = x; frame.y = y;
-  frame.fills = [{ type: 'SOLID', color: bg }];
-  frame.cornerRadius = 6;
-  if (depth === 2) {
-    frame.strokes = [{ type: 'SOLID', color: { r: 0.82, g: 0.82, b: 0.82 } }];
-    frame.strokeWeight = 1;
-  }
-
-  const t = figma.createText();
-  t.characters = label;
-  t.fontSize = fontSize;
-  t.fontName = { family: "Pretendard", style: fontWeight };
-  t.fills = [{ type: 'SOLID', color: textColor }];
-  t.textAutoResize = "WIDTH_AND_HEIGHT";
-  frame.appendChild(t);
-  t.x = (W - t.width) / 2; t.y = (H - t.height) / 2;
-  parent.appendChild(frame);
-  return { x, y, W, H, bottom: y + H };
-}
-```
 
 ### 레이아웃 간격 기준
 
@@ -182,7 +125,7 @@ function createIANode(parent, label, depth, x, y) {
 
 ## 2. 플로우 차트
 
-> 상세 패턴 레퍼런스: `references/flowchart-patterns.md`
+> 구현 코드: `references/flowchart-patterns.md`
 
 ### 핵심 원칙
 
@@ -197,163 +140,14 @@ function createIANode(parent, label, depth, x, y) {
 |------|------|------|------|
 | `terminal-start` | 타원 | 60×32 | 시작점 |
 | `screen` | 둥근 직사각형 | 140×44 | 일반 화면 |
-| `decision` | 다이아몬드 (45° 회전) | 80×80 | `<CHECK>` 분기 |
+| `decision` | 다이아몬드 (vectorPaths) | 80×80 | `<CHECK>` 분기 |
 | `terminal-end` | Pill 직사각형 | 100×44 | `<END>` 종료 |
 | `input-list` | 점선 직사각형 | 160×가변 | Inputs 목록 |
 | `group-zone` | 배경 영역 | 가변 | 구간 표시 |
 
-### Figma 구현 패턴
-
-```javascript
-// 플로우 차트 캔버스
-const flowFrame = figma.createFrame();
-flowFrame.name = "Flow Chart";
-flowFrame.layoutMode = "NONE";
-flowFrame.resize(1440, canvasHeight);
-flowFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-
-// 화면 노드
-function createScreenNode(parent, label, x, y) {
-  const W = 140, H = 44;
-  const frame = figma.createFrame();
-  frame.resize(W, H);
-  frame.x = x; frame.y = y;
-  frame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-  frame.cornerRadius = 6;
-  frame.strokes = [{ type: 'SOLID', color: { r: 0.20, g: 0.20, b: 0.20 } }];
-  frame.strokeWeight = 1;
-  const t = figma.createText();
-  t.characters = label;
-  t.fontSize = 12;
-  t.fontName = { family: "Pretendard", style: "Regular" };
-  t.fills = [{ type: 'SOLID', color: { r: 0.10, g: 0.10, b: 0.10 } }];
-  t.textAutoResize = "WIDTH_AND_HEIGHT";
-  frame.appendChild(t);
-  t.x = (W - t.width) / 2; t.y = (H - t.height) / 2;
-  parent.appendChild(frame);
-  return {
-    right:  { x: x + W, y: y + H / 2 },
-    left:   { x: x,     y: y + H / 2 },
-    bottom: { x: x + W / 2, y: y + H },
-    top:    { x: x + W / 2, y: y },
-  };
-}
-
-// 결정 노드 (다이아몬드) — vectorPaths 사용, rotation 금지
-function createDecisionNode(parent, conditionText, x, y) {
-  const size = 80;
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-
-  // 다이아몬드: 로컬 좌표(0,0 기준) closed path
-  const diamond = figma.createVector();
-  diamond.vectorPaths = [{
-    windingRule: "NONZERO",
-    data: `M ${size / 2} 0 L ${size} ${size / 2} L ${size / 2} ${size} L 0 ${size / 2} Z`,
-  }];
-  diamond.x = x;
-  diamond.y = y;
-  diamond.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-  diamond.strokes = [{ type: 'SOLID', color: { r: 0.20, g: 0.20, b: 0.20 } }];
-  diamond.strokeWeight = 1;
-  parent.appendChild(diamond);
-
-  // <CHECK> 라벨 — append 후 width 읽기
-  const t1 = figma.createText();
-  t1.characters = "<CHECK>";
-  t1.fontSize = 10;
-  t1.fontName = { family: "Poppins", style: "Regular" };
-  t1.fills = [{ type: 'SOLID', color: { r: 0.60, g: 0.60, b: 0.60 } }];
-  t1.textAutoResize = "WIDTH_AND_HEIGHT";
-  parent.appendChild(t1);
-  t1.x = cx - t1.width / 2;
-  t1.y = cy - t1.height - 2;
-
-  // 조건 내용 — append 후 width 읽기
-  const t2 = figma.createText();
-  t2.characters = conditionText;
-  t2.fontSize = 11;
-  t2.fontName = { family: "Pretendard", style: "Regular" };
-  t2.fills = [{ type: 'SOLID', color: { r: 0.10, g: 0.10, b: 0.10 } }];
-  t2.textAutoResize = "WIDTH_AND_HEIGHT";
-  parent.appendChild(t2);
-  t2.x = cx - t2.width / 2;
-  t2.y = cy - t2.height / 2;
-
-  return {
-    right:  { x: x + size, y: cy },
-    left:   { x: x,        y: cy },
-    bottom: { x: cx,       y: y + size },
-    top:    { x: cx,       y: y },
-  };
-}
-
-// Orthogonal 엣지 (직각 꺾임)
-function createOrthogonalEdge(parent, x1, y1, x2, y2, label, isNegative) {
-  const midX = x1 + (x2 - x1) / 2;
-  const path = figma.createVector();
-  path.vectorPaths = [{
-    windingRule: "NONE",
-    data: y1 === y2
-      ? `M ${x1} ${y1} L ${x2} ${y2}`
-      : `M ${x1} ${y1} L ${midX} ${y1} L ${midX} ${y2} L ${x2} ${y2}`,
-  }];
-  path.strokes = [{ type: 'SOLID', color: { r: 0.60, g: 0.60, b: 0.60 } }];
-  path.strokeWeight = 1;
-  path.fills = [];
-  parent.appendChild(path);
-
-  // 화살표
-  const arrowSize = 6;
-  const arrow = figma.createVector();
-  arrow.vectorPaths = [{
-    windingRule: "NONZERO",
-    data: `M ${x2} ${y2} L ${x2 - arrowSize} ${y2 - arrowSize / 2} L ${x2 - arrowSize} ${y2 + arrowSize / 2} Z`,
-  }];
-  arrow.fills = [{ type: 'SOLID', color: { r: 0.40, g: 0.40, b: 0.40 } }];
-  arrow.strokes = [];
-  parent.appendChild(arrow);
-
-  // 분기 라벨 (If YES / If NO)
-  if (label) {
-    const labelColor = isNegative
-      ? { r: 0.87, g: 0.30, b: 0.09 }  // #DF4D18
-      : { r: 0.40, g: 0.40, b: 0.40 }; // #666666
-    const t = figma.createText();
-    t.characters = label;
-    t.fontSize = 10;
-    t.fontName = { family: "Poppins", style: "Regular" };
-    t.fills = [{ type: 'SOLID', color: labelColor }];
-    t.textAutoResize = "WIDTH_AND_HEIGHT";
-    t.x = midX + 4; t.y = Math.min(y1, y2) + 4;
-    parent.appendChild(t);
-  }
-}
-
-// Group Zone (배경 영역)
-function createGroupZone(parent, label, x, y, w, h) {
-  const zone = figma.createRectangle();
-  zone.resize(w, h);
-  zone.x = x; zone.y = y;
-  zone.fills = [{ type: 'SOLID', color: { r: 0.96, g: 0.96, b: 0.96 } }];
-  zone.cornerRadius = 8;
-  zone.strokes = [];
-  parent.insertChild(0, zone); // 최하단 z-order
-  const t = figma.createText();
-  t.characters = label;
-  t.fontSize = 11;
-  t.fontName = { family: "Pretendard", style: "Regular" };
-  t.fills = [{ type: 'SOLID', color: { r: 0.60, g: 0.60, b: 0.60 } }];
-  t.textAutoResize = "WIDTH_AND_HEIGHT";
-  t.x = x + 12; t.y = y + 12;
-  parent.appendChild(t);
-}
-```
-
 ### 레이아웃 간격 기준
 
-- 노드 간 수평 간격: 80px (엣지 길이)
-- 분기 수직 간격: 60px
+- 노드 간 수평: 80px / 분기 수직: 60px
 - 섹션 간 간격 (멀티 플로우): 80px
 - 섹션 헤더: 12px SemiBold, 플로우 위 16px
 - 전체 캔버스 패딩: 80px
@@ -361,6 +155,8 @@ function createGroupZone(parent, label, x, y, w, h) {
 ---
 
 ## 3. 와이어프레임
+
+> 구현 코드: `references/wireframe.md`
 
 ### 레이아웃 기준
 
@@ -370,8 +166,6 @@ function createGroupZone(parent, label, x, y, w, h) {
 - 절대 좌표 금지 — Auto Layout + Hug Contents 전용
 
 ### MD Web Renewal 화면 패턴
-
-PRD에서 아래 화면이 나오면 해당 패턴을 우선 적용.
 
 | 화면 | 패턴 |
 |------|------|
@@ -384,133 +178,105 @@ PRD에서 아래 화면이 나오면 해당 패턴을 우선 적용.
 
 ### 공통 컴포넌트 패턴
 
-**헤더**
-- 로고(좌) + 네비게이션(중앙) + CTA 버튼(우)
-- 높이: 64~80px
+| 컴포넌트 | 스펙 |
+|----------|------|
+| 헤더 | 로고(좌) + 네비(중앙) + CTA(우), 높이 64~80px |
+| 히어로 2단 | 좌: 타이틀+서브카피+CTA / 우: 이미지 플레이스홀더 |
+| 히어로 중앙정렬 | 타이틀+서브카피+CTA center align |
+| Core Block | 아이콘 플레이스홀더 + 타이틀 + 설명 1~2줄 |
+| Authority Badge Bar | `[뱃지] · [로고] · [로고]` 가로 1열 |
+| Plan Card | 플랜명 + 가격 + 피처 리스트 + CTA / 추천 플랜 strokeWeight 2 |
+| Feature 비교 테이블 | 행: 기능명 / 열: 플랜 / 체크 = 다크 원 |
+| Testimonial Card | 인용구 + 이름 + 직함 + 소속 |
+| Workflow Step | 01/02/03 Step 인디케이터 + 제목 + 설명 |
+| 푸터 | 회사정보 + 링크 3~4열 + 저작권 |
 
-**히어로 2단**
-- 좌: 타이틀 + 서브카피 + CTA 버튼
-- 우: 이미지 플레이스홀더
+### 서체 스케일 (와이어프레임 — 그레이스케일)
 
-**히어로 중앙정렬**
-- 중앙: 타이틀 + 서브카피 + CTA 버튼 (모두 center align)
+| 역할 | 크기 | Weight | 색상 |
+|------|------|--------|------|
+| Hero 타이틀 | 40~56px | Bold | `#1A1A1A` |
+| 섹션 타이틀 | 32~40px | Bold | `#1A1A1A` |
+| 서브헤딩 | 20~24px | SemiBold | `#333333` |
+| 본문 | 16~18px | Regular | `#333333` |
+| 캡션/라벨 | 12~14px | Regular | `#666666` |
 
-**Core Block**
-- 아이콘 플레이스홀더 + 타이틀 + 설명 1~2줄
+행간: 24px 이상 → `140%` / 20px 이하 → `180%`
 
-**Authority Badge Bar**
-- `[뱃지] · [로고] · [로고] · [로고]` 가로 1열
+---
 
-**Plan Card**
-- 플랜명 + 가격 + 피처 리스트 + CTA 버튼
-- 추천 플랜: 테두리 강조 (strokeWeight 2)
+### MD Renewal Website Visual Reference (실제 구현용)
 
-**Feature 비교 테이블**
-- 행: 기능명 / 열: 플랜
-- 체크 = 다크 원, 미지원 = 라이트 대시
+> 와이어프레임은 그레이스케일. 아래는 실제 컴포넌트 구현 시 참조값.
+> 출처: Figma 2026-RENEWAL node 835:6890 (Pricing 페이지)
 
-**Testimonial Card**
-- 인용구 + 이름 + 직함 + 소속
+**폰트**: `Poppins` 전용 (Regular/Medium/SemiBold/Bold)
 
-**Workflow Step**
-- 01 / 02 / 03 Step 인디케이터 + 제목 + 설명
+**다크 테마 컬러**:
+| 용도 | HEX |
+|------|-----|
+| 페이지 배경 | `#19191e` |
+| 카드 배경 | `#202027` |
+| 토글 배경 | `#373743` |
+| 섹션 라벨 | `#d7d7d7` |
+| 기본 텍스트 | `#ffffff` |
 
-**푸터**
-- 회사정보 + 링크 3~4열 + 저작권
+**Plan Card 스펙**: `420×550px` · `rounded-[7px]` · 버튼 `top-[444px]`
 
-### Figma API 기본 패턴
+**버튼 (pill)**:
+- Primary: `bg-white text-[#19191e] rounded-[22px] px-[14px] py-[10px]`
+- Outline: `border border-white text-white rounded-[22px] px-[14px] py-[10px]`
 
-```javascript
-// 폰트 로드 (필수)
-await figma.loadFontAsync({ family: "Pretendard", style: "Regular" });
-await figma.loadFontAsync({ family: "Pretendard", style: "Medium" });
-await figma.loadFontAsync({ family: "Pretendard", style: "SemiBold" });
-await figma.loadFontAsync({ family: "Pretendard", style: "Bold" });
-await figma.loadFontAsync({ family: "Poppins", style: "Regular" });
-await figma.loadFontAsync({ family: "Poppins", style: "SemiBold" });
-await figma.loadFontAsync({ family: "Poppins", style: "Bold" });
+**Navbar**: `px-[48px] py-[20px]` · 로고 + 네비 + Sign In pill + language selector
 
-// 메인 프레임 (Auto Layout)
-const mainFrame = figma.createFrame();
-mainFrame.name = "화면명";
-mainFrame.layoutMode = "VERTICAL";
-mainFrame.primaryAxisSizingMode = "AUTO";
-mainFrame.counterAxisSizingMode = "FIXED";
-mainFrame.resize(1440, 100);
-mainFrame.primaryAxisSizingMode = "AUTO"; // resize 후 재설정
-mainFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-
-// 텍스트 헬퍼
-function createText(parent, text, fontSize, fontWeight, color, isEnglish) {
-  const t = figma.createText();
-  t.characters = text;
-  t.fontSize = fontSize;
-  t.fontName = { family: isEnglish ? "Poppins" : "Pretendard", style: fontWeight || "Regular" };
-  t.fills = [{ type: 'SOLID', color: color || { r: 0.20, g: 0.20, b: 0.20 } }];
-  t.lineHeight = { value: fontSize >= 24 ? 140 : 180, unit: "PERCENT" };
-  t.textAutoResize = "WIDTH_AND_HEIGHT";
-  parent.appendChild(t);
-  return t;
-}
-
-// Auto Layout 프레임 헬퍼
-function createAutoFrame(parent, name, direction, spacing, padding, fills) {
-  const f = figma.createFrame();
-  f.name = name;
-  f.layoutMode = direction || "VERTICAL";
-  f.primaryAxisSizingMode = "AUTO";
-  f.counterAxisSizingMode = "FIXED";
-  f.itemSpacing = spacing || 0;
-  if (padding) {
-    f.paddingTop = padding; f.paddingBottom = padding;
-    f.paddingLeft = padding; f.paddingRight = padding;
-  }
-  f.fills = fills || [];
-  parent.appendChild(f);
-  return f;
-}
-
-// 이미지 플레이스홀더
-function createImagePlaceholder(parent, w, h, label) {
-  const r = figma.createRectangle();
-  r.resize(w, h);
-  r.fills = [{ type: 'SOLID', color: { r: 0.80, g: 0.80, b: 0.80 } }];
-  r.cornerRadius = 4;
-  parent.appendChild(r);
-  if (label) {
-    const t = figma.createText();
-    t.characters = label || "IMG";
-    t.fontSize = 12;
-    t.fontName = { family: "Poppins", style: "Regular" };
-    t.fills = [{ type: 'SOLID', color: { r: 0.60, g: 0.60, b: 0.60 } }];
-    t.textAutoResize = "WIDTH_AND_HEIGHT";
-    parent.appendChild(t);
-  }
-  return r;
-}
-```
-
-### 서체 스케일
-
-- Hero 타이틀: Bold 40~56px, `#1A1A1A`
-- 섹션 타이틀: Bold 32~40px, `#1A1A1A`
-- 서브헤딩: SemiBold 20~24px, `#333333`
-- 본문: Regular 16~18px, `#333333`
-- 캡션/라벨: Regular 12~14px, `#666666`
-
-### 행간
-
-- 24px 이상: `{ value: 140, unit: "PERCENT" }`
-- 20px 이하: `{ value: 180, unit: "PERCENT" }`
+상세 규칙: `.claude/rules/ds-renewal-website.md`
 
 ### 섹션 분할 호출 원칙
 
-한 번의 `use_figma` 호출당 노드 수 제한 → 섹션 분할:
-1. 1차: 메인 프레임 + Header + Hero
-2. 2차: 본문 섹션
-3. 3차: CTA + Footer
+한 번의 `use_figma` 호출당 노드 수 제한 → 3단계 분할:
+1. 메인 프레임 + Header + Hero
+2. 본문 섹션
+3. CTA + Footer
 
-재참조: `figma.currentPage.findOne(n => n.name === "프레임명")`
+---
+
+## 3.5 모달 컴포넌트
+
+> 구현 코드: `references/modal.md`
+
+CLOver Admin 디자인 기준 (Figma node `3721:666`). Confirmation Dialog에 사용.
+
+### 스펙
+
+| 항목 | 값 |
+|------|-----|
+| 컨테이너 크기 | 528×320px |
+| 컨테이너 radius | 8px |
+| 배경 | #FFFFFF |
+| 폰트 | **Poppins Regular** (모달 내 모든 텍스트) |
+| Title | SemiBold 16px, #000000, 중앙정렬, y=68 |
+| Body | Regular 14px, #333333, 중앙정렬 |
+| 버튼 y | 컨테이너 하단에서 64px 위 |
+| 버튼 간격 | 19px / radius 6px / padding 수직 8px 수평 20px |
+
+### 버튼 스타일
+
+| 버튼 | 배경 | 테두리 | 텍스트 |
+|------|------|--------|--------|
+| Cancel (왼쪽) | 없음 | `#929292` 1px | `#454545` |
+| Primary (오른쪽) | `#8096FF` | 없음 | `#FFFFFF` |
+
+### 버튼 텍스트 규칙
+
+- 모든 버튼 텍스트 **영어**
+- 왼쪽: 항상 `Cancel` / 오른쪽: 동작명 (`Overwrite`, `Remove`, `Delete`, `Publish` 등)
+- Title: 동작 대상 + `?` 의문형 (`"Overwrite existing data?"`)
+
+### 배치 규칙
+
+- DOC 프레임 우측에 세로 나열
+- 각 모달 위에 `storyId` 라벨 (Poppins SemiBold 11px, #6B6B6B)
+- 모달 간 수직 간격: 80px
 
 ---
 
@@ -553,27 +319,23 @@ Story: MDWEB-{n} — [S2] {기능명}
 
 ## 5. 문서 페이지 (Figma)
 
-> 상세 패턴 레퍼런스: `references/document-patterns.md`
+> 구현 코드: `references/document.md`
 
 ### 구조
-
-COMPONENT 파일 템플릿 기반 4패널 + 하단 HISTORY 테이블.
 
 ```
 ┌──────────────┬──────────────┬────────────────────────────────┬──────────────┐
 │ DESCRIPTION  │ POLICY       │ FLOW REF                       │ ROUTE        │
-│              │              │                                │              │
 │ 기능 설명    │ 정책 내용    │ 플로우 차트 섹션명 + 링크      │ URL 라우트   │
-│ 배경/목적    │ 예외 처리    │ (실제 차트는 별도 프레임)      │ API 엔드포인트│
-│ 사용자 시나리오│ 제약 조건  │                                │              │
+│ 배경/목적    │ 예외 처리    │                                │ API 엔드포인트│
 └──────────────┴──────────────┴────────────────────────────────┴──────────────┘
 
 HISTORY
-┌──────────┬──────────┬────────────────────────────────────────────────────────┐
-│ DATE     │ VERSION  │ DESCRIPTION                                            │
-├──────────┼──────────┼────────────────────────────────────────────────────────┤
-│ 2026-04-27│ v0.1    │ 초안 작성                                              │
-└──────────┴──────────┴────────────────────────────────────────────────────────┘
+┌──────────┬──────────┬────────────────────────────────────────┐
+│ DATE     │ TITLE    │ DESCRIPTION                            │
+├──────────┼──────────┼────────────────────────────────────────┤
+│ YYMMDD   │ Draft    │ 초안 작성                              │
+└──────────┴──────────┴────────────────────────────────────────┘
 ```
 
 ### 패널별 내용
@@ -585,183 +347,7 @@ HISTORY
 | FLOW REF | 플로우 차트 프레임명 + Jira Epic 링크 | — |
 | ROUTE | 화면 URL 경로, 주요 API 엔드포인트 | PRD 화면 목록 |
 
-### Figma 구현 패턴
-
-```javascript
-// 문서 페이지 캔버스 (Auto Layout — 와이어프레임과 동일)
-const docFrame = figma.createFrame();
-docFrame.name = "DOC — {기능명}";
-docFrame.layoutMode = "VERTICAL";
-docFrame.primaryAxisSizingMode = "AUTO";
-docFrame.counterAxisSizingMode = "FIXED";
-docFrame.resize(1440, 100);
-docFrame.primaryAxisSizingMode = "AUTO";
-docFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-docFrame.paddingTop = 48; docFrame.paddingBottom = 48;
-docFrame.paddingLeft = 60; docFrame.paddingRight = 60;
-docFrame.itemSpacing = 40;
-
-// 상단 타이틀
-function createDocTitle(parent, title) {
-  const t = figma.createText();
-  t.characters = title;
-  t.fontSize = 20;
-  t.fontName = { family: "Poppins", style: "SemiBold" };
-  t.fills = [{ type: 'SOLID', color: { r: 0.10, g: 0.10, b: 0.10 } }];
-  t.textAutoResize = "WIDTH_AND_HEIGHT";
-  parent.appendChild(t);
-  return t;
-}
-
-// 4패널 가로 컨테이너
-const panelRow = figma.createFrame();
-panelRow.layoutMode = "HORIZONTAL";
-panelRow.primaryAxisSizingMode = "FIXED";
-panelRow.counterAxisSizingMode = "AUTO";
-panelRow.resize(1320, 10); // 좌우 패딩 60×2 제외
-panelRow.counterAxisSizingMode = "AUTO";
-panelRow.itemSpacing = 16;
-panelRow.fills = [];
-docFrame.appendChild(panelRow);
-
-// 개별 패널
-function createDocPanel(parent, panelTitle, bodyText, flexGrow) {
-  const panel = figma.createFrame();
-  panel.layoutMode = "VERTICAL";
-  panel.primaryAxisSizingMode = "AUTO";
-  panel.counterAxisSizingMode = "FIXED";
-  panel.resize(300, 10);
-  panel.primaryAxisSizingMode = "AUTO";
-  panel.paddingTop = 20; panel.paddingBottom = 20;
-  panel.paddingLeft = 20; panel.paddingRight = 20;
-  panel.itemSpacing = 12;
-  panel.cornerRadius = 6;
-  panel.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
-  panel.strokes = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-  panel.strokeWeight = 1;
-  if (flexGrow) panel.layoutGrow = 1;
-
-  // 패널 헤더
-  const header = figma.createText();
-  header.characters = panelTitle;
-  header.fontSize = 11;
-  header.fontName = { family: "Poppins", style: "SemiBold" };
-  header.fills = [{ type: 'SOLID', color: { r: 0.40, g: 0.40, b: 0.40 } }];
-  header.textAutoResize = "WIDTH_AND_HEIGHT";
-  panel.appendChild(header);
-
-  // 구분선
-  const divider = figma.createRectangle();
-  divider.resize(260, 1);
-  divider.fills = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-  panel.appendChild(divider);
-
-  // 본문
-  const body = figma.createText();
-  body.characters = bodyText;
-  body.fontSize = 13;
-  body.fontName = { family: "Pretendard", style: "Regular" };
-  body.fills = [{ type: 'SOLID', color: { r: 0.20, g: 0.20, b: 0.20 } }];
-  body.lineHeight = { value: 180, unit: "PERCENT" };
-  body.textAutoResize = "WIDTH_AND_HEIGHT";
-  panel.appendChild(body);
-
-  parent.appendChild(panel);
-  return panel;
-}
-
-// HISTORY 테이블
-function createHistoryTable(parent, rows) {
-  // rows: [{ date, version, description }]
-  const table = figma.createFrame();
-  table.layoutMode = "VERTICAL";
-  table.primaryAxisSizingMode = "AUTO";
-  table.counterAxisSizingMode = "FIXED";
-  table.resize(1320, 10);
-  table.primaryAxisSizingMode = "AUTO";
-  table.fills = [];
-  table.strokes = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-  table.strokeWeight = 1;
-  table.cornerRadius = 6;
-  table.clipsContent = true;
-
-  // 헤더 행
-  const COLS = [{ label: "DATE", w: 120 }, { label: "TITLE", w: 200 }, { label: "DESCRIPTION", w: 1000 }];
-  const headerRow = figma.createFrame();
-  headerRow.layoutMode = "HORIZONTAL";
-  headerRow.primaryAxisSizingMode = "FIXED";
-  headerRow.counterAxisSizingMode = "FIXED";
-  headerRow.resize(1320, 36);
-  headerRow.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
-  table.appendChild(headerRow);
-
-  COLS.forEach(col => {
-    const cell = figma.createFrame();
-    cell.resize(col.w, 36);
-    cell.layoutMode = "HORIZONTAL";
-    cell.paddingLeft = 16; cell.paddingRight = 16;
-    cell.primaryAxisAlignItems = "CENTER";
-    cell.counterAxisAlignItems = "CENTER";
-    cell.fills = [];
-    cell.strokes = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-    cell.strokeWeight = 1;
-    const t = figma.createText();
-    t.characters = col.label;
-    t.fontSize = 11;
-    t.fontName = { family: "Poppins", style: "SemiBold" };
-    t.fills = [{ type: 'SOLID', color: { r: 0.40, g: 0.40, b: 0.40 } }];
-    t.textAutoResize = "WIDTH_AND_HEIGHT";
-    cell.appendChild(t);
-    headerRow.appendChild(cell);
-  });
-
-  // 데이터 행
-  rows.forEach(row => {
-    const dataRow = figma.createFrame();
-    dataRow.layoutMode = "HORIZONTAL";
-    dataRow.primaryAxisSizingMode = "FIXED";
-    dataRow.counterAxisSizingMode = "FIXED";
-    dataRow.resize(1320, 36);
-    dataRow.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
-    table.appendChild(dataRow);
-
-    [{ val: row.date, w: 120 }, { val: row.title, w: 200 }, { val: row.description, w: 1000 }].forEach(d => {
-      const cell = figma.createFrame();
-      cell.resize(d.w, 36);
-      cell.layoutMode = "HORIZONTAL";
-      cell.paddingLeft = 16; cell.paddingRight = 16;
-      cell.primaryAxisAlignItems = "CENTER";
-      cell.counterAxisAlignItems = "CENTER";
-      cell.fills = [];
-      cell.strokes = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-      cell.strokeWeight = 1;
-      const t = figma.createText();
-      t.characters = d.val;
-      t.fontSize = 12;
-      t.fontName = { family: "Pretendard", style: "Regular" };
-      t.fills = [{ type: 'SOLID', color: { r: 0.20, g: 0.20, b: 0.20 } }];
-      t.textAutoResize = "WIDTH_AND_HEIGHT";
-      cell.appendChild(t);
-      dataRow.appendChild(cell);
-    });
-  });
-
-  parent.appendChild(table);
-  return table;
-}
-```
-
-### HISTORY 초기 행
-
-문서 페이지 생성 시 첫 번째 행은 항상 자동 삽입:
-
-```javascript
-createHistoryTable(docFrame, [
-  { date: "YYYY-MM-DD", version: "v0.1", description: "초안 작성" }
-]);
-```
-
-날짜는 오늘 날짜 기준. 이후 변경 시 행 추가.
+HISTORY 초기 행은 생성 날짜 기준으로 자동 삽입. 이후 변경 시 행 추가.
 
 ---
 
@@ -778,8 +364,10 @@ createHistoryTable(docFrame, [
 
 ## 주의사항
 
-- IA 차트, 플로우 차트는 `layoutMode = "NONE"` (절대 좌표) — 나머지는 Auto Layout
+- IA 차트, 플로우 차트는 `layoutMode = "NONE"` — 나머지는 Auto Layout
 - 흑백 규칙 절대 위반 금지
 - 각 단계 완료 후 `get_screenshot`으로 검증 필수
+- Figma 다른 페이지에 그릴 때: 반드시 `setCurrentPageAsync` 먼저 호출
+- Figma 링크는 항상 `page-id` 파라미터 포함 (`page-id=XXXX%3AYYYY`)
 - 어드민/대시보드/복잡한 폼 등 범위 외 화면은 사용자에게 명시적으로 고지
 - Jira 티켓 생성 전 반드시 Atlassian MCP 인증 상태 확인
