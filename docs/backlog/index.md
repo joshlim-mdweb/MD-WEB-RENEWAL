@@ -1,6 +1,6 @@
-# OPINION 백로그 인덱스
+# MD-WEB 백로그 인덱스
 
-최종 수정: 2026-04-18 (OPIN-058 done — 스테이징 환경 구성 완료) | 관리: opin-pm
+최종 수정: 2026-05-13 (MD-WEB-004 생성 — 기업 트라이얼 폼 개선) | 관리: md-pm
 
 ## 파일 구조
 
@@ -34,10 +34,13 @@ docs/backlog/
 
 ## W17 스프린트
 
-| ID                           | 제목                                                               | Priority | Status | Owner   |
-| ---------------------------- | ------------------------------------------------------------------ | -------- | ------ | ------- |
-| [OPIN-062](todo/OPIN-062.md) | 빌더 탭 구조 개편 — 응답 관리 + AI 분석                            | P1       | ready  | opin-fe |
-| [OPIN-057](todo/OPIN-057.md) | 아이콘 시스템 적용 — SuccessScreen · EmptyState · 설문 카드 썸네일 | P2       | ready  | opin-fe |
+| ID                              | 제목                                                               | Priority | Status | Owner   |
+| ------------------------------- | ------------------------------------------------------------------ | -------- | ------ | ------- |
+| [MD-WEB-004](todo/MD-WEB-004.md) | 기업 트라이얼 폼 개선 — 드롭다운 전환 + 중국 조건부 필드          | P1       | ready  | md-fe   |
+| [MD-WEB-003](todo/MD-WEB-003.md) | Plan 페이지 — 플랜 카드 구조 및 버튼 상태 정의                    | P1       | research | md-pm  |
+| [MD-WEB-002](todo/MD-WEB-002.md) | Checkout UX 리디자인 — 단일 페이지 폼 + 회원타입별 분기           | P1       | ready  | md-fe   |
+| [OPIN-062](todo/OPIN-062.md)    | 빌더 탭 구조 개편 — 응답 관리 + AI 분석                            | P1       | ready  | opin-fe |
+| [OPIN-057](todo/OPIN-057.md)    | 아이콘 시스템 적용 — SuccessScreen · EmptyState · 설문 카드 썸네일 | P2       | ready  | opin-fe |
 
 ## 완료
 
