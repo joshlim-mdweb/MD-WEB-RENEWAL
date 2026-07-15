@@ -80,3 +80,25 @@
   .mn-rail { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--mn-line); padding: 16px 0; }
   .mn-content { padding: 20px 16px 60px; }
 }
+
+/* ── 버전 홈: 헬프센터형 랜딩 ── */
+.mn-hero { text-align: center; padding: 36px 0 28px; }
+.mn-hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 20px; text-wrap: balance; }
+.mn-hero form { position: relative; max-width: 560px; margin: 0 auto; }
+.mn-hero input { width: 100%; padding: 13px 18px 13px 44px; border: 1.5px solid var(--mn-line); border-radius: 12px;
+  background: var(--mn-panel); color: var(--mn-ink); font-size: 15px; outline: none; font-family: inherit; }
+.mn-hero input:focus { border-color: var(--mn-accent); }
+.mn-hero form::before { content: "⌕"; position: absolute; left: 16px; top: 50%; transform: translateY(-54%);
+  color: var(--mn-muted); font-size: 19px; }
+.mn-group { margin: 34px 0 8px; }
+.mn-group h2 { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 14px; }
+.mn-cardgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 900px) { .mn-cardgrid { grid-template-columns: 1fr; } }
+.mn-card { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 12px;
+  background: var(--mn-panel); border: 1px solid var(--mn-line); text-decoration: none; color: var(--mn-ink); }
+.mn-card:hover { border-color: var(--mn-accent); }
+.mn-card .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--mn-bg);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  border: 1px solid var(--mn-line); }
+.mn-card .nm { font-weight: 600; font-size: 14px; }
+.mn-card .ct { font-size: 11.5px; color: var(--mn-muted); }
