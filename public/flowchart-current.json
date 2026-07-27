@@ -1,0 +1,26 @@
+{
+  "nodes": [
+    { "id": "start",    "label": "시작",        "type": "start",    "step": 0, "track": 0 },
+    { "id": "plan",     "label": "Plan 페이지", "type": "screen",   "step": 1, "track": 0 },
+    { "id": "auth",     "label": "로그인 여부?","type": "decision", "step": 2, "track": 0 },
+    { "id": "login",    "label": "로그인 화면", "type": "screen",   "step": 2, "track": 1 },
+    { "id": "checkout", "label": "Checkout",    "type": "screen",   "step": 3, "track": 0 },
+    { "id": "pay",      "label": "결제 처리",   "type": "screen",   "step": 4, "track": 0 },
+    { "id": "result",   "label": "결제 성공?",  "type": "decision", "step": 5, "track": 0 },
+    { "id": "success",  "label": "구독 활성화", "type": "end",      "step": 6, "track": 0 },
+    { "id": "fail",     "label": "결제 실패",   "type": "end",      "step": 6, "track": 1 }
+  ],
+  "edges": [
+    { "from": "start",    "to": "plan" },
+    { "from": "plan",     "to": "auth" },
+    { "from": "auth",     "to": "checkout", "condition": "yes" },
+    { "from": "auth",     "to": "login",    "condition": "no" },
+    { "from": "login",    "to": "checkout" },
+    { "from": "checkout", "to": "pay" },
+    { "from": "pay",      "to": "result" },
+    { "from": "result",   "to": "success",  "condition": "yes" },
+    { "from": "result",   "to": "fail",     "condition": "no" }
+  ],
+  "edge_cases": ["이미 구독 중인 상태로 Plan 페이지 진입", "결제 타임아웃"],
+  "missing_cases": ["3DS 인증 케이스", "쿠폰 적용 분기"]
+}
