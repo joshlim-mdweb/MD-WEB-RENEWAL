@@ -1,6 +1,6 @@
 # [MD|ADMIN] CLOver Admin SW Release UX 개선 — Phase 2
 
-Epic Key: `CLOVER-SW-EP02` | 요청: Jeongsu Lim (SW QA) | 출처: [Slack CEV7QB151](https://clo3d.slack.com/archives/CEV7QB151/p1772687620249109) | 작성일: 2026-04-27
+Epic Key: `(미정)` | 요청: Jeongsu Lim (SW QA) | 출처: [Slack CEV7QB151](https://clo3d.slack.com/archives/CEV7QB151/p1772687620249109) | 작성일: 2026-04-27
 
 ## 배경
 
