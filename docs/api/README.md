@@ -54,6 +54,7 @@ Supabase session cookie(`sb-*`) 기반. 로그인 후 자동으로 쿠키가 설
 | [share.md](./share.md)         | `/api/share/**`                      | 공유 링크 기반 설문 조회 및 응답        |
 | [gifticons.md](./gifticons.md) | `/api/gifticons/**`                  | 포인트 → 기프티콘 전환, 상품 목록, 내역 |
 | [analyze.md](./analyze.md)     | `/api/analyze`                       | AI 설문 초안 생성 (URL 분석 / 프롬프트) |
+| [tool.md](./tool.md)           | `/api/tool/**`                       | 내부 사내 툴 API (플로우차트 분석 등)  |
 
 ---
 
