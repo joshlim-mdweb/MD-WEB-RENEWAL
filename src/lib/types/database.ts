@@ -8,6 +8,30 @@ export type Database = {
   };
   public: {
     Tables: {
+      tool_flowcharts: {
+        Row: {
+          id: string;
+          title: string;
+          data: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title?: string;
+          data: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          data?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       ai_credit_transactions: {
         Row: {
           amount: number;
