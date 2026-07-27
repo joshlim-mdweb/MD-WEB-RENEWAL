@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920" />
+<title>GNB — Updated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111113;
+    font-family: 'Poppins', sans-serif;
+    min-width: 1920px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ───────────────────────────── GNB BAR ───────────────────────────── */
+  .gnb {
+    width: 1920px;
+    height: 80px;
+    background: #19191e;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+  }
+
+  .gnb-left {
+    display: flex;
+    align-items: center;
+    gap: 58px;
+  }
+
+  .gnb-logo {
+    width: 40px;
+    height: 40px;
+    background: #f54e00;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gnb-logo svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+
+  .gnb-nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .gnb-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .gnb-nav-item svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  .gnb-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-sign-in {
+    border: 1px solid #b4b4b4;
+    border-radius: 20px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-free-trial {
+    background: #f54e00;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ───────────────────────── SOLUTIONS DROPDOWN ───────────────────────── */
+  .dropdown-wrapper {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding-left: calc(48px + 40px + 58px + 70px + 40px);
+    /* align under "Solutions" nav item roughly */
+  }
+
+  .dropdown-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .dropdown {
+    width: 160px;
+    background: #19191e;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dropdown-item {
+    padding: 7px 12px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+
+  .dropdown-item:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* State labels */
+  .state-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+
+  <!-- ── Default State ── -->
+  <div class="section-block">
+    <span class="state-label">Default</span>
+    <nav class="gnb" id="gnb-default">
+      <div class="gnb-left">
+        <!-- Logo -->
+        <div class="gnb-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <!-- Nav -->
+        <div class="gnb-nav">
+          <a class="gnb-nav-item">Features</a>
+          <a class="gnb-nav-item">
+            Solutions
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <a class="gnb-nav-item">Plan</a>
+          <a class="gnb-nav-item">
+            Resources
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <a class="gnb-nav-item">Download</a>
+        </div>
+      </div>
+      <!-- CTAs -->
+      <div class="gnb-right">
+        <button class="btn-sign-in">Sign In</button>
+        <button class="btn-free-trial">Free Trial</button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ── Solutions Hover State ── -->
+  <div class="section-block">
+    <span class="state-label">Solutions Hover</span>
+    <nav class="gnb">
+      <div class="gnb-left">
+        <div class="gnb-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="gnb-nav">
+          <a class="gnb-nav-item">Features</a>
+          <a class="gnb-nav-item" style="color:#f54e00;">
+            Solutions
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f54e00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 15 12 9 18 15"/>
+            </svg>
+          </a>
+          <a class="gnb-nav-item">Plan</a>
+          <a class="gnb-nav-item">
+            Resources
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <a class="gnb-nav-item">Download</a>
+        </div>
+      </div>
+      <div class="gnb-right">
+        <button class="btn-sign-in">Sign In</button>
+        <button class="btn-free-trial">Free Trial</button>
+      </div>
+    </nav>
+
+    <!-- Solutions Dropdown -->
+    <div style="padding-left: calc(48px + 40px + 58px + 85px);">
+      <div class="dropdown">
+        <div class="dropdown-item">Enterprise</div>
+        <div class="dropdown-item">Academics</div>
+        <div class="dropdown-item">Students</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

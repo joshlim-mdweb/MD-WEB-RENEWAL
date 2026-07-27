@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Team Console — Activity Log / Usage Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    padding: 32px 24px 80px;
+  }
+
+  .container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── Tab bar ─────────────────────────── */
+  .tab-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tabs { display: flex; gap: 4px; flex-shrink: 0; }
+
+  .tab {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+  }
+  .tab.active  { background: #121212; border-color: #121212; color: white; font-weight: 500; }
+  .tab.inactive { background: #f0f0f0; border-color: #e6e6e6; color: #666; }
+  .tab.inactive:hover { background: #e8e8e8; }
+
+  .tab-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toggle-label { font-size: 12px; color: #888; white-space: nowrap; }
+
+  .toggle-switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #e0e0e0;
+    border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .toggle-switch.on .toggle-track { background: #121212; }
+  .toggle-switch.on .toggle-thumb { transform: translateX(16px); }
+
+  .download-btn {
+    padding: 8px 14px;
+    background: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+  }
+  .download-btn:hover { background: #f5f5f5; }
+
+  /* ── Table scroll wrapper ─────────────────────────── */
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+  }
+
+  .table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+  }
+
+  /* ── Rows ─────────────────────────── */
+  .header-row {
+    background: #f0f0f0;
+    display: flex;
+    height: 42px;
+  }
+  .header-cell {
+    display: flex;
+    align-items: center;
+    padding: 0 6px 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .header-cell.private-ip-col { background: #f0f0f0; }
+
+  .data-row {
+    display: flex;
+    height: 52px;
+    background: white;
+    border-top: 1px solid #e6e6e6;
+  }
+  .data-row:hover { background: #fafafa; }
+
+  .data-cell {
+    display: flex;
+    align-items: center;
+    padding: 0 6px 0 14px;
+    font-size: 13px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .data-cell.muted { color: #999; }
+
+  /* ── Column widths — Activity Log ─────────────────────────── */
+  .col-license   { width: 180px; }
+  .col-userid    { width: 280px; gap: 4px; }
+  .col-compname  { width: 190px; }
+  .col-version   { width: 130px; }
+  .col-publicip  { width: 155px; }
+  .col-privateip { width: 155px; }
+  .col-hwid      { width: 200px; gap: 6px; overflow: visible; }
+
+  /* ── Column widths — Usage Time ─────────────────────────── */
+  .col-license-ut { width: 200px; }
+  .col-userid-ut  { width: 300px; gap: 4px; }
+  .col-login      { width: 220px; }
+  .col-logout     { width: 220px; }
+  .col-usagetime  { width: 140px; }
+
+  /* ── Guest badge ─────────────────────────── */
+  .guest-badge {
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #999;
+    background: white;
+    flex-shrink: 0;
+  }
+
+  /* ── Hardware ID ─────────────────────────── */
+  .hwid-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hwid-eye {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px 3px;
+    border-radius: 3px;
+    transition: background 0.1s;
+    flex-shrink: 0;
+  }
+  .hwid-eye:hover { background: #efefef; }
+
+  /* ── Global tooltip (fixed, avoids overflow clipping) ─────────────────────────── */
+  #g-tooltip {
+    display: none;
+    position: fixed;
+    background: #1a1a1a;
+    color: white;
+    font-size: 11px;
+    font-family: 'Poppins', monospace;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+  #g-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: #1a1a1a;
+    border-top: none;
+  }
+  #g-tooltip.visible { display: block; }
+
+
+  /* ── Tab panels ─────────────────────────── */
+  .tab-panel         { display: none; }
+  .tab-panel.active  { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Global tooltip -->
+<div id="g-tooltip"></div>
+
+<div class="container">
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <div class="tabs">
+      <div class="tab active"   id="tab-activity" onclick="switchTab('activity')">Activity log</div>
+      <div class="tab inactive" id="tab-usage"    onclick="switchTab('usage')">Usage Time</div>
+    </div>
+
+    <div class="tab-bar-right">
+      <button class="download-btn" onclick="alert('Download as Excel')">↓&nbsp; Download as excel</button>
+    </div>
+  </div>
+
+  <!-- ── Activity Log ── -->
+  <div class="tab-panel active" id="panel-activity">
+    <div class="table-wrap">
+      <div class="table">
+        <div class="header-row">
+          <div class="header-cell col-license">License ID</div>
+          <div class="header-cell col-userid">User ID / Email</div>
+          <div class="header-cell col-compname">Computer Name</div>
+          <div class="header-cell col-version">Version</div>
+          <div class="header-cell col-publicip">Public IP</div>
+          <div class="header-cell col-privateip private-ip-col">Private IP</div>
+          <div class="header-cell col-hwid">Hardware ID</div>
+        </div>
+
+        <!-- Row 1 — Owner -->
+        <div class="data-row">
+          <div class="data-cell col-license">joshenttest001</div>
+          <div class="data-cell col-userid">joshenttest001</div>
+          <div class="data-cell col-compname">JoshLim-01MB-SE</div>
+          <div class="data-cell col-version">2025.2.127.57280</div>
+          <div class="data-cell col-publicip">122.203.233.75</div>
+          <div class="data-cell col-privateip muted">192.168.1.100</div>
+          <div class="data-cell col-hwid">
+            <div class="hwid-wrap">
+              <span>A3F9···C82E</span>
+              <span class="hwid-eye" data-full="A3F9B2C1D5E8F07A44219C3B8D6E1C82E" onclick="showTooltip(this)">👁</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 — Guest alice -->
+        <div class="data-row">
+          <div class="data-cell col-license">joshenttest001</div>
+          <div class="data-cell col-userid">guest.alice@company.com <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-compname">AlicePC-WIN11</div>
+          <div class="data-cell col-version">2025.2.127.57280</div>
+          <div class="data-cell col-publicip">58.140.12.44</div>
+          <div class="data-cell col-privateip muted">192.168.1.42</div>
+          <div class="data-cell col-hwid">
+            <div class="hwid-wrap">
+              <span>B71C···D94A</span>
+              <span class="hwid-eye" data-full="B71C3D4E5F6A7B8C9D0E1F2A3B4C5D94A" onclick="showTooltip(this)">👁</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 — Guest bob -->
+        <div class="data-row">
+          <div class="data-cell col-license">joshenttest001</div>
+          <div class="data-cell col-userid">guest.bob@company.com <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-compname">BobMac-M2</div>
+          <div class="data-cell col-version">2025.2.127.57280</div>
+          <div class="data-cell col-publicip">203.11.55.9</div>
+          <div class="data-cell col-privateip muted">10.0.0.55</div>
+          <div class="data-cell col-hwid">
+            <div class="hwid-wrap">
+              <span>C98E···1F3B</span>
+              <span class="hwid-eye" data-full="C98E2A3B4C5D6E7F8A9B0C1D2E3F4A1F3B" onclick="showTooltip(this)">👁</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 — Owner 2 -->
+        <div class="data-row">
+          <div class="data-cell col-license">joshenttest002</div>
+          <div class="data-cell col-userid">joshenttest002</div>
+          <div class="data-cell col-compname">TestPC-WIN10</div>
+          <div class="data-cell col-version">2025.2.127.57280</div>
+          <div class="data-cell col-publicip">175.45.12.88</div>
+          <div class="data-cell col-privateip muted">192.168.0.12</div>
+          <div class="data-cell col-hwid">
+            <div class="hwid-wrap">
+              <span>D12A···7E9C</span>
+              <span class="hwid-eye" data-full="D12A3B4C5E6F7A8B9C0D1E2F3A4B5C7E9C" onclick="showTooltip(this)">👁</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5 — Guest carol -->
+        <div class="data-row">
+          <div class="data-cell col-license">joshenttest002</div>
+          <div class="data-cell col-userid">guest.carol@partner.org <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-compname">CarolBook-M3</div>
+          <div class="data-cell col-version">2025.2.125.51200</div>
+          <div class="data-cell col-publicip">61.254.8.17</div>
+          <div class="data-cell col-privateip muted">10.10.1.5</div>
+          <div class="data-cell col-hwid">
+            <div class="hwid-wrap">
+              <span>E45F···2B8D</span>
+              <span class="hwid-eye" data-full="E45F6A7B8C9D0E1F2A3B4C5D6E7F8A2B8D" onclick="showTooltip(this)">👁</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Usage Time ── -->
+  <div class="tab-panel" id="panel-usage">
+    <div class="table-wrap">
+      <div class="table">
+        <div class="header-row">
+          <div class="header-cell col-license-ut">License ID</div>
+          <div class="header-cell col-userid-ut">User ID / Email</div>
+          <div class="header-cell col-login">Login</div>
+          <div class="header-cell col-logout">Logout</div>
+          <div class="header-cell col-usagetime">Usage Time</div>
+        </div>
+
+        <div class="data-row">
+          <div class="data-cell col-license-ut">joshenttest001</div>
+          <div class="data-cell col-userid-ut">joshenttest001</div>
+          <div class="data-cell col-login">2026-04-29T06:08:03Z</div>
+          <div class="data-cell col-logout">2026-04-29T06:08:43Z</div>
+          <div class="data-cell col-usagetime">00:00:40</div>
+        </div>
+
+        <div class="data-row">
+          <div class="data-cell col-license-ut">joshenttest001</div>
+          <div class="data-cell col-userid-ut">guest.alice@company.com <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-login">2026-04-29T07:12:00Z</div>
+          <div class="data-cell col-logout">2026-04-29T08:45:10Z</div>
+          <div class="data-cell col-usagetime">01:33:10</div>
+        </div>
+
+        <div class="data-row">
+          <div class="data-cell col-license-ut">joshenttest001</div>
+          <div class="data-cell col-userid-ut">guest.bob@company.com <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-login">2026-04-29T09:00:22Z</div>
+          <div class="data-cell col-logout">2026-04-29T10:15:05Z</div>
+          <div class="data-cell col-usagetime">01:14:43</div>
+        </div>
+
+        <div class="data-row">
+          <div class="data-cell col-license-ut">joshenttest002</div>
+          <div class="data-cell col-userid-ut">joshenttest002</div>
+          <div class="data-cell col-login">2026-04-30T01:22:10Z</div>
+          <div class="data-cell col-logout">2026-04-30T03:55:44Z</div>
+          <div class="data-cell col-usagetime">02:33:34</div>
+        </div>
+
+        <div class="data-row">
+          <div class="data-cell col-license-ut">joshenttest002</div>
+          <div class="data-cell col-userid-ut">guest.carol@partner.org <span class="guest-badge">Guest</span></div>
+          <div class="data-cell col-login">2026-04-30T02:10:00Z</div>
+          <div class="data-cell col-logout">2026-04-30T02:48:30Z</div>
+          <div class="data-cell col-usagetime">00:38:30</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- .container -->
+
+<script>
+  /* ── Tab switch ── */
+  function switchTab(tab) {
+    document.getElementById('tab-activity').className = 'tab ' + (tab === 'activity' ? 'active' : 'inactive');
+    document.getElementById('tab-usage').className    = 'tab ' + (tab === 'usage'    ? 'active' : 'inactive');
+    document.getElementById('panel-activity').className = 'tab-panel' + (tab === 'activity' ? ' active' : '');
+    document.getElementById('panel-usage').className    = 'tab-panel' + (tab === 'usage'    ? ' active' : '');
+    document.getElementById('privateip-toggle-wrap').style.display = tab === 'activity' ? 'flex' : 'none';
+    hideTooltip();
+  }
+
+/* ── Global tooltip ── */
+  const tooltip = document.getElementById('g-tooltip');
+  let activeEye = null;
+
+  function showTooltip(eye) {
+    if (activeEye === eye) { hideTooltip(); return; }
+    activeEye = eye;
+    tooltip.textContent = eye.dataset.full;
+    tooltip.classList.add('visible');
+    positionTooltip(eye);
+  }
+
+  function positionTooltip(eye) {
+    const r = eye.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const top = r.bottom + 8;
+    tooltip.style.left = cx + 'px';
+    tooltip.style.top  = top + 'px';
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+    activeEye = null;
+  }
+
+  document.addEventListener('click', e => {
+    if (!e.target.classList.contains('hwid-eye')) hideTooltip();
+  });
+
+  document.addEventListener('scroll', () => {
+    if (activeEye) positionTooltip(activeEye);
+  }, true);
+</script>
+</body>
+</html>
