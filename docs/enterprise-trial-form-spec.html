@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Trial 신청 폼 — 스펙 검토</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ── */
+  .page-wrap {
+    display: flex;
+    gap: 0;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 28px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar h2 {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 16px;
+  }
+
+  .sidebar nav a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid #2a2a2a;
+    transition: color 0.15s;
+  }
+
+  .sidebar nav a:hover { color: #fff; }
+
+  .sidebar .tag {
+    display: inline-block;
+    font-size: 10px;
+    background: #333;
+    color: #aaa;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .sidebar .tag.new { background: #1e3a1e; color: #4caf50; }
+  .sidebar .tag.cond { background: #2a2a1a; color: #c8a84b; }
+
+  .sidebar .meta {
+    margin-top: 32px;
+    font-size: 11px;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  .main {
+    flex: 1;
+    padding: 48px 40px;
+    max-width: 720px;
+  }
+
+  /* ── Page header ── */
+  .page-header {
+    margin-bottom: 32px;
+  }
+
+  .page-header .breadcrumb {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .page-header .jira-link {
+    font-size: 12px;
+    color: #0052cc;
+    text-decoration: none;
+  }
+
+  .page-header .jira-link:hover { text-decoration: underline; }
+
+  /* ── Form container ── */
+  .form-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 32px;
+    max-width: 560px;
+  }
+
+  .form-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* ── Info banner ── */
+  .info-banner {
+    background: #f0f0f0;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .badge {
+    font-size: 11px;
+    color: #666;
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    padding: 2px 10px;
+    background: #fff;
+  }
+
+  .info-banner .heading {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 3px;
+  }
+
+  .info-banner .sub {
+    font-size: 12px;
+    color: #999;
+  }
+
+  /* ── Fields ── */
+  .field-group {
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    height: 36px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #333;
+    background: #f5f5f5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="tel"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #999;
+    background: #fff;
+  }
+
+  textarea {
+    height: 80px;
+    padding: 8px 10px;
+    resize: vertical;
+  }
+
+  /* prefix input */
+  .input-with-prefix {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    background: #f5f5f5;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .input-with-prefix:focus-within {
+    border-color: #999;
+    background: #fff;
+  }
+
+  .input-prefix {
+    padding: 0 10px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 13px;
+    color: #666;
+    background: #ebebeb;
+    border-right: 1px solid #d1d1d1;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .input-with-prefix input {
+    border: none;
+    background: transparent;
+    height: 36px;
+    flex: 1;
+    padding: 0 10px;
+    font-size: 13px;
+    outline: none;
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 20px 0 12px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  /* ── Checkbox group ── */
+  .checkbox-group, .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checkbox-item, .radio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-item input[type="checkbox"],
+  .radio-item input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    accent-color: #1a1a1a;
+    cursor: pointer;
+  }
+
+  .checkbox-item span, .radio-item span {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  /* ── Conditional banners ── */
+  .cond-banner {
+    display: none;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .cond-banner.info {
+    background: #f0f0f0;
+    border: 1px solid #d1d1d1;
+  }
+
+  .cond-banner.warning {
+    background: #fff9e6;
+    border: 1px solid #e5c84a;
+  }
+
+  .cond-banner.visible { display: block; }
+
+  .cond-banner .banner-head {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+  }
+
+  .cond-banner .banner-text { color: #555; }
+
+  .cond-banner .banner-cta {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #1a1a1a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cond-banner .banner-cta:hover { text-decoration: underline; }
+
+  /* ── Terms ── */
+  .terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .terms-row input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #1a1a1a;
+    cursor: pointer;
+  }
+
+  .terms-row span {
+    font-size: 13px;
+    color: #333;
+  }
+
+  /* ── Submit notice ── */
+  .submit-notice {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .submit-notice p + p { margin-top: 4px; }
+
+  /* ── CTA button ── */
+  .btn-submit {
+    width: 100%;
+    height: 48px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-submit:hover { background: #333; }
+
+  /* ── Spec annotations ── */
+  .spec-note {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .spec-note::before {
+    content: '✦';
+    font-size: 9px;
+    color: #ccc;
+  }
+
+  /* Hidden fields wrapper */
+  .cond-fields {
+    display: none;
+  }
+
+  .cond-fields.visible {
+    display: block;
+  }
+
+  /* ── Right panel (changelog) ── */
+  .changelog {
+    width: 300px;
+    flex-shrink: 0;
+    padding: 48px 24px;
+  }
+
+  .changelog h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+    margin-bottom: 16px;
+  }
+
+  .change-item {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+  }
+
+  .change-item .change-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .change-tag.added { background: #e6f4ea; color: #2e7d32; }
+  .change-tag.changed { background: #e3f0ff; color: #1565c0; }
+  .change-tag.removed { background: #fce8e8; color: #c62828; }
+  .change-tag.conditional { background: #fff8e1; color: #f57f17; }
+
+  .change-item .change-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .change-item .change-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1100px) {
+    .changelog { display: none; }
+  }
+
+  @media (max-width: 800px) {
+    .sidebar { display: none; }
+    .main { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>필드 목록</h2>
+    <nav>
+      <a href="#field-name">이름 <span class="tag">필수</span></a>
+      <a href="#field-email">업무용 이메일 <span class="tag">필수</span></a>
+      <a href="#field-jobtitle">직무</a>
+      <a href="#field-country">국가 <span class="tag">필수</span></a>
+      <a href="#field-china">WeChat / Mobile <span class="tag cond">China만</span></a>
+      <a href="#field-company">회사명 <span class="tag">필수</span></a>
+      <a href="#field-website">회사 홈페이지 <span class="tag">필수</span></a>
+      <a href="#field-industry">산업 분류</a>
+      <a href="#section-trial">── 트라이얼 신청 정보 ──</a>
+      <a href="#field-usecase">주요 작업 분야 <span class="tag">필수</span></a>
+      <a href="#field-orgtype">신청 구분 <span class="tag new">신규</span></a>
+      <a href="#field-timeline">예상 도입 시기 <span class="tag">필수</span></a>
+      <a href="#field-mdusage">MD 도입 현황 <span class="tag">필수</span></a>
+      <a href="#field-notes">기타 요청 사항</a>
+    </nav>
+    <div class="meta">
+      <div>JIRA: MDWEB-762</div>
+      <div>Epic: MDWEB-625</div>
+      <div>요청: BD팀</div>
+      <div style="margin-top:8px; color:#777">이 파일은 검토용입니다.<br>실제 제출 기능 없음.</div>
+    </div>
+  </aside>
+
+  <!-- Main form -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">MD Site · Enterprise Trial 폼 개선</div>
+      <h1>Enterprise Trial 신청 폼</h1>
+      <a href="#" class="jira-link">MDWEB-762</a>
+    </div>
+
+    <div class="form-card">
+      <div class="form-title">Enterprise Trial 신청</div>
+
+      <!-- 안내 배너 -->
+      <div class="info-banner">
+        <div class="badge-row">
+          <span class="badge">Enterprise</span>
+          <span class="badge">Academic Institution</span>
+        </div>
+        <div class="heading">기업·교육기관 전용 트라이얼 신청</div>
+        <div class="sub">개인용 플랜을 찾으신다면 Personal 페이지를 이용해 주세요.</div>
+      </div>
+
+      <!-- 이름 -->
+      <div class="field-group" id="field-name">
+        <label>이름 *</label>
+        <input type="text" placeholder="">
+      </div>
+
+      <!-- 업무용 이메일 -->
+      <div class="field-group" id="field-email">
+        <label>업무용 이메일 *</label>
+        <input type="email" placeholder="">
+      </div>
+
+      <!-- 직무 -->
+      <div class="field-group" id="field-jobtitle">
+        <label>직무</label>
+        <select>
+          <option value="">선택</option>
+          <option>3D Artist</option>
+          <option>Technical Artist</option>
+          <option>Art Director</option>
+          <option>Pipeline TD</option>
+          <option>Producer</option>
+          <option>기타</option>
+        </select>
+      </div>
+
+      <!-- 국가 -->
+      <div class="field-group" id="field-country">
+        <label>국가 *</label>
+        <select id="country-select" onchange="handleCountryChange(this.value)">
+          <option value="">선택</option>
+          <option value="KR">Korea</option>
+          <option value="US">United States</option>
+          <option value="JP">Japan</option>
+          <option value="CN">China</option>
+          <option value="UK">United Kingdom</option>
+          <option value="CA">Canada</option>
+          <option value="AU">Australia</option>
+          <option value="OTHER">기타</option>
+        </select>
+      </div>
+
+      <!-- China 조건부 배너 -->
+      <div class="cond-banner info" id="china-banner">
+        <div class="banner-head">중국 사용자를 위한 추가 정보를 입력해 주세요.</div>
+      </div>
+
+      <!-- China 조건부 필드 -->
+      <div class="cond-fields" id="china-fields">
+        <div class="field-group" id="field-china">
+          <label>WeChat ID *</label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="field-group">
+          <label>Mobile Number *</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">+86</span>
+            <input type="tel" placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <!-- 회사명 -->
+      <div class="field-group" id="field-company">
+        <label>회사명 *</label>
+        <input type="text" placeholder="">
+      </div>
+
+      <!-- 회사 홈페이지 -->
+      <div class="field-group" id="field-website">
+        <label>회사 홈페이지 *</label>
+        <input type="url" placeholder="https://">
+        <div class="spec-note">제출 시 DNS 검증 (NXDOMAIN 실패 → 블로킹)</div>
+      </div>
+
+      <!-- 산업 분류 -->
+      <div class="field-group" id="field-industry">
+        <label>산업 분류</label>
+        <select>
+          <option value="">선택</option>
+          <option>Game Development</option>
+          <option>VFX / Film</option>
+          <option>Animation</option>
+          <option>Fashion / Apparel</option>
+          <option>Architecture / Visualization</option>
+          <option>Education</option>
+          <option>기타</option>
+        </select>
+      </div>
+
+      <!-- Section divider -->
+      <hr class="section-divider" id="section-trial">
+      <div class="section-label">트라이얼 신청 정보</div>
+
+      <!-- ① 주요 작업 분야 -->
+      <div class="field-group" id="field-usecase">
+        <label>주요 작업 분야 *</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox"><span>캐릭터 의상 모델링</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>시뮬레이션</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>애니메이션</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>배경·환경 아트</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>파이프라인 호환성 테스트 (Maya, Unreal 등)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>기타</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ② 신청 구분 (신규) -->
+      <div class="field-group" id="field-orgtype">
+        <label>신청 구분 * <span style="font-size:11px;color:#4caf50;font-weight:600;">신규</span></label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="org-type" value="corporate" onchange="handleOrgType(this.value)">
+            <span>Corporate Studio / Agency</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="org-type" value="educational" onchange="handleOrgType(this.value)">
+            <span>Educational Institution</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="org-type" value="freelancer" onchange="handleOrgType(this.value)">
+            <span>Freelancer / Personal</span>
+          </label>
+        </div>
+        <!-- Freelancer/Personal 선택 시 배너 -->
+        <div class="cond-banner info" id="freelancer-banner">
+          <div class="banner-text">1인 기업 또는 프리랜서라면 Personal Trial을 사용해도 돼요.</div>
+          <a href="#" class="banner-cta">Personal Trial 신청하기 →</a>
+        </div>
+      </div>
+
+      <!-- ③ 예상 도입 시기 -->
+      <div class="field-group" id="field-timeline">
+        <label>예상 도입 시기 *</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>1개월 이내</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>1~3개월</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>3~6개월</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>단순 기능 검토</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ④ MD 도입 현황 -->
+      <div class="field-group" id="field-mdusage">
+        <label>MD 도입 현황 *</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>처음 도입 검토 중</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>팀 내 개인 라이선스 사용자가 있고, 기업 전환 검토 중</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>다른 팀·부서를 위해 도입 검토 중</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>기존 기업용 사용 중 (갱신·확장)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ⑤ 기타 요청 사항 -->
+      <div class="field-group" id="field-notes">
+        <label>기타 요청 사항 (선택)</label>
+        <textarea placeholder="추가로 전달하고 싶은 내용을 입력해주세요."></textarea>
+      </div>
+
+      <!-- 약관 -->
+      <div style="margin-bottom:16px;">
+        <div class="terms-row">
+          <input type="checkbox" id="terms1">
+          <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
+        </div>
+        <div class="terms-row">
+          <input type="checkbox" id="terms2">
+          <span>[선택] 마케팅 정보 수신에 동의합니다.</span>
+        </div>
+      </div>
+
+      <!-- Submit notice -->
+      <div class="submit-notice">
+        <p>신청 후 영업일 기준 2~3일 이내에 담당자가 안내 드립니다.</p>
+        <p>1인 기업이거나 허위 정보가 포함된 경우, 별도 회신이 어려울 수 있습니다.</p>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-submit" onclick="handleSubmit(event)">제출하기</button>
+    </div>
+  </main>
+
+  <!-- Changelog panel -->
+  <aside class="changelog">
+    <h3>변경 사항 (MDWEB-762)</h3>
+
+    <div class="change-item">
+      <span class="change-tag added">추가</span>
+      <div class="change-title">신청 구분 필드</div>
+      <div class="change-desc">Corporate Studio/Agency · Educational Institution · Freelancer/Personal 중 선택. Freelancer/Personal 선택 시 Personal Trial 안내 배너 표시.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag added">추가</span>
+      <div class="change-title">트라이얼 신청 정보 섹션</div>
+      <div class="change-desc">주요 작업 분야(체크박스), 예상 도입 시기, MD 도입 현황을 구조화 라디오 버튼으로 수집.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag conditional">조건부</span>
+      <div class="change-title">China 조건부 필드</div>
+      <div class="change-desc">국가 = China 선택 시 WeChat ID + Mobile Number (+86) 필드 표시. 타 국가 선택 시 즉시 숨김·초기화.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag added">추가</span>
+      <div class="change-title">DNS 검증 (홈페이지)</div>
+      <div class="change-desc">제출 시 회사 홈페이지 도메인 DNS 조회. NXDOMAIN → 제출 블로킹. 타임아웃(3초) 시 통과.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag changed">변경</span>
+      <div class="change-title">요청 사항 필드 격하</div>
+      <div class="change-desc">기존 200자 자유 입력 → "기타 요청 사항 (선택)"으로 격하. 구조화 필드가 대부분 역할 대체.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag changed">변경</span>
+      <div class="change-title">폼 헤더 순서 변경</div>
+      <div class="change-desc">타이틀 → 안내 배너 순으로 재배치. 안내 배너에 Enterprise / Academic Institution 배지 추가.</div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function handleCountryChange(val) {
+    const banner = document.getElementById('china-banner');
+    const fields = document.getElementById('china-fields');
+    if (val === 'CN') {
+      banner.classList.add('visible');
+      fields.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+      fields.classList.remove('visible');
+      // 값 초기화
+      fields.querySelectorAll('input').forEach(i => i.value = '');
+    }
+  }
+
+  function handleOrgType(val) {
+    const banner = document.getElementById('freelancer-banner');
+    if (val === 'freelancer') {
+      banner.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('이 파일은 검토용입니다. 실제 제출 기능은 없습니다.');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise/Academics Trial Form — Spec Review</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ── */
+  .page-wrap {
+    display: flex;
+    gap: 0;
+    min-height: 100vh;
+    justify-content: center;
+  }
+
+  .main {
+    flex: none;
+    padding: 48px 40px;
+    width: 660px;
+  }
+
+  /* ── Page header ── */
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .page-header .breadcrumb {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+  }
+
+  .page-header .jira-link {
+    font-size: 12px;
+    color: #0052cc;
+    text-decoration: none;
+  }
+
+  .page-header .jira-link:hover { text-decoration: underline; }
+
+  /* ── Form page title (Image 1) ── */
+  .form-page-title {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .trial-info-box {
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  .trial-info-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .trial-info-item:last-child { margin-bottom: 0; }
+
+  .trial-check {
+    color: #e8622a;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Support box (Image 2) ── */
+  .support-box {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+
+  .support-box .support-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .support-box .support-body {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .support-box .support-confidential {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 12px;
+    color: #777;
+  }
+
+  .support-box .support-confidential .info-icon {
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #888;
+  }
+
+  /* terms note */
+  .terms-note {
+    font-size: 11px;
+    color: #999;
+    margin-top: 6px;
+    padding-left: 24px;
+  }
+
+  /* ── Form container ── */
+  .form-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 32px;
+    max-width: 560px;
+  }
+
+  .form-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* ── Info banner ── */
+  .info-banner {
+    background: #f0f0f0;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .badge {
+    font-size: 11px;
+    color: #666;
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
+    padding: 2px 10px;
+    background: #fff;
+  }
+
+  .info-banner .heading {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 3px;
+  }
+
+  .info-banner .sub {
+    font-size: 12px;
+    color: #999;
+  }
+
+  /* ── Fields ── */
+  .field-group {
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    height: 36px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #333;
+    background: #f5f5f5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="tel"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #999;
+    background: #fff;
+  }
+
+  textarea {
+    height: 80px;
+    padding: 8px 10px;
+    resize: vertical;
+  }
+
+  /* prefix input */
+  .input-with-prefix {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    background: #f5f5f5;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .input-with-prefix:focus-within {
+    border-color: #999;
+    background: #fff;
+  }
+
+  .input-prefix {
+    padding: 0 10px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 13px;
+    color: #666;
+    background: #ebebeb;
+    border-right: 1px solid #d1d1d1;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .input-with-prefix input {
+    border: none;
+    background: transparent;
+    height: 36px;
+    flex: 1;
+    padding: 0 10px;
+    font-size: 13px;
+    outline: none;
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 20px 0 12px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  /* ── Checkbox group ── */
+  .checkbox-group, .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checkbox-item, .radio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-item input[type="checkbox"],
+  .radio-item input[type="radio"] {
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    accent-color: #1a1a1a;
+    cursor: pointer;
+  }
+
+  .checkbox-item span, .radio-item span {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  /* ── Conditional banners ── */
+  .cond-banner {
+    display: none;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .cond-banner.info {
+    background: #f0f0f0;
+    border: 1px solid #d1d1d1;
+  }
+
+  .cond-banner.warning {
+    background: #fff9e6;
+    border: 1px solid #e5c84a;
+  }
+
+  .cond-banner.visible { display: block; }
+
+  .cond-banner .banner-head {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+  }
+
+  .cond-banner .banner-text { color: #555; }
+
+  .cond-banner .banner-cta {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #1a1a1a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cond-banner .banner-cta:hover { text-decoration: underline; }
+
+  /* ── Terms ── */
+  .terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .terms-row input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #1a1a1a;
+    cursor: pointer;
+  }
+
+  .terms-row span {
+    font-size: 13px;
+    color: #333;
+  }
+
+  /* ── Submit notice ── */
+  .submit-notice {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .submit-notice p + p { margin-top: 4px; }
+
+  /* ── CTA button ── */
+  .btn-submit {
+    width: 100%;
+    height: 48px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-submit:hover { background: #333; }
+
+  /* ── Spec annotations ── */
+  .spec-note {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .spec-note::before {
+    content: '✦';
+    font-size: 9px;
+    color: #ccc;
+  }
+
+  /* Hidden fields wrapper */
+  .cond-fields {
+    display: none;
+  }
+
+  .cond-fields.visible {
+    display: block;
+  }
+
+  /* ── Right panel (changelog) ── */
+  .changelog {
+    width: 300px;
+    flex-shrink: 0;
+    padding: 48px 24px;
+  }
+
+  .changelog h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+    margin-bottom: 16px;
+  }
+
+  .change-item {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+  }
+
+  .change-item .change-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .change-tag.added { background: #e6f4ea; color: #2e7d32; }
+  .change-tag.changed { background: #e3f0ff; color: #1565c0; }
+  .change-tag.removed { background: #fce8e8; color: #c62828; }
+  .change-tag.conditional { background: #fff8e1; color: #f57f17; }
+
+  .change-item .change-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .change-item .change-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* ── Use my email link ── */
+  .use-email-btn {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #e8622a;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .use-email-btn:hover:not(:disabled) { text-decoration: underline; }
+
+  .use-email-btn:disabled {
+    color: #bbb;
+    cursor: not-allowed;
+  }
+
+  /* state toggle (spec demo) */
+  .state-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .state-toggle label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+
+  @media (max-width: 1100px) {
+    .changelog { display: none; }
+  }
+
+  @media (max-width: 800px) {
+    .main { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Main form -->
+  <main class="main">
+    <!-- Image 1: Page title + badges + info box -->
+    <div class="form-page-title">Enterprise/Academics Trial</div>
+    <div class="badge-row" style="justify-content:center; margin-bottom:16px;">
+      <span class="badge">Enterprise</span>
+      <span class="badge">Academic Institution</span>
+    </div>
+    <div class="trial-info-box">
+      <div class="trial-info-item">
+        <span class="trial-check">✓</span>
+        <span>Enterprise trial is a service for Enterprise and Educational Institutions to try out the software before committing.</span>
+      </div>
+      <div class="trial-info-item">
+        <span class="trial-check">✓</span>
+        <span>During the trial, you have access to all of the features we provide from the latest version.</span>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-title">Enterprise/Academics Trial Application</div>
+
+      <!-- Name -->
+      <div class="field-group" id="field-name">
+        <label>Name *</label>
+        <input type="text" placeholder="">
+      </div>
+
+      <!-- Business Email -->
+      <div class="field-group" id="field-email">
+        <label>Business Email *</label>
+        <input type="email" id="emailInput" placeholder="">
+        <button class="use-email-btn" id="useEmailBtn">Use my email</button>
+      </div>
+
+      <!-- Job Title -->
+      <div class="field-group" id="field-jobtitle">
+        <label>Job Title</label>
+        <select>
+          <option value="">Select</option>
+          <option>3D Artist</option>
+          <option>Technical Artist</option>
+          <option>Art Director</option>
+          <option>Pipeline TD</option>
+          <option>Producer</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Country -->
+      <div class="field-group" id="field-country">
+        <label>Country *</label>
+        <select id="country-select" onchange="handleCountryChange(this.value)">
+          <option value="">Select</option>
+          <option value="KR">Korea</option>
+          <option value="US">United States</option>
+          <option value="JP">Japan</option>
+          <option value="CN">China</option>
+          <option value="UK">United Kingdom</option>
+          <option value="CA">Canada</option>
+          <option value="AU">Australia</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+
+      <!-- China conditional banner -->
+      <div class="cond-banner info" id="china-banner">
+        <div class="banner-head">Please provide additional information for China users.</div>
+      </div>
+
+      <!-- China conditional fields -->
+      <div class="cond-fields" id="china-fields">
+        <div class="field-group" id="field-china">
+          <label>WeChat ID *</label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="field-group">
+          <label>Mobile Number *</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">+86</span>
+            <input type="tel" placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Organization Name -->
+      <div class="field-group" id="field-company">
+        <label>Organization Name *</label>
+        <input type="text" placeholder="">
+      </div>
+
+      <!-- Organization Website -->
+      <div class="field-group" id="field-website">
+        <label>Organization Website *</label>
+        <input type="url" placeholder="https://">
+        <div class="spec-note">DNS validation on submit (NXDOMAIN → blocked)</div>
+      </div>
+
+      <!-- Industry -->
+      <div class="field-group" id="field-industry">
+        <label>Industry</label>
+        <select>
+          <option value="">Select</option>
+          <option>Game Development</option>
+          <option>VFX / Film</option>
+          <option>Animation</option>
+          <option>Fashion / Apparel</option>
+          <option>Architecture / Visualization</option>
+          <option>Education</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Section divider -->
+      <hr class="section-divider" id="section-trial">
+      <div class="section-label">Trial Application Details</div>
+
+      <!-- ① Organization Type — moved to top per 2026-05-18 decision -->
+      <div class="field-group" id="field-orgtype">
+        <label>Organization Type *</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="org-type" value="corporate">
+            <span>Corporate Studio / Agency</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="org-type" value="educational">
+            <span>Educational Institution</span>
+          </label>
+          <!-- Freelancer / Personal option removed per 2026-05-18 decision -->
+        </div>
+        <!-- Personal Trial notice — always visible (not conditional) per 2026-05-18 decision -->
+        <div class="cond-banner info visible" id="personal-trial-notice" style="margin-top:10px;">
+          <div class="banner-text">For Freelancing or individual use, please redirect to Personal Trial</div>
+          <a href="#" class="banner-cta" id="personal-trial-link">Apply for Personal Trial →</a>
+          <!-- GA: enterprise_trial_personal_link_click on click -->
+        </div>
+        <div class="spec-note">GA event: <code>enterprise_trial_personal_link_click</code> — "Apply for Personal Trial" 클릭 시</div>
+      </div>
+
+      <!-- ② Trial Purpose -->
+      <div class="field-group" id="field-usecase">
+        <label>Trial Purpose *</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Character Costume Modeling</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Simulation</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Animation</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Background & Environment Art</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Pipeline Compatibility Testing (Maya, Unreal, etc.)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox"><span>Other</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ③ Expected Adoption Timeline -->
+      <div class="field-group" id="field-timeline">
+        <label>Expected Adoption Timeline *</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>Within 1 month</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>1–3 months</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>3–6 months</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="timeline"><span>Just exploring features</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ④ Current MD Usage -->
+      <div class="field-group" id="field-mdusage">
+        <label>Current MD Usage *</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>Considering initial adoption</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>Have individual license users on team, considering enterprise upgrade</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>Evaluating for another team or project</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="md-usage"><span>Currently using enterprise license (renewal or expansion)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ⑤ Additional Requests -->
+      <div class="field-group" id="field-notes">
+        <label>Additional Requests (Optional)</label>
+        <textarea placeholder="Enter any additional information you'd like to share."></textarea>
+      </div>
+
+      <!-- Image 2: Support box -->
+      <div class="support-box">
+        <div class="support-title">Helping You Get the Best Support</div>
+        <div class="support-body">We may be unable to respond if your corporate information cannot be verified or is insufficient.</div>
+        <div class="support-confidential">
+          <span class="info-icon">ⓘ</span>
+          <span>Information you provided will be kept confidential.</span>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div style="margin-bottom:16px;">
+        <div class="terms-row">
+          <input type="checkbox" id="terms1">
+          <span>I understand that a representative will follow up by email after verification. If information cannot be verified, we may not be able to proceed.*</span>
+        </div>
+        <div class="terms-row">
+          <input type="checkbox" id="terms2">
+          <span>I would like to receive more information about Marvelous Designer events, updates, special promotions, and other offers. (optional)</span>
+        </div>
+        <div class="terms-note">*You may withdraw your consent at any time.</div>
+      </div>
+
+      <!-- Submit notice -->
+      <div class="submit-notice">
+        <p>A representative will follow up within 2–3 business days after submission.</p>
+        <p>If you're a sole proprietor or if any information is inaccurate, we may not be able to follow up.</p>
+      </div>
+
+      <!-- Submit -->
+      <!-- GA: enterprise_trial_submit on click -->
+      <button class="btn-submit" id="submitBtn" onclick="handleSubmit(event)">Submit</button>
+      <div class="spec-note">GA event: <code>enterprise_trial_submit</code> — Submit 버튼 클릭 시</div>
+    </div>
+  </main>
+
+  <!-- Changelog panel -->
+  <aside class="changelog">
+    <h3>Changes (MDWEB-762)</h3>
+
+    <div class="change-item">
+      <span class="change-tag added">Added</span>
+      <div class="change-title">Organization Type Field</div>
+      <div class="change-desc">Select from Corporate Studio/Agency · Educational Institution. Moved to top of Trial Application Details section. Personal Trial notice always shown below (not conditional). Freelancer/Personal option removed.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag added">Added</span>
+      <div class="change-title">GA Events (Spec)</div>
+      <div class="change-desc">enterprise_trial_personal_link_click: "Apply for Personal Trial" 클릭 시. enterprise_trial_submit: Submit 버튼 클릭 시. (Impl: Arsen)</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag added">Added</span>
+      <div class="change-title">Trial Application Details Section</div>
+      <div class="change-desc">Structured collection of Trial Purpose (checkboxes), Expected Adoption Timeline, and Current MD Usage via radio buttons.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag conditional">Conditional</span>
+      <div class="change-title">China Conditional Fields</div>
+      <div class="change-desc">Shows WeChat ID + Mobile Number (+86) when Country = China. Hides and clears fields when another country is selected.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag added">Added</span>
+      <div class="change-title">DNS Validation (Company Website)</div>
+      <div class="change-desc">DNS lookup for company website domain on submit. NXDOMAIN → blocks submission. Passes if timeout (3s) occurs.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag changed">Changed</span>
+      <div class="change-title">Additional Requests Field Demoted</div>
+      <div class="change-desc">Original 200-char free-text field demoted to "Additional Requests (Optional)". Structured fields now handle most of its role.</div>
+    </div>
+
+    <div class="change-item">
+      <span class="change-tag changed">Changed</span>
+      <div class="change-title">Form Header Order Changed</div>
+      <div class="change-desc">Reordered to Title → Info Banner. Info banner now includes Enterprise / Academic Institution badges.</div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function handleCountryChange(val) {
+    const banner = document.getElementById('china-banner');
+    const fields = document.getElementById('china-fields');
+    if (val === 'CN') {
+      banner.classList.add('visible');
+      fields.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+      fields.classList.remove('visible');
+      fields.querySelectorAll('input').forEach(i => i.value = '');
+    }
+  }
+
+  // handleOrgType removed — Personal Trial notice is now always visible (2026-05-18)
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // GA: enterprise_trial_submit
+    console.log('[GA] enterprise_trial_submit');
+    alert('This file is for review only. No actual submission.');
+  }
+
+  // GA: enterprise_trial_personal_link_click
+  document.getElementById('personal-trial-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log('[GA] enterprise_trial_personal_link_click');
+  });
+
+  // ── Use my email ──
+  const MOCK_EMAIL = 'user@company.com';
+  const useEmailBtn = document.getElementById('useEmailBtn');
+  const emailInput = document.getElementById('emailInput');
+
+  function applyUserState(isMember) {
+    if (isMember) {
+      useEmailBtn.disabled = false;
+      useEmailBtn.title = '';
+    } else {
+      useEmailBtn.disabled = true;
+      useEmailBtn.title = 'Available after login';
+    }
+  }
+
+  useEmailBtn.addEventListener('click', function () {
+    emailInput.value = MOCK_EMAIL;
+    emailInput.focus();
+  });
+
+  // Default: member state (logged in)
+  applyUserState(true);
+</script>
+
+</body>
+</html>

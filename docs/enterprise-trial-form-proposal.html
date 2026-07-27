@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>기업 체험 서비스 — 개선안 데모</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    /* ── 상단 레이블 바 ── */
+    .proposal-bar {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .proposal-bar strong { font-size: 14px; color: #f0f0f0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: default;
+    }
+    .badge-a { background: #2563eb20; color: #60a5fa; border: 1px solid #2563eb40; }
+    .badge-b { background: #d9770620; color: #fb923c; border: 1px solid #d9770640; }
+    .badge-c { background: #16a34a20; color: #4ade80; border: 1px solid #16a34a40; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .badge-a .badge-dot { background: #60a5fa; }
+    .badge-b .badge-dot { background: #fb923c; }
+    .badge-c .badge-dot { background: #4ade80; }
+
+    /* ── 폼 컨테이너 ── */
+    .page {
+      display: flex;
+      justify-content: center;
+      padding: 48px 24px 80px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .info-box {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #444;
+    }
+    .info-box p { display: flex; align-items: flex-start; gap: 8px; }
+    .info-box p + p { margin-top: 6px; }
+    .check-icon { color: #22c55e; flex-shrink: 0; margin-top: 2px; }
+
+    /* ── 필드 그룹 ── */
+    .field-group { margin-bottom: 20px; position: relative; }
+    .field-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .required { color: #f59e0b; font-size: 14px; }
+    .proposal-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .tag-a { background: #dbeafe; color: #1d4ed8; }
+    .tag-b { background: #ffedd5; color: #c2410c; }
+    .tag-c { background: #dcfce7; color: #15803d; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #222;
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #22c55e;
+    }
+    input::placeholder, textarea::placeholder { color: #bbb; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+    textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
+
+    /* ── 이메일 필드 상태 ── */
+    .email-warning {
+      font-size: 12px;
+      color: #f59e0b;
+      margin-top: 5px;
+      display: none;
+    }
+    input.input-warn { border-color: #f59e0b; }
+    input.input-ok { border-color: #22c55e; }
+
+    /* ── 중국 조건부 필드 ── */
+    .china-fields {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      padding: 16px;
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .china-fields.visible { display: flex; }
+    .china-notice {
+      font-size: 12.5px;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    /* ── 구분선 ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 28px 0;
+    }
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── 체크박스 ── */
+    .checkbox-group { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; }
+    .checkbox-group input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: #22c55e; cursor: pointer; }
+    .checkbox-label { font-size: 13px; color: #555; line-height: 1.5; }
+
+    /* ── 제출 버튼 ── */
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #ccc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: not-allowed;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .submit-btn.active {
+      background: #222;
+      cursor: pointer;
+    }
+    .submit-btn.active:hover { background: #444; }
+
+    /* ── 이메일 차단 모달 ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-icon { font-size: 36px; text-align: center; margin-bottom: 16px; }
+    .modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+    .modal p { font-size: 13.5px; color: #555; line-height: 1.7; margin-bottom: 20px; }
+    .modal-actions { display: flex; flex-direction: column; gap: 10px; }
+    .btn-primary {
+      padding: 12px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-primary:hover { background: #444; }
+    .btn-secondary {
+      padding: 12px;
+      background: transparent;
+      color: #888;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-secondary:hover { border-color: #aaa; color: #555; }
+
+    /* ── 개인 이메일 도메인 목록 ── */
+    /* (JS에서 참조) */
+  </style>
+</head>
+<body>
+
+<!-- 상단 설명 바 -->
+<div class="proposal-bar">
+  <strong>개선안 데모</strong>
+  <span class="badge badge-a"><span class="badge-dot"></span>A — 드롭다운 전환</span>
+  <span class="badge badge-b"><span class="badge-dot"></span>B — 이메일 도메인 검증</span>
+  <span class="badge badge-c"><span class="badge-dot"></span>C — 중국 조건부 필드</span>
+</div>
+
+<div class="page">
+  <div class="card">
+    <h1>기업 체험 서비스</h1>
+
+    <div class="info-box">
+      <p><span class="check-icon">✓</span> 기업 체험 프로그램은 기업 및 교육 기관이 소프트웨어를 구입하기 전에 사용해볼 수 있는 서비스입니다.</p>
+      <p><span class="check-icon">✓</span> 체험판 기간 동안 최신 버전의 모든 기능을 이용하실 수 있습니다.</p>
+    </div>
+
+    <!-- 이름 -->
+    <div class="field-group">
+      <div class="field-label">이름 <span class="required">*</span></div>
+      <input type="text" placeholder="이름을 입력해주세요." />
+    </div>
+
+    <!-- 업무용 이메일 — 개선안 B -->
+    <div class="field-group">
+      <div class="field-label">
+        업무용 이메일 <span class="required">*</span>
+        <span class="proposal-tag tag-b">B</span>
+      </div>
+      <input type="email" id="emailInput" placeholder="이메일을 입력해주세요."
+             onblur="checkEmailDomain(this)" oninput="resetEmailState(this)" />
+      <div class="email-warning" id="emailWarning">
+        ⚠️ 개인 이메일이 감지됐습니다. 업무용 이메일로 입력해 주세요.
+      </div>
+    </div>
+
+    <!-- 직무 -->
+    <div class="field-group">
+      <div class="field-label">직무</div>
+      <select>
+        <option>Others</option>
+        <option>Artist / Designer</option>
+        <option>Technical Director</option>
+        <option>Producer / Manager</option>
+        <option>Developer / Engineer</option>
+        <option>Researcher / Educator</option>
+      </select>
+    </div>
+
+    <!-- 국가 — 개선안 C -->
+    <div class="field-group">
+      <div class="field-label">
+        국가 <span class="required">*</span>
+        <span class="proposal-tag tag-c">C</span>
+      </div>
+      <select id="countrySelect" onchange="handleCountryChange(this)">
+        <option value="">국가를 선택해주세요.</option>
+        <option value="south-korea" selected>South Korea</option>
+        <option value="china">China</option>
+        <option value="usa">United States</option>
+        <option value="japan">Japan</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <!-- 중국 조건부 필드 — 개선안 C -->
+    <div class="china-fields" id="chinaFields">
+      <div class="china-notice">
+        🇨🇳 <strong>중국 지역 추가 정보</strong> — 원활한 커뮤니케이션을 위해 아래 항목 중 하나 이상을 입력해주세요.
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <div class="field-label">위챗 ID (WeChat ID)</div>
+        <input type="text" placeholder="위챗 ID를 입력해주세요." />
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <div class="field-label">핸드폰 번호 (Mobile Number)</div>
+        <input type="tel" placeholder="+86 000 0000 0000" />
+      </div>
+    </div>
+
+    <!-- 회사명 -->
+    <div class="field-group">
+      <div class="field-label">회사명 <span class="required">*</span></div>
+      <input type="text" placeholder="회사명을 입력해주세요." />
+    </div>
+
+    <!-- 회사 홈페이지 -->
+    <div class="field-group">
+      <div class="field-label">회사 홈페이지 <span class="required">*</span></div>
+      <input type="url" placeholder="회사 홈페이지 주소를 입력해주세요." />
+    </div>
+
+    <!-- 산업 분류 -->
+    <div class="field-group">
+      <div class="field-label">산업 분류</div>
+      <select>
+        <option>Others</option>
+        <option>Game / Interactive</option>
+        <option>VFX / Film / Animation</option>
+        <option>Fashion / Apparel</option>
+        <option>Architecture / Product Viz</option>
+        <option>Education / Research</option>
+      </select>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- 개선안 A — 드롭다운 섹션 -->
+    <div class="section-title">
+      트라이얼 신청 정보
+      <span class="proposal-tag tag-a" style="font-size:10px; margin-left:6px;">개선안 A</span>
+    </div>
+
+    <!-- A-1: 트라이얼 목적 -->
+    <div class="field-group">
+      <div class="field-label">
+        트라이얼 신청 목적 <span class="required">*</span>
+        <span class="proposal-tag tag-a">A</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; padding: 14px; background:#f9f9f9; border-radius:8px; border: 1.5px solid #e8e8e8;">
+        <label style="display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer;">
+          <input type="checkbox" style="width:15px;height:15px;accent-color:#222;" /> 의상 모델링 기능 테스트
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer;">
+          <input type="checkbox" style="width:15px;height:15px;accent-color:#222;" /> 애니메이션 기능 테스트
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer;">
+          <input type="checkbox" style="width:15px;height:15px;accent-color:#222;" /> 시뮬레이션 기능 테스트
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer;">
+          <input type="checkbox" style="width:15px;height:15px;accent-color:#222;" /> 파이프라인 호환성 테스트 (Maya, Unreal 등)
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; font-size:13.5px; cursor:pointer;">
+          <input type="checkbox" style="width:15px;height:15px;accent-color:#222;" /> 기타 (Other)
+        </label>
+      </div>
+    </div>
+
+    <!-- A-2: 예상 도입 시기 -->
+    <div class="field-group">
+      <div class="field-label">
+        예상 도입 시기 <span class="required">*</span>
+        <span class="proposal-tag tag-a">A</span>
+      </div>
+      <select>
+        <option value="">선택해주세요.</option>
+        <option>1개월 이내 (Within 1 month)</option>
+        <option>1~3개월 이내 (1–3 months)</option>
+        <option>3~6개월 이내 (3–6 months)</option>
+        <option>단순 기능 검토 (Just browsing)</option>
+      </select>
+    </div>
+
+    <!-- A-3: MD 사용 경험 -->
+    <div class="field-group">
+      <div class="field-label">
+        Marvelous Designer 사용 경험 <span class="required">*</span>
+        <span class="proposal-tag tag-a">A</span>
+      </div>
+      <select>
+        <option value="">선택해주세요.</option>
+        <option>처음 사용 / 신규 검토 (First-time user)</option>
+        <option>개인/학생 버전 사용 경험 있음</option>
+        <option>기업용 구버전 사용 경험 있음</option>
+      </select>
+    </div>
+
+    <!-- A-4: 기타 요청 사항 (선택) -->
+    <div class="field-group">
+      <div class="field-label">
+        기타 요청 사항
+        <span style="font-size:12px; color:#aaa; font-weight:400;">(선택)</span>
+        <span class="proposal-tag tag-a">A</span>
+      </div>
+      <textarea placeholder="추가로 전달하고 싶은 내용이 있으면 자유롭게 입력해주세요."></textarea>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- 체크박스 -->
+    <div class="checkbox-group">
+      <input type="checkbox" id="agreeCheck" onchange="updateSubmitBtn()" />
+      <label class="checkbox-label" for="agreeCheck">
+        제출하신 정보가 담당 매니저에 의해 확인되면 안내 이메일을 보내드리겠습니다. 정보가 확인되지 않거나 부정확한 경우, 체험 계정 조율 단계로 진행할 수 없습니다. <span class="required">*</span>
+      </label>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="marketingCheck" />
+      <label class="checkbox-label" for="marketingCheck">
+        마블러스 디자이너와 관련된 이벤트, 업데이트, 특별 프로모션, 제안 등 더 많은 정보를 받고 싶습니다. <span style="color:#aaa;">(선택 사항)</span><br />
+        <span style="font-size:12px; color:#aaa;">*구독은 언제든지 취소 가능합니다.</span>
+      </label>
+    </div>
+
+    <button class="submit-btn" id="submitBtn">제출하기</button>
+  </div>
+</div>
+
+<!-- 이메일 차단 모달 — 개선안 B -->
+<div class="modal-overlay" id="emailModal">
+  <div class="modal">
+    <div class="modal-icon">📧</div>
+    <h2>개인 이메일이 감지됐어요</h2>
+    <p>
+      기업용 트라이얼은 기업·기관의 도입 검토용으로만 제공됩니다.<br /><br />
+      학생 또는 개인 아티스트이신 경우, 아래 버튼을 클릭해 개인/학생용 라이선스 페이지로 이동해 주세요.
+    </p>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="goToIndividualPlan()">개인/학생 플랜 보러 가기 →</button>
+      <button class="btn-secondary" onclick="closeModal()">업무용 이메일로 다시 입력할게요</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PERSONAL_DOMAINS = [
+    'gmail.com','yahoo.com','yahoo.co.kr','naver.com','daum.net','hanmail.net',
+    'hotmail.com','hotmail.co.kr','outlook.com','icloud.com','me.com','mac.com',
+    'kakao.com','nate.com','msn.com','live.com','protonmail.com','tutanota.com'
+  ];
+
+  function checkEmailDomain(input) {
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) return;
+    const domain = email.split('@')[1]?.toLowerCase();
+    if (domain && PERSONAL_DOMAINS.includes(domain)) {
+      input.classList.add('input-warn');
+      document.getElementById('emailWarning').style.display = 'block';
+      openModal();
+    } else if (domain) {
+      input.classList.add('input-ok');
+    }
+  }
+
+  function resetEmailState(input) {
+    input.classList.remove('input-warn', 'input-ok');
+    document.getElementById('emailWarning').style.display = 'none';
+  }
+
+  function openModal() {
+    document.getElementById('emailModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('emailModal').classList.remove('open');
+    const input = document.getElementById('emailInput');
+    input.value = '';
+    input.classList.remove('input-warn', 'input-ok');
+    document.getElementById('emailWarning').style.display = 'none';
+    input.focus();
+  }
+
+  function goToIndividualPlan() {
+    alert('→ /solutions/personal 페이지로 이동 (데모)');
+    closeModal();
+  }
+
+  function handleCountryChange(select) {
+    const chinaFields = document.getElementById('chinaFields');
+    if (select.value === 'china') {
+      chinaFields.classList.add('visible');
+    } else {
+      chinaFields.classList.remove('visible');
+    }
+  }
+
+  function updateSubmitBtn() {
+    const agreed = document.getElementById('agreeCheck').checked;
+    const btn = document.getElementById('submitBtn');
+    btn.classList.toggle('active', agreed);
+  }
+</script>
+</body>
+</html>
