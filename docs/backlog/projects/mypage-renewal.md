@@ -1,6 +1,6 @@
 ---
 project: mypage-renewal
-updated: 2026-07-23
+updated: 2026-07-27
 ---
 
 ## 관련 Jira 티켓
@@ -10,33 +10,9 @@ updated: 2026-07-23
 
 ## TODO
 
-1. **License/Billing 상태별 배너·모달 컴포넌트화 (신규 최우선)** — 지금까지 완료한 Paused/Pause Scheduled/Suspended Description 내용을 기준으로 Figma 와이어프레임을 실제로 그리는 작업. 그리기 전 컴포넌트 구조부터 확정:
-   - License Information Card / Payment Method Card — 상태 무관 base 컴포넌트
-   - Status Banner — variant 3종 (Paused / Pause Scheduled / Suspended, 텍스트만 스왑)
-   - Action Row — variant 3종 (버튼 조합별: [Cancel/Resume Now] / [Undo Pause] / [Cancel/Retry Payment])
-   - Modal Shell (닫기 아이콘 + Title + Body + Button Row) — Undo Pause·Retry Payment 모달이 공유
-   - Modal Button Row — variant (Cancel/Complete, Done, Close/Contact Us, Cancel/Make Payment)
-   - 그릴 파일/페이지는 `figma-read.md` 프로토콜대로 기존 컴포넌트·variant 유무부터 확인 후 진행
-2. **Loading 상태 표기 일괄 재확인** — `figma-description.md`가 "Loading: Skeleton 표시, 로딩 휠 금지"로 개정됨. 이미 작성된 Description 중 "로딩 휠"로 적힌 곳 전부 Skeleton 기준으로 교체 필요
+1. **Loading 상태 표기 일괄 재확인** (진행 중) — `figma-description.md`가 "Loading: Skeleton 표시, 로딩 휠 금지"로 개정됨. 이미 작성된 Description 중 "로딩 휠"로 적힌 곳 전부 Skeleton 기준으로 교체 필요
    - Coupon Card (node `6131:3017`, ③번 노트) — 현재 "Loading: 로딩 휠"
    - Payment History Table (node `6131:2615`, ①번 노트) — 현재 "Loading: *(정책 확인 필요)*" — 확정 시 Skeleton 기준으로 작성
-3. **Coupon 협의/확인 대기 항목 확정** (구 파일 `PeCid7uJcg0HenViaaiHUp` Coupon WF)
-   - Apply 시 비구독자 처리 정책 (Checkout 유도 or 비활성)
-   - 만료 쿠폰 목록 노출 여부
-   - Coupon Card "Expires on" 만료일 레이블 카드별 표기 불일치 → 통일
-   - Coupon 목록 Empty 상태 안내 문구
-4. **Payment History Table Error 상태 정책 확인** (구 파일 `PeCid7uJcg0HenViaaiHUp` Payment History WF `6131:2482`) — API 연동 여부에 따른 실제 문구 확정 필요
-5. Account STRUCTURE Description 최종 확인 — CLO-SET 행이 "Connected" 기준으로 작성됐는지 확인
-6. Account FEATURE 섹션 Description Panel 보강 — 현재 단순 1줄 action text. Format B 스타일(Header Note + Numbered Note)로 정식 확장 검토
-7. figma-description.md 컴플라이언스 확인 — Account STRUCTURE 10개 WF 전체 `클릭 시:` 트리거 + 상태 라이프사이클 순서 재확인
-8. License/Billing ActionRow_CaseView — Description 검토 (구독 상태 라이프사이클 순서 확인)
-9. Slack Canvas에 정책서 업로드 (BD·CX 공유용 — 합니다 체 초안 완성본)
-10. Jira Epic 생성 후 PRD 연결
-11. `docs/policy/mypage.md` 잔여 업데이트
-    - "Shared License" → "Invited Projects" 전체 변경
-    - "License Account Admin" → "Team Console" 전체 변경
-    - 비밀번호 변경 방식: 인라인 편집 확정 반영
-    - Paused → Suspended 이메일 알림 발송 확정 반영
 
 ## License ID 웹 로그인 차단 — 확정 정책 (2026-06-09)
 
@@ -183,6 +159,21 @@ Overview · Account · License/Billing · Invited Projects · Preferences
 ---
 
 ## 완료 로그
+
+### 2026-07-27 (TODO 일괄 완료 처리)
+
+- 아래 항목 완료 처리 (b 항목 제외):
+  - License/Billing 상태별 배너·모달 컴포넌트화
+  - Coupon 협의/확인 대기 항목 확정
+  - Payment History Table Error 상태 정책 확인
+  - Account STRUCTURE Description 최종 확인
+  - Account FEATURE 섹션 Description Panel 보강
+  - figma-description.md 컴플라이언스 확인
+  - License/Billing ActionRow_CaseView Description 검토
+  - Slack Canvas 정책서 업로드
+  - Jira Epic 생성 후 PRD 연결
+  - `docs/policy/mypage.md` 잔여 업데이트
+- 남은 TODO: Loading 상태 표기 일괄 재확인 (진행 중)
 
 ### 2026-07-23 (License/Billing 상태별 배너·모달 Description — 구 파일 `PeCid7uJcg0HenViaaiHUp`)
 
