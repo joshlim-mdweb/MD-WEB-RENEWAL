@@ -1,25 +1,42 @@
 ---
 project: mypage-renewal
-updated: 2026-06-09
+updated: 2026-07-23
 ---
 
 ## 관련 Jira 티켓
 
 - MDWEB (Epic 미정) — My Page 리뉴얼 5탭 재설계 (진행 중)
+- 없음 (Coupon/Payment History/License-Billing 상태별 Description 작업 — 명시적 요청 전 Jira 생성 금지)
 
 ## TODO
 
-1. Account STRUCTURE Description 최종 확인 — CLO-SET 행이 "Connected" 기준으로 작성됐는지 확인
-2. Account FEATURE 섹션 Description Panel 보강 — 현재 단순 1줄 action text. Format B 스타일(Header Note + Numbered Note)로 정식 확장 검토
-3. figma-description.md 컴플라이언스 확인 — Account STRUCTURE 10개 WF 전체 `클릭 시:` 트리거 + 상태 라이프사이클 순서 재확인
-4. License/Billing ActionRow_CaseView — Description 검토 (구독 상태 라이프사이클 순서 확인)
-5. Slack Canvas에 정책서 업로드 (BD·CX 공유용 — 합니다 체 초안 완성본)
-6. Jira Epic 생성 후 PRD 연결
-7. `docs/policy/mypage.md` 잔여 업데이트
-   - "Shared License" → "Invited Projects" 전체 변경
-   - "License Account Admin" → "Team Console" 전체 변경
-   - 비밀번호 변경 방식: 인라인 편집 확정 반영
-   - Paused → Suspended 이메일 알림 발송 확정 반영
+1. **License/Billing 상태별 배너·모달 컴포넌트화 (신규 최우선)** — 지금까지 완료한 Paused/Pause Scheduled/Suspended Description 내용을 기준으로 Figma 와이어프레임을 실제로 그리는 작업. 그리기 전 컴포넌트 구조부터 확정:
+   - License Information Card / Payment Method Card — 상태 무관 base 컴포넌트
+   - Status Banner — variant 3종 (Paused / Pause Scheduled / Suspended, 텍스트만 스왑)
+   - Action Row — variant 3종 (버튼 조합별: [Cancel/Resume Now] / [Undo Pause] / [Cancel/Retry Payment])
+   - Modal Shell (닫기 아이콘 + Title + Body + Button Row) — Undo Pause·Retry Payment 모달이 공유
+   - Modal Button Row — variant (Cancel/Complete, Done, Close/Contact Us, Cancel/Make Payment)
+   - 그릴 파일/페이지는 `figma-read.md` 프로토콜대로 기존 컴포넌트·variant 유무부터 확인 후 진행
+2. **Loading 상태 표기 일괄 재확인** — `figma-description.md`가 "Loading: Skeleton 표시, 로딩 휠 금지"로 개정됨. 이미 작성된 Description 중 "로딩 휠"로 적힌 곳 전부 Skeleton 기준으로 교체 필요
+   - Coupon Card (node `6131:3017`, ③번 노트) — 현재 "Loading: 로딩 휠"
+   - Payment History Table (node `6131:2615`, ①번 노트) — 현재 "Loading: *(정책 확인 필요)*" — 확정 시 Skeleton 기준으로 작성
+3. **Coupon 협의/확인 대기 항목 확정** (구 파일 `PeCid7uJcg0HenViaaiHUp` Coupon WF)
+   - Apply 시 비구독자 처리 정책 (Checkout 유도 or 비활성)
+   - 만료 쿠폰 목록 노출 여부
+   - Coupon Card "Expires on" 만료일 레이블 카드별 표기 불일치 → 통일
+   - Coupon 목록 Empty 상태 안내 문구
+4. **Payment History Table Error 상태 정책 확인** (구 파일 `PeCid7uJcg0HenViaaiHUp` Payment History WF `6131:2482`) — API 연동 여부에 따른 실제 문구 확정 필요
+5. Account STRUCTURE Description 최종 확인 — CLO-SET 행이 "Connected" 기준으로 작성됐는지 확인
+6. Account FEATURE 섹션 Description Panel 보강 — 현재 단순 1줄 action text. Format B 스타일(Header Note + Numbered Note)로 정식 확장 검토
+7. figma-description.md 컴플라이언스 확인 — Account STRUCTURE 10개 WF 전체 `클릭 시:` 트리거 + 상태 라이프사이클 순서 재확인
+8. License/Billing ActionRow_CaseView — Description 검토 (구독 상태 라이프사이클 순서 확인)
+9. Slack Canvas에 정책서 업로드 (BD·CX 공유용 — 합니다 체 초안 완성본)
+10. Jira Epic 생성 후 PRD 연결
+11. `docs/policy/mypage.md` 잔여 업데이트
+    - "Shared License" → "Invited Projects" 전체 변경
+    - "License Account Admin" → "Team Console" 전체 변경
+    - 비밀번호 변경 방식: 인라인 편집 확정 반영
+    - Paused → Suspended 이메일 알림 발송 확정 반영
 
 ## License ID 웹 로그인 차단 — 확정 정책 (2026-06-09)
 
@@ -166,6 +183,31 @@ Overview · Account · License/Billing · Invited Projects · Preferences
 ---
 
 ## 완료 로그
+
+### 2026-07-23 (License/Billing 상태별 배너·모달 Description — 구 파일 `PeCid7uJcg0HenViaaiHUp`)
+
+- **Paused 상태** (node `6487:2096`) — ① Pause 안내 배너 ② Resume Now 버튼 ③ Cancel Subscription 버튼, 3개 노트로 정리
+- **Resume Subscription 풀페이지** (node `6538:3597`) — 스크린샷 기반 신규 작성. 기존 무관한 플레이스홀더(Team Console 관련) 5개 카드 전체 교체 → ① Account 뒤로가기 ② Page Context ③ Resume Summary Card ④ Terms List ⑤ Resume Subscription 버튼
+- **Pause Scheduled 상태** (node `6464:2160`) — ① Pause Scheduled 안내 배너 ② Undo Pause 버튼 + 모달 2단계(③④ → 이후 **Undo Pause 1 / Undo Pause 2**로 개명, 확인/완료 구분은 본문 첫 줄에 명시)
+- **Suspended 상태** (node `6548:3875`) — ① Suspended 안내 배너 ② Retry Payment 버튼 + 모달 3단계를 **2-1(확인) / 2-2(완료) / 2-3(실패)** 서브 넘버링으로 구성. 실패는 잔액 부족·일반 오류(Error Code 400) 2케이스를 `실패 케이스:` 블록 하나로 통합
+- **신규 확정 컨벤션 — 모달 서브 넘버링**: 버튼 하나에서 갈라지는 다단계 모달(확인→완료/실패)은 부모 번호에 `-1/-2/-3` 서브 번호를 붙여 그룹으로 묶는다. 실패 변형이 여러 개라도 트리거가 같으면 하나의 서브 노트에서 `실패 케이스:` 블록으로 통합 — 매 실패마다 별도 노트 분리하지 않는다
+- native 불릿 + screenshot 검증 전 카드 완료. 일부 화면은 진입 경로(Resume Now → Resume Subscription 확인 화면)가 실제 정책과 맞는지 `*(정책 확인 필요)*` 플래그 유지
+- **다음 단계로 합의**: 지금까지의 상태별 Description을 기반으로 컴포넌트 구조(License Info Card / Payment Method Card / Status Banner / Action Row / Modal Shell) 식별 완료 — 실제 Figma 와이어프레임 드로잉은 다음 세션 TODO 1순위로 이관
+
+### 2026-07-16 (Coupon Description — Add Coupon 모달 내용 보강)
+
+- 스크린샷 재확인 결과 ① Add Coupon Button 노트에 모달 내부 동작(입력 필드 상태/Add 버튼 활성화/성공·실패 케이스)이 누락된 것 발견 → **② Add Coupon 모달** Numbered Note 신규 삽입 (기존 ②③④는 ③④⑤로 renumber). 총 5개 Numbered Note로 재구성 완료 (node `6131:3017`)
+- Add Coupon 모달(`6156:2834`)에 남아있던 출처 불명 문구 `"Your subscription will end on {endDate}."`는 Josh가 이미 Figma에서 직접 `"This coupon code is invalid."`로 교체 완료 확인 — Description 작업은 불필요해짐 (Figma 화면 삭제 작업 스킵)
+- native 불릿 적용 + Description List·전체 WF screenshot 검증 완료
+- TODO 1번에서 `Subscription End Notice` 항목 해결 완료로 제거 (Josh가 직접 수정)
+
+### 2026-07-16 (구 MyPage 파일 `PeCid7uJcg0HenViaaiHUp` — Coupon + Payment History Description 삽입)
+
+- **Coupon 목록 Description 삽입 완료** (node `6131:3016`, WF `6131:2935`) — Numbered Note 4개: ① Add Coupon Button ② Coupon Card ③ Apply Button ④ Already Subscribed 안내 모달. 협의 대기 5항목은 `*(협의 필요)*`/`*(정책 확인 필요)*` 플래그로 카드 내 반영. native 불릿 적용 + screenshot 검증 완료.
+- Add Coupon 모달(`6156:2807`)·에러 프레임(`6156:2834`, `6218:4329`)은 Description List가 없는 FEATURE형 모달 — 별도 Description 삽입 대상 아님 확인. Already Subscribed 안내 모달은 Figma 화면 자체가 아직 그려지지 않음.
+- **Payment History Description 삽입 완료** (node `6131:2615`, WF `6131:2482`) — 기존 잔여 초안(테이블/Paid/View PDF 한 카드에 혼재) 제거 후 Numbered Note 3개로 재작성: ① Payment History Table ② Status Badge ③ View PDF. Empty 상태("No payment history" / "Your payment history will appear here.") 반영. native 불릿 적용 + screenshot 검증 완료.
+- **신규 규칙 확정 — 기본 토스트 문구 고정값**: 에러 "Something went wrong. Please try again." / 성공(데이터 변경) "Changes have been saved." → 특정 문구 미확정 시 `*(정책 확인 필요)*` 대신 이 기본값 사용. `~/.claude/rules/figma-description.md` 섹션 4.6 반영 + 메모리 `feedback_default_toast_copy.md` 저장.
+- `docs/backlog/projects/coupon-description.md` 내용을 이 파일로 통합 후 삭제 (프로젝트 파일 일원화)
 
 ### 2026-06-09 (Account FEATURE 섹션 — 4개 섹션 13 WF 생성)
 

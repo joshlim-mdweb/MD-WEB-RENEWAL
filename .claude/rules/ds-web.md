@@ -74,10 +74,13 @@ className="text-sm" style={{ color: COLOR.TEXT_PRIMARY }}
 
 ## 로딩 상태
 
-- 데이터 로딩 → Skeleton (형태 유지)
-- 액션 로딩 → Button `loading` prop
-- 페이지 전환 → `loading.tsx` Skeleton (Next.js Suspense)
-- 전체 화면 스피너 단독 사용 금지
+콘텐츠 로딩(페이지 · 컴포넌트)은 **전 범위 Skeleton으로 통일한다. 로딩 휠(스피너)은 콘텐츠 로딩에 쓰지 않는다.**
+
+- 페이지 로딩 → `loading.tsx` Skeleton (Next.js Suspense)
+- 컴포넌트/섹션 로딩 → Skeleton (형태 유지)
+- 액션 로딩 → Button `loading` prop (버튼 내부 인라인 인디케이터만 허용)
+- **로딩 휠 / 전체 화면 스피너 단독 사용 금지**
+- Figma Description에 Loading 상태 기술 시 "Skeleton"으로 쓴다 (로딩 휠 금지)
 
 ## 텍스트 오버플로우
 
