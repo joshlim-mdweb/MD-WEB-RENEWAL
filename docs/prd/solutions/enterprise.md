@@ -51,7 +51,7 @@ Indie 세그먼트에는 Enterprise 페이지 내 배너로 가치 제안: "Ente
 | Secondary CTA | "Talk to Sales" → 문의 폼 또는 Calendly 링크 |
 
 > Non-Member / CompanyID(라이선스 없음) → Primary CTA 활성화
-> Personal / Student → "For Enterprise" 비활성 (해당 유저가 이 페이지 진입 시 상단 배너로 개인 플랜 안내)
+> Individual / Student → "For Enterprise" 비활성 (해당 유저가 이 페이지 진입 시 상단 배너로 개인 플랜 안내)
 > Trial 없음: Enterprise / Indie는 무료 Trial을 제공하지 않음. 문의(Talk to Sales) 통해 별도 협의.
 
 ### Section 2 — Why Enterprise
@@ -100,7 +100,7 @@ Enterprise 페이지 내 별도 배너로 노출. Indie는 독립 Solutions 항�
 | Sub | "Indie-certified Enterprise customers get a special rate — Enterprise-grade features at a price built for teams of 2–5." |
 | 가격 | $800/년, Max 5 Copy (Indie 인증 완료 CompanyID 전용) |
 | 조건 | Enterprise 고객 중 Indie 인증 완료 (연 매출 $500K 이하) |
-| 노출 조건 | CompanyID 계정에서만 배너 노출. Personal / Student에게는 표시 안 함. |
+| 노출 조건 | CompanyID 계정에서만 배너 노출. Individual / Student에게는 표시 안 함. |
 | CTA | "Get Verified" (Indie 인증 미완료 CompanyID) / "Check my License Status" (Indie 인증 완료) |
 
 > 버튼 상태는 plan-card.md CARD: INDIE 매트릭스를 따른다.
@@ -160,7 +160,7 @@ Visual: 심플한 플로우 다이어그램 (3~4 step)
 
 ## 5. 운영 포인트
 
-- Personal / Student MemberType이 Enterprise 페이지 방문 시: 상단 알림 배너로 "이 플랜은 기업 계정용이에요. 개인 플랜을 확인해 보세요." + Individual 페이지 링크
+- Individual / Student MemberType이 Enterprise 페이지 방문 시: 상단 알림 배너로 "이 플랜은 기업 계정용이에요. 개인 플랜을 확인해 보세요." + Individual 페이지 링크
 - Indie 인증 대기 중 유저가 재방문 시: 인증 진행 상태 표시 ("Verification in process" 상태 유지, 처리 기간은 페이지에 노출하지 않음)
 - Enterprise Offline은 가격 미표시 — "Contact Sales" 단일 CTA로만 처리
 - BD팀 문의 폼 연결 SLA: 영업일 기준 1~2일 내 응답 (페이지에 명시)

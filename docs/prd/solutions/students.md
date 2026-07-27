@@ -1,6 +1,6 @@
 # Solutions — Students 페이지 기획
 
-> 대상 MemberType: Personal (인증 전) / Student (인증 완료)
+> 대상 MemberType: Individual (인증 전) / Student (인증 완료)
 > 관련 정책: docs/policy/member.md, docs/policy/plan.md, docs/policy/plan-card.md
 
 ---
@@ -17,7 +17,7 @@
 - 학점 외 자기계발 목적으로 3D 패션 공부하는 학생
 
 ### 페인포인트
-- Personal Monthly($39/월)은 학생 신분으로 부담
+- Individual Monthly($39/월)은 학생 신분으로 부담
 - 학생 인증 절차가 복잡할 것 같아서 시도 안 해봤다
 - "2년밖에 못 쓴다"는 제한이 있다는 걸 모른다 → 알고 나서 실망 가능
 - 학교에서 쓰던 라이선스(Academic)가 만료됐는데 어디서 개인 구매해야 할지 모른다
@@ -46,8 +46,8 @@
 | Secondary CTA | "See How It Works" → Section 3 (인증 절차 섹션 앵커) |
 
 > MemberType별 CTA 분기:
-> - Non-Member / Personal(인증 X) → "Get Verified" (활성)
-> - Personal(인증 대기 중) → "Start Now" (비활성) — 버튼 옆에 "인증을 검토하고 있어요. 완료되면 이메일로 알려드릴게요." 안내
+> - Non-Member / Individual(인증 X) → "Get Verified" (활성)
+> - Individual(인증 대기 중) → "Start Now" (비활성) — 버튼 옆에 "인증을 검토하고 있어요. 완료되면 이메일로 알려드릴게요." 안내
 > - Student(인증 완료, 라이선스 없음) → "Start Now" (활성) → 결제 플로우
 > - Student(인증 완료, 라이선스 있음) → "Check my Status" (활성) → 라이선스 현황
 > - Student(재인증 필요) → "Get Verified" (활성) → 재인증 플로우
@@ -55,9 +55,9 @@
 
 ### Section 2 — 가격 강조 섹션 (가격 비교)
 
-학생 플랜의 가격 매력을 시각적으로 강조. Personal과 비교.
+학생 플랜의 가격 매력을 시각적으로 강조. Individual과 비교.
 
-| 구분 | Personal Monthly | Personal Annual | Student Annual |
+| 구분 | Individual Monthly | Individual Annual | Student Annual |
 |------|-----------------|-----------------|----------------|
 | 가격 | $39/월 | $280/년 | **$99/년** |
 | 조건 | 제한 없음 | 제한 없음 | 학생 인증 필요 |
@@ -70,7 +70,7 @@
 
 ```
 학생 플랜은 최대 2년(2회 구매)까지 이용할 수 있어요.
-졸업 후에는 Personal 플랜으로 전환할 수 있어요.
+졸업 후에는 Individual 플랜으로 전환할 수 있어요.
 ```
 
 > 숨기지 않고 눈에 잘 보이는 위치에 명시. 구매 후 CS 방지.
@@ -81,7 +81,7 @@
 
 | 단계 | 설명 |
 |------|------|
-| Step 1 | 개인 계정(Personal) 생성 또는 로그인 |
+| Step 1 | 개인 계정(Individual) 생성 또는 로그인 |
 | Step 2 | 학생 인증 신청 — 학교 이메일 인증 또는 재학 증명서 업로드 |
 | Step 3 | 인증 완료 후 Student Annual 구매 ($99/년) |
 | Step 4 | 바로 시작 |
@@ -110,8 +110,8 @@ Visual: 4-step 수평 스텝퍼 (아이콘 + 짧은 텍스트)
 | CTA | plan-card.md CARD: STUDENT 매트릭스 기준 |
 
 > 버튼 상태 전체 매트릭스:
-> - Non-Member / Personal(인증 X) → "Get Verified" (활성)
-> - Personal(인증 대기 중) → "Start Now" (비활성)
+> - Non-Member / Individual(인증 X) → "Get Verified" (활성)
+> - Individual(인증 대기 중) → "Start Now" (비활성)
 > - Student(인증 완료, 라이선스 없음) → "Start Now" (활성)
 > - Student(인증 완료, 라이선스 있음) → "Check my Status" (활성)
 > - Student(재인증 필요) → "Get Verified" (활성)
@@ -134,9 +134,9 @@ Visual: 4-step 수평 스텝퍼 (아이콘 + 짧은 텍스트)
 
 | 상황 | 안내 내용 |
 |------|---------|
-| 2년 후 (재학 중) | 재인증 후 재구매 불가 — Personal 플랜으로 전환 |
+| 2년 후 (재학 중) | 재인증 후 재구매 불가 — Individual 플랜으로 전환 |
 | 졸업 후 취업 | 회사에서 Enterprise 라이선스 사용 (MD 알면 바로 실무 투입) |
-| 프리랜서 전환 | Personal 플랜으로 이어서 사용 |
+| 프리랜서 전환 | Individual 플랜으로 이어서 사용 |
 
 CTA: "졸업 후 플랜 보기" → Individual 페이지
 
@@ -145,8 +145,8 @@ CTA: "졸업 후 플랜 보기" → Individual 페이지
 | 질문 | 답변 요지 |
 |------|---------|
 | 어떤 학교 이메일이 인증되나요? | 정규 교육기관 공식 도메인 (edu 등) |
-| 인증 없이 쓸 수 있나요? | 없음. Personal 플랜은 인증 없이 가능 ($39/월) |
-| 2년 후 어떻게 되나요? | 라이선스 만료, Personal 플랜으로 전환 가능 |
+| 인증 없이 쓸 수 있나요? | 없음. Individual 플랜은 인증 없이 가능 ($39/월) |
+| 2년 후 어떻게 되나요? | 라이선스 만료, Individual 플랜으로 전환 가능 |
 | 재학 증명서 검토는 얼마나 걸리나요? | 서류 검토 후 이메일로 결과를 안내해 드려요. |
 | 기기를 바꿔도 되나요? | 1인 1계정 — 기기 변경 가능하나 동시접속 불가 |
 

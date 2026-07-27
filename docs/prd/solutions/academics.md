@@ -56,7 +56,7 @@
 > - Non-Member / CompanyID(인증 X) → "Get Verified" (활성)
 > - CompanyID(인증 대기 중) → "Verification in process" (비활성)
 > - Academic(인증 완료, 라이선스 있음) → "Start Now" (활성)
-> - Personal / Student → "For Enterprise" (비활성) + 안내 배너
+> - Individual / Student → "For Enterprise" (비활성) + 안내 배너
 > Trial 없음: Academic은 무료 Trial을 제공하지 않음. 문의(Contact Us) 통해 별도 협의.
 
 ### Section 2 — Why Marvelous Designer for Education
@@ -176,7 +176,7 @@ Visual: 4-step 수평 스텝퍼 컴포넌트
 
 - 인증 처리 기간은 페이지에 노출하지 않음 (확정된 정책). 인증 결과는 이메일로만 안내.
 - 인증 대기 중 상태에서 "Verification in process" 클릭 시 현재 진행 상태 확인 페이지로 연결 (단순 비활성만이면 CS 문의 폭증)
-- Personal / Student MemberType 진입 시 상단 배너: "교육기관 계정이 아닌 경우 Individual 플랜을 확인해 보세요" + 링크
+- Individual / Student MemberType 진입 시 상단 배너: "교육기관 계정이 아닌 경우 Individual 플랜을 확인해 보세요" + 링크
 - Copy 수 계산기는 MVP 범위 밖으로 우선 정적 텍스트로 처리 검토
 
 ---

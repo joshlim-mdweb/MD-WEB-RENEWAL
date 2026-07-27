@@ -1,6 +1,6 @@
 # Solutions — Individual 페이지 기획
 
-> 대상 MemberType: Personal / Student
+> 대상 MemberType: Individual / Student
 > 관련 정책: docs/policy/member.md, docs/policy/plan.md, docs/policy/plan-card.md
 
 ---
@@ -69,15 +69,15 @@
 
 ### Section 4 — Pricing
 
-플랜 카드 2종 나란히 배치: Personal Monthly / Personal Annual
+플랜 카드 2종 나란히 배치: Individual Monthly / Individual Annual
 
 | 플랜 | 가격 | 특징 | CTA |
 |------|------|------|-----|
-| Personal Monthly | $39/월 | 유연한 구독, 언제든 해지 | plan-card.md 매트릭스 기준 |
-| Personal Annual | $280/년 | 월 환산 $23.3 — 40% 절약 | plan-card.md 매트릭스 기준 |
+| Individual Monthly | $39/월 | 유연한 구독, 언제든 해지 | plan-card.md 매트릭스 기준 |
+| Individual Annual | $280/년 | 월 환산 $23.3 — 40% 절약 | plan-card.md 매트릭스 기준 |
 
-> 버튼 상태는 plan-card.md CARD: PERSONAL 매트릭스를 100% 따른다.
-> MemberType별 버튼 동작: Non-Member/Personal → "Start Now" (활성), Student → "For Student" (비활성), CompanyID 계열 → "For Personal" (비활성)
+> 버튼 상태는 plan-card.md CARD: INDIVIDUAL 매트릭스를 100% 따른다.
+> MemberType별 버튼 동작: Non-Member/Individual → "Start Now" (활성), Student → "For Student" (비활성), CompanyID 계열 → "For Individual" (비활성)
 
 **Student 플랜 배너** — Pricing 섹션 하단에 별도 배너로 노출
 
@@ -96,7 +96,7 @@
 
 | 질문 | 답변 요지 |
 |------|---------|
-| Personal과 Student 플랜의 차이는? | Student는 학생 인증 필요, 더 저렴하지만 최대 2년 사용 |
+| Individual과 Student 플랜의 차이는? | Student는 학생 인증 필요, 더 저렴하지만 최대 2년 사용 |
 | 언제든 해지할 수 있나요? | Monthly는 다음 결제일 전 해지 가능, 즉시 반영 |
 | 다른 기기에서도 쓸 수 있나요? | 단일 사용자 라이선스 — 1인 1기기 기준 |
 | Student 인증은 어떻게 하나요? | 학교 이메일 인증 또는 재학 증명서 업로드 |
@@ -117,8 +117,8 @@
 |------|------------|---------|------|
 | Hero Primary | Start Free Trial | 14일 Trial 시작 플로우 → Trial 종료 후 자동 Subscription | 비로그인 기본 |
 | Hero Secondary | See Pricing | #pricing (앵커) | - |
-| Personal Monthly 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
-| Personal Annual 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
+| Individual Monthly 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
+| Individual Annual 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
 | Student 배너 | Get Verified / Start Now | 인증 플로우 / 결제 플로우 | Verification Status 분기 |
 | Final CTA | Start Free Trial | 14일 Trial 시작 플로우 | - |
 
@@ -128,8 +128,8 @@
 
 - Student 인증 상태(pending/완료/재인증 필요)에 따라 버튼 상태 실시간 반영 필요
 - "For Student" 버튼 클릭 시 Student 페이지로 안내하는 툴팁 또는 링크 제공 검토
-- Trial은 Personal 전용 (개인 계정만 해당). Enterprise / Academic / Indie는 Trial 없음 — 문의 통해 별도 협의.
-- Trial 사용 이력 있는 Personal 유저가 재접근 시 Trial CTA 노출 금지 (이미 Subscription 전환 완료 상태)
+- Trial은 Individual 전용 (개인 계정만 해당). Enterprise / Academic / Indie는 Trial 없음 — 문의 통해 별도 협의.
+- Trial 사용 이력 있는 Individual 유저가 재접근 시 Trial CTA 노출 금지 (이미 Subscription 전환 완료 상태)
 - Trial 종료 후 자동 Subscription 전환 시점 명확히 고지 — 카드 정보 입력 시점(Trial 시작 전)에 안내 필수
 
 ---
