@@ -9,29 +9,15 @@ updated: 2026-08-07
 ## TODO
 
 ### Figma WF 작업 — 진행 중 (우선순위 1)
-1. **나머지 6개 플랜 WF 작성** — Individual / Student / Enterprise Single / Enterprise Team Linux / Academic / Indie. Enterprise Team 1(`6980:2`)에서 확정한 방식 그대로: `화면설계서` 마스터 템플릿(`6627:7050`, 파일 `PeCid7uJcg0HenViaaiHUp`) 클론 → Screen에 checkout-feature-spec.md §4-3 노출 순서대로 카드 구성 → `/description` 스킬로 Description 작성 → Annotation 카드 클론해 삽입 → Screen 배지 8개(or 해당 플랜 카드 수)와 1:1 매칭
-2. **구 CASE VIEW 프레임 파일 접근 확인 필요** — `checkout-renewal.md`에 기존에 기록된 `NYShAqeBVSmpQYdk3HgPwN` 파일의 `Order/Checkout` 페이지가 2026-08-06 세션에서 조회되지 않음(페이지 목록에 없음), target node `6039:51`도 존재하지 않음. 아래 "구 CASE VIEW 관련 미결" 항목(TODO 5~12였던 것)이 참조하는 `Card1_CaseView`(6232:60) 등 프레임이 삭제·이동됐는지, 아니면 다른 파일/페이지로 옮겨졌는지 확인 필요. **이 확인 전까지는 구 항목들의 유효성 불확실**
+1. **나머지 6개 플랜 WF 작성** — Individual / Student / Enterprise Single / Enterprise Team Linux / Academic / Indie. Enterprise Team 1(`6980:2`)에서 확정한 방식 그대로: `화면설계서` 마스터 템플릿(`6627:7050`, 파일 `PeCid7uJcg0HenViaaiHUp`) 클론 → Screen에 checkout-feature-spec.md §4-3 노출 순서대로 카드 구성 → `/description` 스킬로 Description 작성 → Annotation 카드 클론해 삽입 → Screen 배지와 Numbered Note 1:1 매칭
 
 ### 기획 착수 전 결정 필요 — 잔여 (Plan Card 스코프)
-3. **Trial 진입 경로** — Plan 카드 `Start Now`가 Trial 진입을 겸하는지, Trial과 바로 구매를 분리 노출할지 미정 (`docs/policy/plan-card.md` 미결 2번)
-4. **Student Benefit 이용 중 버튼 상태** — 3개월 무료 중인 유저의 Plan 카드 버튼 정의 없음 (`plan-card.md` 미결 1번)
+2. **Trial 진입 경로** — Plan 카드 `Start Now`가 Trial 진입을 겸하는지, Trial과 바로 구매를 분리 노출할지 미정 (`docs/policy/plan-card.md` 미결 2번)
+3. **Student Benefit 이용 중 버튼 상태** — 3개월 무료 중인 유저의 Plan 카드 버튼 정의 없음 (`plan-card.md` 미결 1번)
 
 ### 정책 확인 필요 (Canvas에도 플래그로 남은 항목)
-5. VAT 번호 입력란 노출을 EU 회원국으로 한정할지 여부 (`docs/policy/checkout.md` §7.2)
-6. Tax ID가 유효하지 않은 경우의 처리 (`docs/policy/checkout.md` §7.2)
-
-### 구 CASE VIEW 관련 미결 (파일 접근 확인 후 유효성 재검토 — TODO 2 참조)
-7. 3개 CASE VIEW 프레임에 Description Panel annotation 추가 (figma-description.md Format B 기준)
-   - Card1_CaseView: 각 케이스별 행 구성 차이 설명
-   - Card2_CaseView: 국가 선택 → 결제 수단 분기 설명
-   - OrderSummary_CaseView: 케이스별 행 추가/차감 항목 설명
-8. FEATURE_CHECKOUT_INDIVIDUAL 섹션 이후 추가 WF 필요 여부 확인 (Coupon 플로우 FEATURE 섹션 등)
-9. Enterprise/Academic/Indie Checkout용 별도 CASE VIEW 섹션 필요 여부 확인
-10. 기존 프레임 용어 갱신 — Card1 ③④⑤의 `License ID dropdown` → `SW Account`, OrderSummary ① `CompanyID` → `Enterprise`
-11. Seat 프리셋 값 갱신 — Card1_CaseView ④⑤ 프리셋이 Canvas 확정값과 다름. Academic `[1][5][10][직접입력]` → `[5][10][20][직접입력]`. Indie `[1][5]` → `[1][3][5][직접입력]`
-12. SW Account 판정 UI — 선택한 계정이 신규 할당인지 기간 연장인지 판정 결과·근거를 표시하는 컴포넌트 (기존 3개 CASE VIEW에 없음). **참고: Enterprise Team 1 WF에서 이미 신규 구현함 — 구 CASE VIEW에도 반영할지, 아니면 신규 WF 방식으로 대체할지 판단 필요**
-13. Coupon vs Discount 분리 — OrderSummary_CaseView가 현재 Coupon 행만 다룸
-14. Seat 추가·기간 연장·Single→Team 전환 플로우 — 기존 WF 스코프에 없음
+4. VAT 번호 입력란 노출을 EU 회원국으로 한정할지 여부 (`docs/policy/checkout.md` §7.2)
+5. Tax ID가 유효하지 않은 경우의 처리 (`docs/policy/checkout.md` §7.2)
 
 ## 컨텍스트
 
@@ -40,7 +26,7 @@ updated: 2026-08-07
 1. **플랜별 기능명세 표** (텍스트 초안 → Figma 반영) — 각 플랜 진입 시 UI/기능을 번호·기능·설명 3칸으로 정리. 설명 문형: 사용자 행동이 있으면 "사용자는 [행동]을 통해 [결과]를 할 수 있다", 조건·상태성 행은 declarative 유지
 2. **플랜별 개별 와이어프레임** — 표 하나당 화면 하나. 고정 마스터 템플릿(`화면설계서`, `6627:7050`) 클론 + `/description` 스킬로 Description 작성이 필수 워크플로우로 확정됨
 
-구 CASE VIEW 방식(여러 플랜을 한 프레임에 케이스 분기로 나열)은 계속 쓸지, 신규 플랜별 개별 WF로 완전히 대체할지는 **미결정** — 다음 세션에서 Josh 확인 필요.
+**CASE VIEW 방식(여러 플랜을 한 프레임에 케이스 분기로 나열) 폐기 확정 (Josh, 2026-08-07).** 앞으로는 플랜별 개별 WF로만 진행한다. 구 CASE VIEW 프레임(`Card1_CaseView`·`Card2_CaseView`·`OrderSummary_CaseView`, 파일 `NYShAqeBVSmpQYdk3HgPwN`)은 더 이상 갱신하지 않는다 — 해당 파일의 참조 정보는 아래 "Figma — 구 위치(폐기)"에 기록만 남기고 TODO에서 제외.
 
 ### 정책 기준 (2026-08-06 Canvas 최종본 반영 완료)
 - **계정 구조**: MemberType 폐지. `Member` / `Organization Owner` / `SW Account`(웹 로그인 불가). 용어 기준 `docs/policy/member.md`
@@ -61,28 +47,16 @@ updated: 2026-08-07
 - **플랜별 기능명세 표** (번호/기능/설명 3칸, 다크 배경): Individual `6967:21` · Student `6967:31` · Enterprise Single `6967:41` · Enterprise Team `6967:51` · Enterprise Team Linux `6967:61` · Academic `6967:71` · Indie `6967:81`
 - **완성된 WF**: `Enterprise Team 1` (`6980:2`) — Screen `6980:10` (8개 카드: Product → SW Account → Seat → Billing Address → Payment Method → Tax ID → Order Summary → 결제 진행), Description List `6980:12` (Numbered Note ①~⑧)
 
-### Figma — 구 위치 (유효성 미확인, TODO 2 참조)
-- Figma file: `NYShAqeBVSmpQYdk3HgPwN`, page: `Order/Checkout` — **2026-08-06 세션에서 조회 시 해당 페이지 없음** (실제 페이지: Cover/COMPONENT/---/Reference/---)
-- Target section: `CASEVIEW_CHECKOUT_INDIVIDUAL` (id=6039:51) — **조회 시 존재하지 않음**
-- 아래는 마지막으로 확인됐던 상태 (2026-06-09 기준, 이후 미검증)
-  - `Card1_CaseView` (id=6232:60) — 5케이스, screen h=1599px
-  - `Card2_CaseView` (id=6233:61) — 2케이스, screen h=964px
-  - `OrderSummary_CaseView` (id=6235:60) — 5케이스, screen h=1166px
+### Figma — 구 위치 (폐기, 참고용 기록만)
+CASE VIEW 방식 폐기로 더 이상 갱신하지 않는다. 과거 작업 이력 참고용으로만 남긴다.
 
-### 실측값 (Annual 1 프레임 `6000:44` 기준 — 구 위치, 미검증)
-- 제품 row label: 80px / 지불 방식 section label: 12px Regular
-- Billing toggle card: 263×69 FIXED, padding 12, gap 4
-- OrderSummary card: padding 12px, gap 8px, inner width 542px, label column 379px FIXED
-- Payment method card: 263×45, bg surface.input
-
-### Card1_CaseView / Card2_CaseView / OrderSummary_CaseView 케이스 구성 (구 위치, 미검증 — TODO 2 참조)
-- Card1: ① Individual/Student ② Trial ③ Enterprise(License ID dropdown→SW Account 갱신 필요) ④ Academic(Seat 프리셋 갱신 필요) ⑤ Indie(Seat 프리셋 갱신 필요)
-- Card2: ① 기본(신용카드·PayPal) ② China(신용카드·AliPay)
-- OrderSummary: ① Standard ② Trial ③ Student ④ Coupon 미선택 ⑤ Coupon 적용됨 (Discount 별도 행 미반영)
+- Figma file: `NYShAqeBVSmpQYdk3HgPwN`, page: `Order/Checkout` — 2026-08-06 세션에서 조회 시 해당 페이지 없음 (실제 페이지: Cover/COMPONENT/---/Reference/---), target node `6039:51`도 존재하지 않음
+- 마지막으로 확인됐던 상태 (2026-06-09 기준): `Card1_CaseView`(6232:60, 5케이스) · `Card2_CaseView`(6233:61, 2케이스) · `OrderSummary_CaseView`(6235:60, 5케이스)
 
 ## 완료 로그
 ### 2026-08-07
-- `/checkout` 세션 마감 — TODO·컨텍스트 전체 재정리. 구 CASE VIEW 파일(`NYShAqeBVSmpQYdk3HgPwN`) 접근 안 되는 것 발견해 TODO 2로 등록, 관련 구 항목 전부 "미검증" 표시로 이동
+- `/checkout` 세션 마감 — TODO·컨텍스트 전체 재정리. 구 CASE VIEW 파일(`NYShAqeBVSmpQYdk3HgPwN`) 접근 안 되는 것 발견
+- **CASE VIEW 방식 폐기 확정 (Josh)** — 여러 플랜을 한 프레임에 케이스 분기로 나열하는 구 방식은 더 이상 쓰지 않는다. 플랜별 개별 WF(화면설계서 템플릿 + `/description` 스킬)로 완전 대체. 구 CASE VIEW 관련 TODO 8건(용어 갱신·Seat 프리셋 갱신·SW Account 판정 UI·Coupon/Discount 분리 등) 전부 폐기 — 신규 WF 작업 시 자연히 반영되므로 별도 이관 불필요
 
 ### 2026-08-06 (3) — Enterprise Team WF 1개 시안 작성
 - Josh 선택: 7개 플랜 중 Enterprise Team이 신규 확정 요소(SW Account 선택+판정, Seat 프리셋, Tax ID)를 가장 많이 포함해 우선 시안으로 선정
