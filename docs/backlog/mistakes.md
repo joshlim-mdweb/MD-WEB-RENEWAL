@@ -347,3 +347,19 @@
 **실수:** 선택지가 "mypage-renewal" 1개뿐인 질문을 보내 InputValidationError 발생 (options는 최소 2개 필요)
 **원인:** 사실상 선택의 여지가 없는 상황(다른 후보가 없음)인데도 확인 질문 형식을 그대로 사용
 **다음엔:** 대안이 1개뿐이면 질문 대신 "~로 저장할게요" 형태로 바로 진행하고, 진짜 2개 이상 선택지가 있을 때만 AskUserQuestion 사용
+
+---
+
+## 2026-08-06
+
+**상황:** Order/Checkout 플랜별 기능명세 표 7개를 Figma에 처음 그림 (다크 배경 카드 표)
+**실수:** 참조 프레임(Compare Plans)에서 측정한 색상을 반올림해서 사용(`#c7c7c7`→0.78 등)하고, 참조에 없던 `itemSpacing:16`을 임의로 추가함. 또 Row/Header/셀 wrapper 프레임이 `createAutoLayout()` 기본값인 불투명 흰색 배경을 그대로 가진 채 방치돼 어두운 배경 위에 흰 줄무늬로 렌더링됨
+**원인:** figma-read.md의 "반올림 금지·실측값 그대로" 규칙을 지키지 않았고, `createAutoLayout()`으로 만든 프레임이 기본 흰색 fill을 가진다는 사실을 놓쳐서 스크린샷 확인 전까지 인지하지 못함
+**다음엔:** 색상은 항상 실측 소수값(hex/255)을 코드에 그대로 쓴다. `createAutoLayout()`/`createFrame()`으로 만든 모든 래퍼 프레임은 배경이 필요 없으면 생성 직후 `fills=[]`를 명시적으로 설정한다. 완료 선언 전 screenshot으로 반드시 시각 검증한다
+
+---
+
+**상황:** Order/Checkout Enterprise Team 와이어프레임 1개를 처음 그림
+**실수:** 이 프로젝트에 이미 고정 마스터 템플릿(`화면설계서`, id=`6627:7050`, Board Header + Screen + Description Annotation 카드 구조)이 있는데 확인 없이 WF 외곽을 직접 새로 만들었고, Description 패널 내용도 `/description` 스킬을 쓰지 않고 자유 작문으로 채움
+**원인:** figma-draw.md의 Q1("같은 역할의 노드가 파일에 이미 있는가?") 판단 없이 바로 코드로 새로 만듦. Description 작성 시 세션에 있는 `/description` 스킬의 존재를 고려하지 않음
+**다음엔:** Figma에 뭔가를 그리기 전에 항상 파일 내 기존 마스터 템플릿·컴포넌트부터 찾아 클론 여부를 먼저 판단한다(Q1~Q4). Description Panel 내용이 필요하면 자유 작문 대신 `/description` 스킬을 먼저 호출한다
