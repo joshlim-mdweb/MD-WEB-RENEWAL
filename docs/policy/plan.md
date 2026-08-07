@@ -131,9 +131,9 @@ Source: https://clo.atlassian.net/wiki/spaces/MDT/pages/3120529409/POLICY_PLAN
 - Order Summary 표시: `Discount` 항목으로 `-$n` 음수 표시
 - Annual / Monthly 모두 적용 가능
 
-### 4-6. Coupon (Annual 전용)
+### 4-6. Coupon
 
-- 적용 대상: Annual Checkout에서만 쿠폰 입력 가능
+- 적용 대상: Individual 플랜 최초 구매 Checkout에서 쿠폰 입력 가능
 - UI: Order Summary 위에 쿠폰 입력 필드 (입력 후 Apply 버튼)
 - 유효 쿠폰: Order Summary에 `Coupon` 항목 `-$n` 표시
 - 유효하지 않은 쿠폰: 인풋 하단 에러 메시지 표시

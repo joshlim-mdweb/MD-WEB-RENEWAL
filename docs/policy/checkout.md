@@ -61,7 +61,7 @@ Trial을 취소한 이력이 있는 계정은 재진입 시 Trial 없이 바로 
 
 ## 5. Coupon · Discount
 
-Coupon 입력창은 Individual Annual 플랜의 최초 구매에만 노출한다.
+Coupon 입력창은 Individual 플랜의 최초 구매에만 노출한다.
 그 외 모든 경우 입력창을 숨긴다.
 
 유효한 코드는 Order Summary에 `Coupon` 행으로 `-$n`을 표시한다.
