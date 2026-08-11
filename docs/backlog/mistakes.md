@@ -363,3 +363,19 @@
 **실수:** 이 프로젝트에 이미 고정 마스터 템플릿(`화면설계서`, id=`6627:7050`, Board Header + Screen + Description Annotation 카드 구조)이 있는데 확인 없이 WF 외곽을 직접 새로 만들었고, Description 패널 내용도 `/description` 스킬을 쓰지 않고 자유 작문으로 채움
 **원인:** figma-draw.md의 Q1("같은 역할의 노드가 파일에 이미 있는가?") 판단 없이 바로 코드로 새로 만듦. Description 작성 시 세션에 있는 `/description` 스킬의 존재를 고려하지 않음
 **다음엔:** Figma에 뭔가를 그리기 전에 항상 파일 내 기존 마스터 템플릿·컴포넌트부터 찾아 클론 여부를 먼저 판단한다(Q1~Q4). Description Panel 내용이 필요하면 자유 작문 대신 `/description` 스킬을 먼저 호출한다
+
+---
+
+## 2026-08-11
+
+**상황:** Coupon 정책 정정을 반영하려고 `docs/policy/checkout.md`·`plan.md`를 Edit
+**실수:** EnterWorktree를 먼저 호출하지 않고 공유 체크아웃 경로로 Edit을 시도해 2건 모두 거부됨. 워크트리 진입 후에도 이전 컨텍스트의 공유 경로를 그대로 써서 또 1건 거부됨 (총 3회 실패)
+**원인:** 백그라운드 세션은 첫 편집 전에 워크트리 격리가 강제된다는 것을 편집 시점에 인지하지 못함. 격리 후에는 파일 경로 prefix가 `.claude/worktrees/{name}/`으로 바뀐다는 점도 놓침
+**다음엔:** 백그라운드 세션에서 파일을 수정할 계획이 생기면 첫 Edit/Write 전에 EnterWorktree를 먼저 호출한다. 격리 후에는 grep·Read·Edit 전부 워크트리 경로로 재조회한다 (격리 전 세션에서 읽은 경로를 재사용하지 않는다)
+
+---
+
+**상황:** `docs/policy/plan.md`의 Coupon 섹션을 확인하려고 Read 호출
+**실수:** `{"file_path": "...", "offset": 70, 150}` 형태로 JSON이 깨진 인자를 보내 InputValidationError 발생
+**원인:** limit 키 이름을 빼먹고 값만 나열함
+**다음엔:** offset·limit을 함께 쓸 때 키 이름을 모두 명시한다. 병렬 호출로 여러 Read를 보낼 때 각 인자를 개별 검토한다

@@ -1,6 +1,6 @@
 ---
 project: checkout-renewal
-updated: 2026-08-07
+updated: 2026-08-11
 ---
 
 ## 관련 Jira 티켓
@@ -9,15 +9,20 @@ updated: 2026-08-07
 ## TODO
 
 ### Figma WF 작업 — 진행 중 (우선순위 1)
-1. **나머지 6개 플랜 WF 작성** — Individual / Student / Enterprise Single / Enterprise Team Linux / Academic / Indie. Enterprise Team 1(`6980:2`)에서 확정한 방식 그대로: `화면설계서` 마스터 템플릿(`6627:7050`, 파일 `PeCid7uJcg0HenViaaiHUp`) 클론 → Screen에 checkout-feature-spec.md §4-3 노출 순서대로 카드 구성 → `/description` 스킬로 Description 작성 → Annotation 카드 클론해 삽입 → Screen 배지와 Numbered Note 1:1 매칭
+1. **Checkout Screen 구조 재작성 — Josh 레퍼런스 대기 중** (2026-08-11 세션에서 착수, 미완). Josh가 "Screen 안에 그려야 하는 화면 구조"를 레퍼런스로 전달할 예정이고 그걸 받아 다시 그리기로 합의됨. 기준 프레임은 현재 `Enterprise Team 1`([`6980:2`](https://www.figma.com/design/PeCid7uJcg0HenViaaiHUp/2026-RENEWAL?node-id=6980-2)). 레퍼런스 수신 후 워크플로우: `figma-read.md` 실측 → 스펙 매트릭스 Josh OK → `figma-draw.md`로 그리기. **레퍼런스·스펙 매트릭스 승인 없이 그리기 착수 금지**
+2. **나머지 6개 플랜 WF 작성** — Individual / Student / Enterprise Single / Enterprise Team Linux / Academic / Indie. 단 1번의 구조 재작성 결과가 확정된 뒤 그 구조로 진행할 것 (구 Enterprise Team 구성 그대로 복제하지 않는다). 워크플로우: `화면설계서` 마스터 템플릿(`6627:7050`, 파일 `PeCid7uJcg0HenViaaiHUp`) 클론 → Screen 카드 구성 → `/description` 스킬로 Description 작성 → Annotation 카드 클론해 삽입 → Screen 배지와 Numbered Note 1:1 매칭
+3. **Coupon 입력창 노출 범위 WF 반영** — Coupon이 Annual 전용이 아니라 **Individual 전 플랜(Monthly 포함) 최초 구매**로 정정됨(2026-08-11). Individual WF 작성 시 Monthly·Annual 양쪽 모두 Coupon 입력창을 노출하도록 그릴 것
+
+### 미머지 — 확인 필요
+4. **PR #5 머지 여부 확인** — Coupon 정책 수정(`docs/policy/checkout.md` §5 · `docs/policy/plan.md` §4-6)이 브랜치 `worktree-hazy-bubbling-quokka`에만 있고 main에 없음. 드래프트 PR: https://github.com/joshlim-mdweb/MD-WEB-RENEWAL/pull/5 — 머지 전까지 main 기준 세션에서는 구 문구("Individual Annual 전용")가 보인다
 
 ### 기획 착수 전 결정 필요 — 잔여 (Plan Card 스코프)
-2. **Trial 진입 경로** — Plan 카드 `Start Now`가 Trial 진입을 겸하는지, Trial과 바로 구매를 분리 노출할지 미정 (`docs/policy/plan-card.md` 미결 2번)
-3. **Student Benefit 이용 중 버튼 상태** — 3개월 무료 중인 유저의 Plan 카드 버튼 정의 없음 (`plan-card.md` 미결 1번)
+5. **Trial 진입 경로** — Plan 카드 `Start Now`가 Trial 진입을 겸하는지, Trial과 바로 구매를 분리 노출할지 미정 (`docs/policy/plan-card.md` 미결 2번)
+6. **Student Benefit 이용 중 버튼 상태** — 3개월 무료 중인 유저의 Plan 카드 버튼 정의 없음 (`plan-card.md` 미결 1번)
 
 ### 정책 확인 필요 (Canvas에도 플래그로 남은 항목)
-4. VAT 번호 입력란 노출을 EU 회원국으로 한정할지 여부 (`docs/policy/checkout.md` §7.2)
-5. Tax ID가 유효하지 않은 경우의 처리 (`docs/policy/checkout.md` §7.2)
+7. VAT 번호 입력란 노출을 EU 회원국으로 한정할지 여부 (`docs/policy/checkout.md` §7.2)
+8. Tax ID가 유효하지 않은 경우의 처리 (`docs/policy/checkout.md` §7.2)
 
 ## 컨텍스트
 
@@ -37,6 +42,7 @@ updated: 2026-08-07
 - **결제수단**: China(IP 또는 청구지 국가) → 신용카드·AliPay / 그 외 → 신용카드·PayPal. Kakao Pay 없음
 - **SW Account 판정**: 사용자가 선택하지 않음. 시스템이 라이선스 상태로 New(신규 할당)/Extension(기간 연장) 자동 판정
 - **VAT/Tax ID**: Organization 그룹의 Enterprise·Indie 플랜 결제에서만 노출 (Academic 제외)
+- **Coupon**: Individual 플랜 최초 구매에만 노출. Monthly·Annual 모두 해당 (Monthly 전용 쿠폰이 실제로 존재 — 2026-08-11 Josh 정정). Student 제외. Discount는 Coupon과 별개로 전 플랜 적용 가능
 - 상세 정책: `docs/policy/checkout.md` §1~§14 (2026-08-06 Canvas 기준 전면 갱신 완료)
 - 관련 Canvas: [[RENEWAL] Order/Checkout](https://clo3d.slack.com/docs/T04BT3VBR/F0BL0SRE4TZ) · [[RENEWAL] Plan Renew](https://clo3d.slack.com/docs/T04BT3VBR/F0BCBS8G88N)
 
@@ -54,6 +60,14 @@ CASE VIEW 방식 폐기로 더 이상 갱신하지 않는다. 과거 작업 이�
 - 마지막으로 확인됐던 상태 (2026-06-09 기준): `Card1_CaseView`(6232:60, 5케이스) · `Card2_CaseView`(6233:61, 2케이스) · `OrderSummary_CaseView`(6235:60, 5케이스)
 
 ## 완료 로그
+### 2026-08-11
+- **Coupon 적용 범위 정정 (Josh)** — 기존 정책 문서가 "Individual **Annual** 플랜 최초 구매에만 노출"로 적혀 있었으나, Monthly 용도 쿠폰도 실제로 존재함이 확인됨. Individual 전 플랜(Monthly·Annual) 최초 구매로 정정. Student 제외는 그대로 유지
+  - `docs/policy/checkout.md` §5 Coupon·Discount — "Individual Annual 플랜" → "Individual 플랜"
+  - `docs/policy/plan.md` §4-6 — 제목 `Coupon (Annual 전용)` → `Coupon`, 적용 대상 "Annual Checkout에서만" → "Individual 플랜 최초 구매 Checkout에서"
+  - Slack Canvas는 Josh가 직접 수정 완료 (Claude 작업 범위 아님)
+  - 커밋·푸시 후 드래프트 PR #5 생성 — **아직 main 미머지** (TODO 4번)
+- Checkout WF 재작성 착수 합의 — Josh가 Screen 화면 구조 레퍼런스를 주면 그걸 기준으로 다시 그리기로 함. 이번 세션에서는 레퍼런스 미수신으로 드로잉 진행하지 않음 (TODO 1번)
+
 ### 2026-08-07
 - `/checkout` 세션 마감 — TODO·컨텍스트 전체 재정리. 구 CASE VIEW 파일(`NYShAqeBVSmpQYdk3HgPwN`) 접근 안 되는 것 발견
 - **CASE VIEW 방식 폐기 확정 (Josh)** — 여러 플랜을 한 프레임에 케이스 분기로 나열하는 구 방식은 더 이상 쓰지 않는다. 플랜별 개별 WF(화면설계서 템플릿 + `/description` 스킬)로 완전 대체. 구 CASE VIEW 관련 TODO 8건(용어 갱신·Seat 프리셋 갱신·SW Account 판정 UI·Coupon/Discount 분리 등) 전부 폐기 — 신규 WF 작업 시 자연히 반영되므로 별도 이관 불필요
