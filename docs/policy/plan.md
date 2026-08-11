@@ -68,8 +68,7 @@ Source: https://clo.atlassian.net/wiki/spaces/MDT/pages/3120529409/POLICY_PLAN
 
 ### Student 취소 및 환불
 - Student Benefit 중 취소 후 재구독: 유료로 시작, 4년 기간 유지 (취소 처리 방식은 미결 — A2 결정 의존)
-- 첫 결제 이후 환불: 불가
-- Legacy users 환불 요청: 불가
+- 환불 기준: `refund.md` §3 참조
 
 ### Student Legacy Users (구 Annual Prepaid 사용자)
 - 기존 Annual 구독자(활성): 쿠폰 자동 발급 + 이메일 발송
