@@ -33,8 +33,8 @@ hex 하드코딩 그대로 사용 (이 페이지는 별도 design-tokens.ts 없�
 | 역할 | size | weight | 적용처 |
 |------|------|--------|--------|
 | 페이지 타이틀 | 40px | 500 Medium | `/pricing` H1 |
-| 섹션 그룹 라벨 | 24px | 400 Regular | "Personal", "Enterprise" 등 |
-| 플랜 카드 타이틀 | 22px | 600 SemiBold | 플랜명 (Personal, Students…) |
+| 섹션 그룹 라벨 | 24px | 400 Regular | "Individual", "Enterprise" 등 |
+| 플랜 카드 타이틀 | 22px | 600 SemiBold | 플랜명 (Individual, Students…) |
 | 플랜 카드 서브타이틀 | 14px | 400 Regular | 플랜 한 줄 설명 |
 | 가격 금액 | 32px | 600 SemiBold | `$29` |
 | 가격 기간 | 16px | 400 Regular | `/mo` `/year` |
@@ -145,7 +145,7 @@ border-radius: rounded-[7px]
 
 ```tsx
 <p className="text-[24px] text-[#d7d7d7] font-normal font-poppins">
-  Personal
+  Individual
 </p>
 ```
 
