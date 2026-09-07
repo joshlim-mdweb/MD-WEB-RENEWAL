@@ -36,3 +36,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# supabase CLI temp state
+supabase/.temp/
+
+# playwright
+/test-results/
+
+# editor
+.vscode/
