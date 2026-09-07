@@ -34,7 +34,7 @@ HTML 태그는 렌더링하지 않고 원문 그대로 출력.
 | CLO Virtual Fashion | CLO Virtual Fashion | CLO Virtual Fashion | CLO Virtual Fashion |
 | CLO-SET | CLO-SET | CLO-SET | CLO-SET |
 | Marvelous Designer | Marvelous Designer | Marvelous Designer | Marvelous Designer |
-| Personal | Personal | Personal | Personal |
+| Individual | Individual | Individual | Individual |
 | Enterprise | Enterprise | Enterprise | Enterprise |
 | Student | Student | Student | Student |
 | Academic | Academic | Academic | Academic |
@@ -56,6 +56,18 @@ HTML 태그는 렌더링하지 않고 원문 그대로 출력.
 
 브랜드명·제품명은 번역 금지. 모든 언어에서 원어 유지.
 
+### 2.1 폐지 용어
+
+| 쓰지 않는다 | 쓴다 |
+|---|---|
+| Personal | **Individual** |
+| Group | Organization |
+| Copy | Seat |
+| License ID | SW Account |
+| MemberType | (폐지) |
+
+`Personal`은 화면·문서·프레임명 어디에도 쓰지 않는다. 개인 계열을 통칭할 때도 `Individual`이다 (2026-08-11 확정).
+
 ---
 
 ## 3. 언어별 핵심 금지 표현
@@ -70,7 +82,8 @@ HTML 태그는 렌더링하지 않고 원문 그대로 출력.
 - `~하시기 바랍니다` 금지 → `~해 주세요`
 - `해당` 남용 금지
 - `처리됩니다` 단독 금지 → 결과 명시
-- `~합니다` / `~됩니다` 금지 → `~해요` / `~돼요`
+- `~해요` / `~돼요` 금지 → 합니다체 (2026-08-07 변경. 상세는 `ux-writing.md` §1)
+- 명령조 `~하세요` / `~하십시오` 금지 → `~해 주세요`
 
 ### ZH-CN
 - 번체자 혼용 금지

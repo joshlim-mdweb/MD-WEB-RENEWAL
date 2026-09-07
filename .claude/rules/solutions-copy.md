@@ -57,8 +57,7 @@ Solutions 페이지 구성:
 - 기능이 아닌 **사용자 가치** 중심
 - 헤드라인 짧고 명확하게, 설명은 1~2문장
 - Core 블록 구조: **Title + Description**
-- `~해요` 체 지양 → 자신감 있고 세련된 프로덕트 마케팅 톤
-- 문장 종결 혼용: `~입니다` `~할 수 있습니다` `~에 적합합니다` `~도움이 됩니다`
+- **말투·문장 구조는 `ux-writing.md` §1·§3을 따른다** (Hero·Core 블록 카피 = 명사형 종결). 이 파일은 페르소나 정의와 메시지 축만 다룬다
 
 ---
 
@@ -100,7 +99,7 @@ MD CONNECT 에셋으로 바로 시작하고, 대형 스튜디오와 같은 툴�
 
 ### Workflow: CONNECT 에셋 → Pattern / Simulation → Detail → Export → Portfolio → 실무 프로젝트
 
-### Trial 정책: 14일 무료 → 종료 후 자동 Subscription 시작
+### Trial 정책: Trial 진입 시 Monthly·Annual 중 선택 → 14일 무료 → 선택한 플랜으로 자동 결제 시작 (Trial 없이 바로 구매도 가능)
 
 ### CTA: Start Trial · Get Plan · See Individual Plan
 
@@ -171,9 +170,9 @@ student discount · up to 70% discount · school email · enrollment certificate
 | Core 3 | CONNECT + 쉬운 시작 + 할인 | 학교 인증 한 번으로 할인 + CONNECT 에셋으로 바로 시작 |
 
 ### 중요 고지 (CS 리스크 1순위)
-**최대 2년(2회) 구매 제한 — Hero 또는 Plan 카드 옆에 반드시 눈에 띄게 표기.**
+**최초 학생 인증 시점부터 4년 이내 이용 가능 — Hero 또는 Plan 카드 옆에 반드시 눈에 띄게 표기. 구매 횟수 제한은 없다.**
 
-### Trial 정책: 14일 무료 → 종료 후 자동 Subscription 시작
+### Trial 정책: Trial 진입 시 Monthly·Annual 중 선택 → 14일 무료 → 선택한 플랜으로 자동 결제 시작 (Trial 없이 바로 구매도 가능)
 
 ### CTA: Verify Student Status · Get Student Plan · Start with Student Discount
 
@@ -196,7 +195,7 @@ academic institution plan · education plan · more reasonable than Enterprise �
 | Core 3 | Reasonable Pricing for Education | Enterprise보다 합리적, 교육 목적에 최적화 |
 
 ### 가격 정책 (plan.md 기준)
-Academic Annual: **$1,500/Copy/연간** (Copy당 단가)
+Academic Annual: **$1,500/Seat/연간** (Seat당 단가). Seat 수는 프리셋 탭으로 선택 — 스테퍼 금지
 
 ### 인증 상태 안내 (CS 리스크)
 - `CompanyID 인증 대기 중` → 버튼 비활성화 + `"Verification in process"` 표시

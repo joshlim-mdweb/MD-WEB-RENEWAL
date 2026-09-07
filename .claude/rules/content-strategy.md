@@ -7,7 +7,6 @@ paths:
 # Content Strategy — MD Renewal Website
 
 적용 경로: `src/app/(marketing)/**`, `requirements/**/*.md`
-말투 규칙: `copywriting.md` 병행 적용.
 
 레퍼런스: Apple (primary), Procreate, Cursor, Claude.ai, Unity
 
@@ -87,7 +86,7 @@ CTA Primary  ·  CTA Secondary
 | 생산성 선언 | "Built to make you extraordinarily productive." | Cursor |
 
 - 추상 감성 금지: "더 나은 경험" "혁신적인" "강력한"
-- 동사 또는 명사형으로 마무리 (copywriting.md 동일 규칙)
+- 동사 또는 명사형으로 마무리
 - 경쟁사 이름, 비교 수식어 금지
 
 ---
