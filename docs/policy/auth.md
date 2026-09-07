@@ -4,6 +4,7 @@ Status: 기획 진행 중 (V 0.4.0 · 2026-06-23)
 관련 프로젝트: signup-mypage-renewal
 
 변경 이력:
+- V 0.4.1 (2026-08-07): Legacy 계정 로그인 허용 범위를 "레거시 미통합 Company ID 계정"으로 한정 명시 (`member.md`와 서술 범위 정합)
 - V 0.4.0 (2026-06-23): Sign Up 리다이렉트 화면 정책 추가 — Enterprise 포함 전면 CLO-SET 단일화 확정, 안내 화면 콘텐츠 정의
 - V 0.3.0 (2026-06-10): 로그인 에러 메시지 세분화, 비밀번호 찾기 CLO-SET 처리 인라인화, 비밀번호 정책 추가
 - V 0.2.0 (2026-06-09): Sign Up 제거, ID/PW 로그인(Legacy) 허용, 비밀번호 찾기 플로우 추가
@@ -14,9 +15,10 @@ Status: 기획 진행 중 (V 0.4.0 · 2026-06-23)
 ## 1. 기본 원칙
 
 - **신규 가입은 CLO-SET에서만 가능하다.** MD 사이트에는 Sign Up 버튼을 제공하지 않는다.
-- **로그인은 CLO-SET 계정과 Legacy(MD 자체) 계정 모두 허용한다.**
+- **로그인은 CLO-SET 계정과 Legacy(MD 자체) 계정을 허용한다.**
   - CLO-SET 계정: "Continue with CLO-SET" 버튼 → CLO-SET 인증 후 MD 진입
   - Legacy 계정: 이메일 + 비밀번호 직접 입력 → MD 자체 인증
+  - **Legacy 계정은 레거시 미통합(un-integrated) Company ID(기업용) 계정에 한정된다.** 개인 Legacy 계정은 이미 CLO-SET으로 통합 완료됐다 (`member.md` §2, §7 참조)
 - CLO-SET 로그인을 Primary로 최우선 노출한다. Legacy 로그인은 "or" 구분선 아래 Secondary로 표시.
 - 모든 CLO-SET MD 계정은 CLO-SET 계정과 1:1로 연결된다.
 - 소셜 로그인(Google, Apple 등)은 CLO-SET에서 처리하며 MD는 관여하지 않는다.
@@ -49,7 +51,7 @@ Sign In 화면의 "회원가입" 링크 클릭 시 CLO-SET 안내 화면으로 �
 
 | 필드 | 초기값 |
 | --- | --- |
-| MemberType (DB 내부) | Individual |
+| MemberType (DB 내부) | Individual — *(개발 확인 필요: 정책상 MemberType은 폐지됐으나 DB 필드가 남아 있는지 확인)* |
 | 개인 Plan | 없음 (No License) |
 | Student 인증 | 없음 |
 | Organization | 없음 |
@@ -93,7 +95,7 @@ Sign In 화면의 "회원가입" 링크 클릭 시 CLO-SET 안내 화면으로 �
 
 ## 4. Legacy 사용자 처리
 
-> CLO-SET 연동 이전에 MD에 직접 가입한 계정 (이메일 + 비밀번호 보유).
+> CLO-SET 연동 이전에 MD에 직접 가입한 **레거시 미통합 Company ID(기업용) 계정** (이메일 + 비밀번호 보유). 개인 Legacy 계정은 이미 CLO-SET으로 통합 완료됐다.
 
 | 상황 | 처리 |
 | --- | --- |

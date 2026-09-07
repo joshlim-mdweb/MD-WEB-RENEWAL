@@ -29,7 +29,7 @@
 
 개인 사용자에게 MD를 선택해야 하는 이유: 접근성 (가격), 유연성 (월/연 선택), 전문성 (업계 표준 툴)을 동시에 전달한다.
 
-학생 세그먼트에는 별도 가치 제안: "학교에서 배운 그 툴, 졸업 후에도 이어 쓰세요 — $99/년."
+학생 세그먼트에는 별도 가치 제안: "학교에서 배운 그 툴, 졸업 후에도 이어 쓰세요 — $8.25/월."
 
 ---
 
@@ -42,7 +42,7 @@
 | Headline | "Design Without Limits. Work Without a Team." |
 | Sub-headline | "Professional 3D garment simulation, built for individuals who mean business." |
 | Visual | 개인 디자이너 작업 장면 (고품질 의류 시뮬레이션 결과물 showcase) |
-| Primary CTA | "Start Free Trial" → 14일 무료 Trial 시작 플로우 (이후 자동으로 Subscription 전환) |
+| Primary CTA | "Start Free Trial" → Trial 시작 플로우 — Monthly·Annual 중 하나를 먼저 선택 → 14일 무료 → 종료 후 선택한 플랜으로 자동 결제 시작 |
 | Secondary CTA | "See Pricing" → 페이지 내 Pricing 섹션 스크롤 |
 
 ### Section 2 — Who It's For (Use Case 갤러리)
@@ -76,6 +76,11 @@
 | Individual Monthly | $39/월 | 유연한 구독, 언제든 해지 | plan-card.md 매트릭스 기준 |
 | Individual Annual | $280/년 | 월 환산 $23.3 — 40% 절약 | plan-card.md 매트릭스 기준 |
 
+> 두 플랜 모두 진입 경로가 2가지다 (plan.md §3 Trial 정책):
+> - Trial 경유: Trial 시작 시 Monthly·Annual 중 하나를 선택 → 14일 무료 → 종료 후 선택한 플랜으로 자동 결제 시작
+> - 바로 구매: Trial 없이 Monthly 또는 Annual 즉시 구매
+> Trial 기간 중 취소 가능하며, 취소 후 동일 계정으로 재Trial은 불가.
+
 > 버튼 상태는 plan-card.md CARD: INDIVIDUAL 매트릭스를 100% 따른다.
 > MemberType별 버튼 동작: Non-Member/Individual → "Start Now" (활성), Student → "For Student" (비활성), CompanyID 계열 → "For Individual" (비활성)
 
@@ -83,7 +88,7 @@
 
 | 플랜 | 가격 | 조건 | CTA |
 |------|------|------|-----|
-| Student Annual | $99/년 | 학생 인증 필요, 최대 2년(2회) | "Get Verified" / "Start Now" (상태별) |
+| Student Monthly | $8.25/월 | 학생 인증 필요, 최초 인증 승인일 기준 4년 이내 (횟수 제한 없음), 최초 3개월 무료(Student Benefit) | "Get Verified" / "Start Now" (상태별) |
 
 > 버튼 상태는 plan-card.md CARD: STUDENT 매트릭스를 따른다.
 
@@ -96,7 +101,7 @@
 
 | 질문 | 답변 요지 |
 |------|---------|
-| Individual과 Student 플랜의 차이는? | Student는 학생 인증 필요, 더 저렴하지만 최대 2년 사용 |
+| Individual과 Student 플랜의 차이는? | Student는 학생 인증 필요, 더 저렴하지만 최초 인증 승인일 기준 4년까지만 이용 가능 |
 | 언제든 해지할 수 있나요? | Monthly는 다음 결제일 전 해지 가능, 즉시 반영 |
 | 다른 기기에서도 쓸 수 있나요? | 단일 사용자 라이선스 — 1인 1기기 기준 |
 | Student 인증은 어떻게 하나요? | 학교 이메일 인증 또는 재학 증명서 업로드 |
@@ -106,8 +111,8 @@
 | 항목 | 내용 |
 |------|------|
 | Headline | "Start creating today." |
-| Sub | "14-day free trial. Subscription starts automatically after trial ends." |
-| CTA | "Start Free Trial" → 14일 무료 Trial 시작 플로우 |
+| Sub | "Pick Monthly or Annual, then try it free for 14 days. Your chosen plan starts automatically when the trial ends — $39/month or $280/year." |
+| CTA | "Start Free Trial" → Trial 시작 플로우 (Monthly·Annual 선택 → 14일 무료) |
 
 ---
 
@@ -115,12 +120,12 @@
 
 | 위치 | 버튼 텍스트 | 연결 대상 | 비고 |
 |------|------------|---------|------|
-| Hero Primary | Start Free Trial | 14일 Trial 시작 플로우 → Trial 종료 후 자동 Subscription | 비로그인 기본 |
+| Hero Primary | Start Free Trial | Trial 시작 플로우 (Monthly·Annual 선택 → 14일 무료 → 선택한 플랜으로 자동 결제) | 비로그인 기본 |
 | Hero Secondary | See Pricing | #pricing (앵커) | - |
 | Individual Monthly 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
 | Individual Annual 카드 | plan-card.md 기준 | /plan 또는 결제 플로우 | MemberType 분기 |
 | Student 배너 | Get Verified / Start Now | 인증 플로우 / 결제 플로우 | Verification Status 분기 |
-| Final CTA | Start Free Trial | 14일 Trial 시작 플로우 | - |
+| Final CTA | Start Free Trial | Trial 시작 플로우 (Monthly·Annual 선택 → 14일 무료) | - |
 
 ---
 
@@ -128,9 +133,10 @@
 
 - Student 인증 상태(pending/완료/재인증 필요)에 따라 버튼 상태 실시간 반영 필요
 - "For Student" 버튼 클릭 시 Student 페이지로 안내하는 툴팁 또는 링크 제공 검토
-- Trial은 Individual 전용 (개인 계정만 해당). Enterprise / Academic / Indie는 Trial 없음 — 문의 통해 별도 협의.
-- Trial 사용 이력 있는 Individual 유저가 재접근 시 Trial CTA 노출 금지 (이미 Subscription 전환 완료 상태)
-- Trial 종료 후 자동 Subscription 전환 시점 명확히 고지 — 카드 정보 입력 시점(Trial 시작 전)에 안내 필수
+- Trial은 Individual 전용 (개인 계정만 해당). Enterprise / Academic / Indie는 자동 Trial 없음 — 문의 통해 별도 협의.
+- Trial은 Monthly·Annual 모두에서 시작 가능. Trial 시작 화면에서 플랜을 먼저 선택하게 하고, 선택 결과를 그대로 결제 플랜으로 승계한다.
+- Trial 사용 이력 있는 Individual 유저가 재접근 시 Trial CTA 노출 금지. Trial 기간 중 취소한 유저도 동일 (재Trial 불가) — 바로 구매 CTA만 노출.
+- Trial 종료 후 자동 결제 전환 시점과 **전환될 플랜의 금액**($39/월 또는 $280/년)을 함께 명확히 고지 — 카드 정보 입력 시점(Trial 시작 전)에 안내 필수
 
 ---
 

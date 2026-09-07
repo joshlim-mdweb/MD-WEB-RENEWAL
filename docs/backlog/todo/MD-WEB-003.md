@@ -37,7 +37,7 @@ figma_ref: "PeCid7uJcg0HenViaaiHUp node 1390:2770 (구 draft) / node 6427:4033 (
 | # | 요구사항 | 반영 방식 |
 |---|---|---|
 | 1 | 한 페이지에서 모든 플랜 노출 | 7개 카드 확정: Individual / Student / Enterprise Single / Enterprise Team / Enterprise Team Linux / Academics / Indie |
-| 2 | Trial 존재를 잘 알림 | Individual 카드 — Monthly·Annual 둘 다 "14-Day Free Trial" 배지 + 가격 하단 안내 문구 |
+| 2 | Trial 존재를 잘 알림 | Individual 카드 — "14-Day Free Trial" 배지 + 가격 하단 안내 문구. Trial 진입 시 Monthly·Annual 중 하나를 선택하고, 종료 후 선택한 플랜으로 자동 결제 시작 |
 | 3 | Organization 케이스 → Team Console 존재 알림 | Enterprise/Academic/Indie 카드 Includes 목록에 Team Console 항목 추가 |
 | 4 | SW Account 등 계정 구조를 은은히 알림 | Seat 선택 UI 하단에 작은 캡션 텍스트 (마케팅 톤, 직접 용어 노출 안 함) |
 | 5 | Trial 없는 플랜의 Contact Sales 쉽게 발견 | Enterprise/Academic/Indie/Linux 전 카드에 Secondary CTA "Contact Sales" 고정 배치 |
@@ -45,7 +45,9 @@ figma_ref: "PeCid7uJcg0HenViaaiHUp node 1390:2770 (구 draft) / node 6427:4033 (
 
 ### 확정된 UX 결정 (2026-07-27)
 
-- **Trial 적용 범위**: Individual Monthly·Annual 둘 다 14일 Trial 적용 (Annual도 결제 없이 14일 사용 후 과금 시작)
+- **Trial 모델 (2026-08-04 확정)**: Trial은 별도 상품이 아니라 진입 방식이다.
+  - 경로 A — Trial 경유: Trial 시작 시 Monthly·Annual 중 하나를 선택 → 14일 무료 → 종료 후 선택한 플랜으로 자동 결제 시작 (Monthly 선택 시 $39/월, Annual 선택 시 $280/년)
+  - 경로 B — 바로 구매: Trial 없이 Monthly 또는 Annual 즉시 구매
 - **Org 생성 진입점**:
   - Enterprise 카드: Group 없는 Member가 "Start Now" 클릭 → **Organization 생성 페이지로 먼저 이동** (인증 없음, 생성만) → 완료 후 Checkout 진행
   - Academic/Indie 카드: Group 없는 Member 또는 미인증 Group Owner가 "Get Verified" 클릭 → **Organization 생성 + 인증 신청 통합 플로우**로 이동 (Group이 이미 있으면 인증 신청만)
@@ -57,10 +59,10 @@ figma_ref: "PeCid7uJcg0HenViaaiHUp node 1390:2770 (구 draft) / node 6427:4033 (
 | Individual 가격 | $23/mo | $39/mo | **수정 필요** |
 | Student 가격 | $99/yr (구 티켓 오기) | **$8.25/mo, Monthly only (Annual 없음)** | **수정 완료 (본 갱신)** |
 | Student 무료 기간 라벨 | "Trial" | "Student Benefit" — Trial 라벨 금지 | **수정 완료 (본 갱신)** |
-| Academics 단위 | $1,500/Mo | $1,500/Copy/yr | **수정 필요** |
+| Academics 단위 | $1,500/Mo | $1,500/Seat/yr | **수정 필요** |
 | Indie 가격 표기 | "60% Off" | $800/yr | **실가격 표기로 변경** |
-| Enterprise Linux | $2,300/yr, 정책 미정의 | 정책명 "Enterprise Team Linux"로 확정, 가격은 Contact Sales only | **수정 완료 (본 갱신)** |
-| Student 구매 횟수 제한 | `solutions-copy.md`: "최대 2년(2회) 구매 제한" | `plan.md`: "첫 구독일 기준 4년(48개월) 이내" — **문서 간 불일치** | **[미결] 정책 소유자 확인 필요 — 아래 참조** |
+| Enterprise Linux | $2,300/yr, 정책 미정의 | 정책명 "Enterprise Team Linux"로 확정, **$2,300/Seat/yr · 연간 일시납 · 웹에서 직접 구매 가능** | **수정 완료 (본 갱신)** |
+| Student 이용 기간 | 구매 횟수 제한 표기 | 최초 인증 시점부터 4년 이내. **횟수 제한 없음** | **수정 완료 (본 갱신)** |
 | 모든 Feature 항목 | "Description" × 5 | 4~6개 불릿 확정 | **확정 완료 (본 갱신, 아래 참조)** |
 
 ---
@@ -76,11 +78,11 @@ URL: `/plan`
 | 카드 | 정책명 | 표시 가격 | 결제 주기 | 비고 |
 |---|---|---|---|---|
 | Individual | Individual Monthly | **$39/mo** | 월간 자동결제 | Monthly/Annual 토글 포함, **"14-Day Free Trial" 배지** |
-| — (토글 시) | Individual Annual | $280/yr | 연간 단일결제 | 카드 내 토글로 전환, **동일하게 "14-Day Free Trial" 배지** |
+| — (토글 시) | Individual Annual | $280/yr | 연간 단일결제 | 카드 내 토글로 전환, **동일하게 "14-Day Free Trial" 배지** (Trial 경유 시 Annual을 선택해 두면 종료 후 $280/년으로 자동 결제) |
 | Enterprise Team | Enterprise Team | $2,000/yr | 연간 (Prepaid) | N Seat, Userpool 재배정, Team Console 포함, Contact Sales |
 | Enterprise Single | Enterprise Single | $199/mo | 월간 자동결제 | Max 1 concurrent user, Contact Sales |
 
-**(요구사항 2) Trial 노출 방식**: Individual 카드 상단에 "14-Day Free Trial" 배지 고정 표시 (Monthly/Annual 토글과 무관하게 항상 노출). 가격 하단에 보조 문구 1줄 — "14일 무료로 먼저 사용해보고 결제하세요" 방향 (최종 EN 카피는 `copywriting.md` 톤으로 별도 확정 — 명사형/동사 생략형 종결 고려).
+**(요구사항 2) Trial 노출 방식**: Individual 카드 상단에 "14-Day Free Trial" 배지 고정 표시 (Monthly/Annual 토글과 무관하게 항상 노출). 가격 하단에 보조 문구 1줄 — "지금 고른 플랜으로 14일 무료 사용 후 자동 결제 시작" 방향 (Trial 진입 시점에 선택한 Monthly·Annual이 그대로 전환 대상 플랜이 된다는 점이 드러나야 함) (최종 EN 카피는 `copywriting.md` 톤으로 별도 확정 — 명사형/동사 생략형 종결 고려).
 
 **[미결 A] Individual 토글 방식**
 현재 Figma는 카드 상단 우측에 Monthly/Annual 토글 배치.
@@ -96,18 +98,18 @@ URL: `/plan`
 | 카드 | 정책명 | 표시 가격 | 인증 조건 | 비고 |
 |---|---|---|---|---|
 | Student | Student Monthly | **$8.25/mo** (Monthly only, Annual 없음) | 학생 인증 | 첫 구독일 기준 4년 이내, 첫 3개월 무료("Student Benefit" — "Trial" 표기 금지) |
-| Academics | Academic Annual | **$1,500/Copy/yr** | 교육기관(Group) 인증 | Copy 수 스테퍼 포함 |
-| Indie | Indie Annual | **$800/yr** | Indie(Group) 인증 | Max 5 Copy |
+| Academics | Academic Annual | **$1,500/Seat/yr** | 교육기관(Group) 인증 | Seat 프리셋 탭 포함 |
+| Indie | Indie Annual | **$800/yr** | Indie(Group) 인증 | Max 5 Seat |
 
-> Academics 카드: Copy 수 스테퍼는 유지. 단위를 "/ Copy / Year"로 명확히 표기.
+> Academics 카드: Seat 수는 스테퍼가 아니라 **프리셋 탭**으로 선택. 단위를 "/ Seat / Year"로 명확히 표기.
 > Indie 카드: "60% Off" 문구 제거. "$800/yr" 실가격 표기. "Enterprise Team 대비 60% 할인" 설명 텍스트 추가.
 > Academic/Indie 두 카드 모두 Enterprise와 동일하게 **Team Console 포함 문구 + Contact Sales Secondary CTA** 노출 (요구사항 3, 5 — 아래 참조).
-> **[미결] Student 구매 횟수 표기**: `solutions-copy.md`는 "최대 2년(2회) 구매 제한"을 CS 리스크 1순위로 명시하지만 `plan.md`는 "첫 구독일 기준 4년(48개월) 이내"로 정의 — 두 문서가 다른 기준을 말하고 있어 카드에 어떤 제한 문구를 넣을지 정책 오너 확인 전까지 보류. 확인 전엔 "4년 이내" 기준으로 임시 표기.
+> Student 카드: 이용 기간은 **최초 인증 시점부터 4년 이내**로 표기. 구매 횟수 제한은 없으므로 횟수 관련 문구를 넣지 않는다.
 
 ### Section 3 — Enterprise Team Linux
 
-정책상 `Enterprise Offline`(Network Offline, Variable 가격, 별도 계약, BD 팀 협상)에 해당 — Plan 페이지 노출명은 **"Enterprise Team Linux"**로 확정.
-가격 자체를 표기하지 않고 **Contact Sales 전용 카드**로 운영 (셀프서브 구매 버튼 없음).
+기업용 Legacy 명칭 `Network Online Linux`에 해당 — Plan 페이지 노출명은 **"Enterprise Team Linux"**로 확정.
+**$2,300/Seat/yr · 연간 일시납 · Network Online (Prepaid)** 가격을 카드에 그대로 표기하고, 다른 Enterprise 카드와 동일하게 **웹에서 직접 구매 가능**하다. Contact Sales는 보조 CTA로만 병행 노출.
 
 ### Business 플랜 공통 — Team Console / SW Account / Contact Sales (요구사항 3·4·5)
 
@@ -147,7 +149,7 @@ Enterprise Single / Enterprise Team / Enterprise Team Linux / Academics / Indie 
 아래는 방향 확정 초안 — 최종 EN 표현은 `copywriting.md`/`content-strategy.md` 톤 재검토 후 확정.
 
 **① Individual** — 상시 판매, Trial 있음
-- 14-day free trial — no card charged until trial ends
+- 14-day free trial — pick Monthly or Annual, billing starts when the trial ends
 - Single-user license for your own devices
 - Full access to pattern-based simulation & fabric tools
 - Start faster with ready-made assets from MD CONNECT
@@ -177,13 +179,13 @@ Enterprise Single / Enterprise Team / Enterprise Team Linux / Academics / Indie 
 - Priority technical support
 - Contact Sales for custom seat counts
 
-**⑤ Enterprise Team Linux** — 가격 미표기, Contact Sales 전용
-- Custom licensing for offline & Linux-based pipelines
-- No self-serve pricing — built around your studio's contract
+**⑤ Enterprise Team Linux** — $2,300/Seat/yr, 웹 구매 가능
+- $2,300 per seat, per year — prepaid annual
+- Licensing for Linux-based studio pipelines
 - Same core toolset as Enterprise Team
-- Centralized management via Team Console
+- Centralized seat & license management via Team Console
 - Dedicated account manager
-- Contact Sales to get started
+- Contact Sales for custom seat counts
 
 **⑥ Academics** — 인증 필요(교육기관 Group), Contact Sales 노출
 - $1,500 per seat, per year
@@ -232,7 +234,9 @@ Secondary CTA **"Contact Sales"** — Enterprise Single/Team 카드에 고정 �
 
 ### ENTERPRISE TEAM LINUX 카드
 
-셀프서브 구매 버튼 없음 — Primary CTA 자체가 **"Contact Sales"** 하나. Non-Member 포함 모든 계정 상태에서 동일하게 노출 (버튼 상태 분기 없음).
+웹 구매 가능 — Primary CTA는 Enterprise Single/Team 카드와 동일한 **"Start Now"**, 버튼 상태 분기도 위 ENTERPRISE SINGLE / ENTERPRISE TEAM 매트릭스를 그대로 따른다.
+
+Secondary CTA **"Contact Sales"** — 고정 표시. 모든 계정 상태에서 항상 표시.
 
 ### STUDENT 카드
 
@@ -286,7 +290,7 @@ Secondary CTA **"Contact Sales"** — 고정 표시.
 ## 완료 조건 (Definition of Done)
 
 ### 기획 완료 기준
-- [x] Enterprise Team Linux 포함 확정 — Contact Sales 전용 카드로
+- [x] Enterprise Team Linux 포함 확정 — $2,300/Seat/yr 표기 + 웹 구매 가능 카드로
 - [ ] 미결 A (Individual 토글 방식) 확정
 - [x] 각 플랜 Feature 목록(Includes) 4~6개 불릿 확정 — 최종 EN 워딩 재검토 필요
 - [ ] 섹션 타이틀 카피 확정
@@ -309,9 +313,9 @@ Secondary CTA **"Contact Sales"** — 고정 표시.
 
 - **비로그인 default**: Non-Member 버튼 상태를 페이지 기본으로. 로그인 후 계정 상태(Member / Member+Student 인증 / Group Owner / Group Owner+Academic·Indie 인증)에 따라 hydration.
 - **Verified Plans 섹션 CTA**: "Verify" 단어 제거. 비로그인은 "Get Verified", 인증 완료는 "Start Now".
-- **Academics Copy 수 표시**: $1,500/Copy/yr + 스테퍼. 총 금액 = 단가 × Copy 수 실시간 표시.
-- **Student 구매 제한 고지**: 카드 하단에 "Available up to 2 times" 명시 (CS 리스크 1순위).
-- **Trial 가시성 (요구사항 2)**: Individual 카드는 Monthly/Annual 무관하게 항상 "14-Day Free Trial" 배지 노출 — CTA 텍스트는 그대로 "Start Now" 유지, Trial 여부는 배지+보조문구로만 전달.
+- **Academics Seat 수 표시**: $1,500/Seat/yr + 프리셋 탭. 총 금액 = 단가 × Seat 수 실시간 표시.
+- **Student 이용 기간 고지**: 카드 하단에 최초 인증 시점부터 4년 이내 이용 가능함을 명시 (CS 리스크 1순위). 구매 횟수 제한 없음.
+- **Trial 가시성 (요구사항 2)**: Individual 카드는 Monthly/Annual 무관하게 항상 "14-Day Free Trial" 배지 노출 — CTA 텍스트는 그대로 "Start Now" 유지, Trial 여부는 배지+보조문구로만 전달. 보조문구는 "지금 고른 플랜(Monthly 또는 Annual)으로 14일 후 자동 결제"라는 전환 관계를 담는다.
 - **Business 플랜 공통 신뢰 요소 (요구사항 3·4·5)**: Enterprise/Academic/Indie/Linux 4개 카드는 Includes 목록 마지막에 Team Console 항목, 카드 하단에 Contact Sales Secondary CTA를 동일하게 배치해 "이 그룹은 별도로 관리·상담받는 플랜"이라는 인상을 통일.
 - **Organization 생성 여정 삽입 (요구사항 6)**: Plan 페이지 자체에 Organization 생성 UI를 만들지 않는다 — Group 없는 Member의 클릭을 별도 생성(+인증) 페이지로 라우팅하는 방식으로 처리해 Plan 페이지 카드 구조는 그대로 유지.
 
@@ -322,8 +326,8 @@ Secondary CTA **"Contact Sales"** — 고정 표시.
 - Student 구매 횟수/기간 제한 — 카드에 명시 필수 (단, 정확한 기준 자체가 문서 간 불일치 — 위 미결 항목 참조)
 - "Verification in process" 상태에서 구매 버튼 왜 비활성인지 — 버튼 아래 "Verification in process" 상태 텍스트 표시
 - Indie 60% Off 기준이 무엇인지 — "Enterprise Team 대비 60% 할인" 명기
-- Enterprise Team Linux 가격 문의 — "Contact Sales" CTA + 이메일/문의 폼 연결
-- Trial 종료 후 자동 결제되는 줄 몰랐다는 문의 — Trial 배지 옆 "종료 후 자동 결제" 보조 문구 필수 (요구사항 2)
+- Enterprise Team Linux 가격 문의 — 카드에 $2,300/Seat/yr 직접 표기 + 보조 "Contact Sales" CTA로 문의 폼 연결
+- Trial 종료 후 어떤 플랜으로 결제되는지 몰랐다는 문의 — Trial 배지 옆에 "종료 후 선택한 플랜(Monthly/Annual)으로 자동 결제" 보조 문구 필수 (요구사항 2)
 - Group 없이 Enterprise/Academic/Indie 진입 시 왜 생성 페이지로 이동하는지 — 진입 화면에 "구매 전 Organization 생성이 필요해요" 안내 문구 필요 (요구사항 6)
 
 ---
@@ -332,7 +336,7 @@ Secondary CTA **"Contact Sales"** — 고정 표시.
 
 | # | 항목 | 옵션 | 추천 |
 |---|---|---|---|
-| ~~A~~ | ~~Enterprise Team Linux 포함 여부~~ | — | **해결** — 포함, Contact Sales 전용 카드 |
+| ~~A~~ | ~~Enterprise Team Linux 포함 여부~~ | — | **해결** — 포함, $2,300/Seat/yr 표기 + 웹 구매 가능 카드 |
 | A | Individual 토글 | 카드 내 / 섹션 상단 글로벌 | 카드 내 토글 |
 | ~~B~~ | ~~Feature 목록~~ | — | **해결** — 카드별 4~6개 불릿 확정 (위 참조), EN 워딩만 재검토 |
 | E | Hero 카피 | "Plan" 단어만 / 마케팅 카피 추가 | 현행 유지, 서브카피 1줄 추가 고려 |
@@ -340,4 +344,3 @@ Secondary CTA **"Contact Sales"** — 고정 표시.
 | G | Team Console Includes 문구 | — | `solutions-copy.md` Enterprise Core 2 톤 참고해 확정 필요 |
 | H | SW Account 간접 안내 캡션 문구 | — | 용어 노출 없이 "팀원 배정 가능"만 전달하는 방향으로 확정 필요 |
 | I | Organization 생성(+인증) 페이지 자체 설계 | 이번 티켓 범위 포함 / 별도 티켓 분리 | **별도 티켓 분리 추천** — 이 티켓은 Plan 페이지 카드·라우팅 분기까지만 |
-| J | Student 구매 횟수/기간 제한 문구 | "4년 이내"(plan.md) / "2년(2회) 구매 제한"(solutions-copy.md) | **정책 오너 확인 필요** — 두 문서 불일치, 확인 전 "4년 이내" 임시 적용 |

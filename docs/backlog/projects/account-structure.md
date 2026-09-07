@@ -12,7 +12,7 @@ updated: 2026-06-25
 3. Slack Canvas 빈 placeholder 표 수동 삭제 필요 (KR·EN 섹션 1 각 1개 — 직접 열어서 Delete)
 
 ## 컨텍스트
-- **Slack Canvas**: `F0BBYNQ3S8P` — Marvelous Designer Account Structure Renew
+- **Slack Canvas**: [[RENEWAL] Account Structure](https://clo3d.slack.com/docs/T04BT3VBR/F0BBYNQ3S8P) `F0BBYNQ3S8P`
   - KR·EN 섹션 1 계정 유형 표를 5컬럼 매트릭스로 교체 (계정 유형 / 설명 / Web 로그인 / SW 로그인 / CLO-SET 연동)
   - Non-Member: 전체 ❌ / Member: 전체 ✅ / SW Account: SW 로그인 ✅만
 - **계정 구조 정책 핵심**:

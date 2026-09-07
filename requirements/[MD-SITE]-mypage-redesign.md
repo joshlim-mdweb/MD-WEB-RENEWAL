@@ -4,7 +4,7 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 
 ## 배경
 
-기존 MyPage는 MemberType 분기 구조가 불명확하고 탭 구성이 최신 정책을 반영하지 않은 채 운영 중이다. License/Billing 외에 Overview(대시보드), Shared License(외부 라이선스 제공자 확인) 탭을 추가하고, 6종 MemberType 전체에 대한 UI 분기를 정확히 재설계한다.
+기존 MyPage는 MemberType 분기 구조가 불명확하고 탭 구성이 최신 정책을 반영하지 않은 채 운영 중이다. License/Billing 외에 Overview(대시보드), Invited Projects(외부 라이선스 제공자 확인) 탭을 추가하고, 6종 MemberType 전체에 대한 UI 분기를 정확히 재설계한다.
 
 ---
 
@@ -13,7 +13,7 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | 항목 | 내용 |
 |---|---|
 | TITLE | MyPage 리뉴얼 — 4탭 재설계 |
-| DESCRIPTION | Overview / Account / License/Billing / Shared License 4탭 구조로 개편. 6종 MemberType × CLO-SET 통합 여부 × 라이선스 상태 전체 분기 반영 |
+| DESCRIPTION | Overview / Account / License/Billing / Invited Projects 4탭 구조로 개편. 6종 MemberType × CLO-SET 통합 여부 × 라이선스 상태 전체 분기 반영 |
 | 요청자 | Josh Lim |
 | DUE DATE | (미정) |
 
@@ -48,16 +48,16 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | Overview | O | O | O | O | O | O |
 | Account | O | O | O | O | O | O |
 | License / Billing | O | O | O | O | O | **X** |
-| Shared License | △ | △ | △ | △ | △ | **O** |
+| Invited Projects | △ | △ | △ | △ | △ | **O** |
 
 > △ = 조건부. 타 Company의 Userpool Guest로 할당된 경우에만 탭 노출.
-> Shared License = License ID는 항상 노출. 소속 Company 없으면 계정 자체가 없음.
+> Invited Projects = License ID는 항상 노출. 소속 Company 없으면 계정 자체가 없음.
 > Company ID의 유저풀 관리(License ID 생성·삭제·Guest 초대)는 Team Console에서 수행. MyPage 미포함.
 
 ### 2.4 제외 범위 (이번 배포 외)
 
 - `/mypage/store`, `/mypage/store/history` — MD Store Archive
-- Seat 수 조회 — Shared License 탭에서 Company 사용 규모 유추 방지
+- Seat 수 조회 — Invited Projects 탭에서 Company 사용 규모 유추 방지
 
 ---
 
@@ -68,12 +68,12 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | 기능명 | Description | 노출 조건 |
 |---|---|---|
 | Account Summary | 시스템은 MemberType 뱃지, 이메일, CLO-SET 통합 상태를 표시한다. | 전체 |
-| My License | 시스템은 내 구독 플랜명, 상태, 만료일, Auto Renew 상태를 표시한다. | 내 구독 보유 시 (Individual / Company ID 계열) |
-| Shared License | 시스템은 제공 Company명, 라이선스 유형, 내 상태, 만료일을 표시한다. Seat 수는 표시하지 않는다. | Userpool Guest 할당 시 또는 License ID |
+| My License | 시스템은 내 구독 플랜명, 상태, 만료일을 표시한다. | 내 구독 보유 시 (Individual / Company ID 계열) |
+| Invited Projects | 시스템은 제공 Company명, 라이선스 유형, 내 상태, 만료일을 표시한다. Seat 수는 표시하지 않는다. | Userpool Guest 할당 시 또는 License ID |
 | Verification Status | 시스템은 자격 인증 현황 뱃지(Student / Academic / Indie)를 표시한다. | 해당 인증 보유 MemberType만 |
 | Quick Actions | 시스템은 라이선스 상태 기반 컨텍스트 CTA를 표시한다. | 전체 (상태에 따라 CTA 내용 변경) |
 
-> My License와 Shared License는 동시 노출 가능 — Individual이 자체 구독 + Guest 할당을 동시에 보유한 경우.
+> My License와 Invited Projects는 동시 노출 가능 — Individual이 자체 구독 + Guest 할당을 동시에 보유한 경우.
 
 ### 3.2 Account 탭
 
@@ -136,7 +136,7 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | LIC-02 | Trial 취소 | Trial 상태 사용자는 Trial을 즉시 취소한다. 재Trial 불가 고지를 포함한 확인 모달 후 처리한다. |
 | LIC-03 | Monthly 구독 취소 | Monthly Active/Paused 사용자는 Stop Subscription 진입 후 Cancel 선택으로 구독을 취소한다. 이탈 서베이 포함. |
 | LIC-04 | Enterprise Single 구독 취소 | Company ID Enterprise Single Active 사용자는 구독을 취소한다. |
-| LIC-05 | Auto Renew 취소 | Individual Annual + Auto Renew ON 상태 사용자는 자동 갱신을 해제한다. |
+| ~~LIC-05~~ | ~~Auto Renew 취소~~ | **폐기 (2026-08-05)** — Auto Renew는 옵션이 아니다. Annual 갱신 중단은 Cancel Subscription으로 통합한다. |
 | LIC-06 | 플랜 구매 이동 | No License / Expired / Trial 취소 완료 시 Pricing 페이지로 이동하는 CTA를 노출한다. Individual 계열만. |
 | LIC-07 | 청구지 주소 조회 / 편집 | 사용자는 청구지 주소를 조회하고 편집한다. |
 | LIC-08 | Payment Method 조회 | 사용자는 등록된 결제 수단 정보를 조회한다. |
@@ -159,8 +159,8 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | Resume Now CTA | Monthly Paused 상태일 때만 |
 | Retry Payment CTA | Monthly Suspended 상태일 때만 |
 | Cancel Subscription CTA | Monthly Active/Paused 또는 Enterprise Single Active일 때 |
-| Auto Renew 섹션 | Individual Annual일 때만 |
-| Auto Renew 취소 CTA | Individual Annual + Auto Renew ON일 때만 |
+| ~~Auto Renew 섹션~~ | **폐기 (2026-08-05)** |
+| ~~Auto Renew 취소 CTA~~ | **폐기 (2026-08-05)** — Cancel Subscription으로 통합 |
 | 플랜 구매 CTA | No License / Expired / Trial 취소 완료 시 (Individual 계열만) |
 | 결제 정보 / 청구지 주소 | Individual O, Company ID O, License ID X |
 | 인보이스 목록 | Individual O, Company ID O, License ID X |
@@ -177,11 +177,11 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | Cancel Scheduled | — (대기) | No License (만료 후) |
 | No License | Go to Pricing | — |
 
-### 3.4 Shared License 탭
+### 3.4 Invited Projects 탭
 
 | Feature ID | 기능명 | Description |
 |---|---|---|
-| SHL-01 | Shared License Provider 정보 조회 | 사용자는 나에게 라이선스를 제공하는 Company명, 라이선스 유형, 내 상태(Active / Inactive), 만료일을 read-only로 조회한다. Seat 수는 표시하지 않는다. |
+| SHL-01 | Invited Projects Provider 정보 조회 | 사용자는 나에게 라이선스를 제공하는 Company명, 라이선스 유형, 내 상태(Active / Inactive), 만료일을 read-only로 조회한다. Seat 수는 표시하지 않는다. |
 
 | 표시 항목 | 표시 여부 | 비고 |
 |---|---|---|
@@ -197,10 +197,10 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 
 ### 4.1 Web
 
-- `/mypage/overview` — Overview 탭: Account Summary, My License, Shared License, Verification Status, Quick Actions
+- `/mypage/overview` — Overview 탭: Account Summary, My License, Invited Projects, Verification Status, Quick Actions
 - `/mypage/account` — Account 탭: 계정 정보, 비밀번호 변경(CLO-SET 분기), 인증 상태, CLO-SET 통합, 관리 액션
-- `/mypage/license` — License/Billing 탭: 라이선스 정보, 구독 관리(Pause/Resume/Cancel/Retry), Auto Renew, 청구지, Payment Method, 인보이스
-- `/mypage/shared-license` — Shared License 탭: Provider 정보 read-only 조회
+- `/mypage/license` — License/Billing 탭: 라이선스 정보, 구독 관리(Pause/Resume/Cancel/Retry — Annual은 Cancel/Retry만), 청구지, Payment Method, 인보이스
+- `/mypage/shared-license` — Invited Projects 탭: Provider 정보 read-only 조회 *(개발 확인 필요: 탭명 변경에 맞춰 경로도 바꿀지)*
 - License ID는 `/mypage/license` 탭 미노출
 
 ### 4.2 Admin
@@ -318,7 +318,12 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | 5b | System (API 에러) | 에러 모달을 노출한다. Error Code 표시 + [Close] / [Contact Us] 버튼. |
 | 5c | System (결제 실패) | 에러 모달을 노출한다. 잔액 부족/결제사 문제 안내 + [Retry] 버튼. |
 
-### 5.10 Auto Renew 취소 (LIC-05)
+### 5.10 ~~Auto Renew 취소 (LIC-05)~~ — 폐기 (2026-08-05)
+
+> Auto Renew는 켜고 끄는 옵션이 아니다. Annual은 자동 갱신이 기본 동작이며, 갱신을 중단하려면 구독을 해지한다. 아래 플로우는 폐기하고 Cancel Subscription 플로우로 통합한다. 근거: `docs/policy/mypage.md` §6-2-2
+
+<details><summary>폐기된 원문</summary>
+
 
 | Step | Actor | Description |
 |------|-------|-------------|
@@ -326,6 +331,8 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 | 2 | System | 확인 모달을 노출한다. "잔여 기간 사용 가능, 만료 후 미갱신" 안내. |
 | 3 | 사용자 | 확인 버튼을 클릭한다. |
 | 4 | System | Auto Renew를 OFF 상태로 전환한다. |
+
+</details>
 
 ### 5.11 License Admin 이동 (ACC-10)
 
@@ -344,12 +351,12 @@ Epic Key: `(미정)` | 요청: Josh Lim | 출처: 세션 논의 | 작성일: 202
 
 ### 6.1 UX / 화면 구성
 
-- [ ] OVERVIEW — Account Summary + My License + Shared License + Verification Status + Quick Actions 와이어프레임 (MemberType별)
+- [ ] OVERVIEW — Account Summary + My License + Invited Projects + Verification Status + Quick Actions 와이어프레임 (MemberType별)
 - [ ] ACCOUNT_INDIVIDUAL — CLO-SET 통합 여부별 편집 상태 분기 화면 (Not Integrated / Integrated 2케이스)
 - [ ] ACCOUNT_COMPANYID — CLO-SET 분기 + Academic/Indie 인증 + CLO-SET 해제 CTA + License Admin 이동
 - [ ] ACCOUNT_LICENSEID — 조회 전용 + 비밀번호 독립 변경 화면
 - [ ] LICENSE_INDIVIDUAL — Monthly 상태 전이 6케이스 (Active / Pause Scheduled / Paused / Suspended / Cancel Scheduled / No License)
-- [ ] LICENSE_INDIVIDUAL_ANNUAL — Auto Renew ON/OFF + Retry Payment 케이스
+- [ ] LICENSE_INDIVIDUAL_ANNUAL — Annual Active / Cancel Scheduled / Suspended 케이스 (Auto Renew·Pause 미제공)
 - [ ] LICENSE_COMPANYID — Enterprise Single Active / Cancel Scheduled
 - [ ] SHARED_LICENSE — Provider 정보 read-only (License ID 상시 / Guest 조건부)
 - [ ] FLOW_STOP_SUBSCRIPTION — Stop Subscription 모달 분기 흐름 (Pause / Cancel)

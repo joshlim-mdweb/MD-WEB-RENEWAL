@@ -24,7 +24,7 @@
 ### 페인포인트
 - 팀원 수에 맞는 라이선스 관리가 어렵다 (입사/퇴사 시 재배분)
 - 대규모 팀 도입 시 총비용(TCO)을 미리 파악하기 어렵다
-- 오프라인 환경(보안 네트워크)에서도 써야 한다
+- Linux 환경에서도 팀 전체가 같은 라이선스로 움직여야 한다
 - 소규모 스튜디오는 Enterprise 가격이 부담 — Enterprise 고객 인증 후 Indie 특가가 있다는 걸 모른다
 
 ---
@@ -52,7 +52,7 @@ Indie 세그먼트에는 Enterprise 페이지 내 배너로 가치 제안: "Ente
 
 > Non-Member / CompanyID(라이선스 없음) → Primary CTA 활성화
 > Individual / Student → "For Enterprise" 비활성 (해당 유저가 이 페이지 진입 시 상단 배너로 개인 플랜 안내)
-> Trial 없음: Enterprise / Indie는 무료 Trial을 제공하지 않음. 문의(Talk to Sales) 통해 별도 협의.
+> 자동 Trial 없음: Enterprise / Indie는 자동으로 시작되는 무료 Trial이 없음. 제공 여부는 문의(Talk to Sales)를 통해 결정.
 
 ### Section 2 — Why Enterprise
 
@@ -61,19 +61,19 @@ Indie 세그먼트에는 Enterprise 페이지 내 배너로 가치 제안: "Ente
 | 포인트 | 설명 |
 |--------|------|
 | Industry Standard | Zara, H&M, Nike 등 글로벌 브랜드가 사용하는 업계 표준 |
-| Scalable Licensing | 팀 규모에 따라 Copy 수 유연 조정 (Network Online) |
+| Scalable Licensing | 팀 규모에 따라 Seat 수 유연 조정 (Network Online) |
 | Centralized Control | CompanyID 한 계정으로 전체 License ID 생성 · 관리 |
-| Offline Option | 보안 환경이 필요한 팀을 위한 Network Offline (별도 계약) |
+| Linux Option | Linux 파이프라인을 쓰는 팀을 위한 Enterprise Team Linux |
 
 ### Section 3 — Plan Comparison
 
-Enterprise Monthly vs Enterprise Annual 비교.
+Enterprise Single vs Enterprise Team 비교.
 
-| 구분 | Enterprise Monthly | Enterprise Annual |
+| 구분 | Enterprise Single | Enterprise Team |
 |------|-------------------|-------------------|
 | 가격 | $199/월 | $2,000/년 |
 | 라이선스 유형 | Network Online | Network Online |
-| 동시접속 | Max 1 Copy | 구매된 N Copy |
+| 동시접속 | Max 1 Seat | 구매된 N Seat |
 | 결제 방식 | 자동결제 | Prepaid (일시 납부) |
 | 적합한 경우 | 단기 프로젝트, 유연성 필요 | 팀 운영, 비용 효율 중요 |
 | CTA | plan-card.md 매트릭스 기준 | plan-card.md 매트릭스 기준 |
@@ -82,13 +82,15 @@ Enterprise Monthly vs Enterprise Annual 비교.
 > License ID (라이선스 있음) → "Check my License Status" (활성)
 > License ID (라이선스 없음) → "Contact your Group Manager" (비활성)
 
-**Enterprise Offline 별도 섹션** (하단 배너)
+**Enterprise Team Linux 별도 섹션** (하단 배너)
 
 | 항목 | 내용 |
 |------|------|
-| 대상 | 보안 네트워크, 인터넷 불가 환경 기업 |
-| 가격 | Variable (별도 계약) |
-| CTA | "Contact Sales" → BD 문의 폼 |
+| 대상 | Linux 기반 제작 파이프라인을 운영하는 팀 |
+| 가격 | $2,300/년 (Prepaid) |
+| 동시접속 | 구매된 N Seat |
+| 구매 방식 | 웹에서 직접 구매 가능 |
+| CTA | "Start Now" → 결제 플로우 (보조 CTA "Talk to Sales") |
 
 ### Section 4 — Indie 특가 배너
 
@@ -98,7 +100,7 @@ Enterprise 페이지 내 별도 배너로 노출. Indie는 독립 Solutions 항�
 |------|------|
 | Headline | "Running a small studio?" |
 | Sub | "Indie-certified Enterprise customers get a special rate — Enterprise-grade features at a price built for teams of 2–5." |
-| 가격 | $800/년, Max 5 Copy (Indie 인증 완료 CompanyID 전용) |
+| 가격 | $800/년, Max 5 Seat (Indie 인증 완료 CompanyID 전용) |
 | 조건 | Enterprise 고객 중 Indie 인증 완료 (연 매출 $500K 이하) |
 | 노출 조건 | CompanyID 계정에서만 배너 노출. Individual / Student에게는 표시 안 함. |
 | CTA | "Get Verified" (Indie 인증 미완료 CompanyID) / "Check my License Status" (Indie 인증 완료) |
@@ -113,7 +115,7 @@ CompanyID (어드민)가 실제로 어떻게 관리하는지 단계별 설명.
 
 1. CompanyID 계정 생성 (CLO-SET 통합 선택)
 2. License ID 생성 (이메일 인증 or ID 선생성)
-3. 라이선스 Copy 수만큼 동시접속 허용
+3. 라이선스 Seat 수만큼 동시접속 허용
 4. 입사/퇴사 시 License ID 재배정
 
 Visual: 심플한 플로우 다이어그램 (3~4 step)
@@ -126,7 +128,7 @@ Visual: 심플한 플로우 다이어그램 (3~4 step)
 |---------|------|
 | Dedicated Onboarding | 도입 초기 셋업 지원 |
 | Priority Support | 기업 전용 빠른 응답 채널 |
-| Volume Discount | Copy 수 대량 구매 시 별도 협의 가능 |
+| Volume Discount | Seat 수 대량 구매 시 별도 협의 가능 |
 | Custom Contract | 결제 조건, 인보이스 등 커스텀 계약 |
 
 ### Section 7 — Social Proof
@@ -149,9 +151,9 @@ Visual: 심플한 플로우 다이어그램 (3~4 step)
 |------|------------|---------|------|
 | Hero Primary | Start Now | /plan#enterprise | MemberType 분기 적용 |
 | Hero Secondary | Talk to Sales | /contact 또는 외부 링크 | 항상 활성 |
-| Enterprise Monthly 카드 | plan-card.md 기준 | 결제 플로우 | - |
-| Enterprise Annual 카드 | plan-card.md 기준 | 결제 플로우 | - |
-| Offline 배너 | Contact Sales | BD 문의 폼 | 항상 활성 |
+| Enterprise Single 카드 | plan-card.md 기준 | 결제 플로우 | - |
+| Enterprise Team 카드 | plan-card.md 기준 | 결제 플로우 | - |
+| Enterprise Team Linux 배너 | Start Now / Talk to Sales | 결제 플로우 / BD 문의 폼 | 웹 구매 가능 |
 | Indie 배너 | Get Verified / Check my License Status | 인증 플로우 / 라이선스 현황 | Verification Status 분기 |
 | Final CTA (좌) | Start Now | /plan#enterprise | - |
 | Final CTA (우) | Talk to Sales | /contact | - |
@@ -162,7 +164,7 @@ Visual: 심플한 플로우 다이어그램 (3~4 step)
 
 - Individual / Student MemberType이 Enterprise 페이지 방문 시: 상단 알림 배너로 "이 플랜은 기업 계정용이에요. 개인 플랜을 확인해 보세요." + Individual 페이지 링크
 - Indie 인증 대기 중 유저가 재방문 시: 인증 진행 상태 표시 ("Verification in process" 상태 유지, 처리 기간은 페이지에 노출하지 않음)
-- Enterprise Offline은 가격 미표시 — "Contact Sales" 단일 CTA로만 처리
+- Enterprise Team Linux는 가격($2,300/년) 표시 + 웹에서 바로 구매 가능 — "Start Now"를 기본 CTA로 두고 "Talk to Sales"는 보조 CTA로 병기
 - BD팀 문의 폼 연결 SLA: 영업일 기준 1~2일 내 응답 (페이지에 명시)
 
 ---
@@ -173,7 +175,7 @@ Visual: 심플한 플로우 다이어그램 (3~4 step)
 |--------|---------|
 | `solutions_enterprise_hero_cta_click` | Hero "Start Now" 클릭 |
 | `solutions_enterprise_talk_to_sales_click` | "Talk to Sales" 클릭 (위치 파라미터 포함) |
-| `solutions_enterprise_plan_card_click` | 플랜 카드 CTA 클릭 (plan_type: monthly/annual) |
-| `solutions_enterprise_offline_contact_click` | Offline 배너 "Contact Sales" 클릭 |
+| `solutions_enterprise_plan_card_click` | 플랜 카드 CTA 클릭 (plan_type: single/team) |
+| `solutions_enterprise_offline_contact_click` | Enterprise Team Linux 배너 CTA 클릭 *(개발 반영 필요 — 이벤트명이 구 플랜명 기준. 개명 시 로깅 단절 주의)* |
 | `solutions_enterprise_indie_banner_click` | Indie 배너 CTA 클릭 |
 | `solutions_enterprise_logo_section_view` | Social Proof 섹션 scroll 진입 |

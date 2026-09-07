@@ -57,7 +57,7 @@
 > - CompanyID(인증 대기 중) → "Verification in process" (비활성)
 > - Academic(인증 완료, 라이선스 있음) → "Start Now" (활성)
 > - Individual / Student → "For Enterprise" (비활성) + 안내 배너
-> Trial 없음: Academic은 무료 Trial을 제공하지 않음. 문의(Contact Us) 통해 별도 협의.
+> 자동 Trial 없음: Academic은 자동으로 시작되는 무료 Trial이 없음. 제공 여부는 문의(Contact Us)를 통해 결정.
 
 ### Section 2 — Why Marvelous Designer for Education
 
@@ -68,7 +68,7 @@
 | Industry-Ready Skills | 졸업생이 Zara, H&M, 넥슨, EA 등에서 바로 쓰는 툴 |
 | Realistic Simulation | 패턴 → 봉제 → 시뮬레이션 전 과정을 교육 가능 |
 | Cross-Discipline | 패션, 게임 아트, 영화 VFX 등 다양한 전공에서 활용 |
-| Easy Student Management | CompanyID로 License ID 일괄 생성 · 관리 |
+| Easy Student Management | CompanyID로 License ID 일괄 생성 · 관리 (구매한 Seat 수 단위) |
 
 ### Section 3 — Academic Plan
 
@@ -77,9 +77,9 @@
 | 항목 | 내용 |
 |------|------|
 | 플랜명 | Academic Annual |
-| 가격 | $1,500/년 |
+| 가격 | $1,500/Seat/년 |
 | 라이선스 유형 | Network Online |
-| 동시접속 | 구매된 N Copy (학생 수만큼 구매) |
+| 동시접속 | 구매된 N Seat (동시에 수업에 참여할 학생 수만큼 구매) |
 | 갱신 방식 | Prepaid (연간 일시 납부) |
 | 조건 | Academic 인증 완료된 CompanyID만 구매 가능 |
 | CTA | plan-card.md CARD: ACADEMICS 매트릭스 기준 |
@@ -92,15 +92,15 @@
 > - License ID(라이선스 있음) → "Check my License Status" (활성)
 > - License ID(라이선스 없음) → "Contact your Group Manager" (비활성)
 
-**Copy 수 계산기 (선택 기능)** — Pricing 카드 옆에 인터랙티브 슬라이더 또는 입력 필드
+**Seat 수 선택 — 프리셋 탭** (plan.md §4-3)
 
 ```
-학생 수: [  30  ] 명
-예상 연간 비용: $1,500 × 1 Copy = $1,500/년
-(동시접속 30명 기준: 30 Copy → $1,500 × 30 = $45,000/년)
+Seat 수: [ 1 ] [ 5 ] [ 10 ] [ 직접 입력 ]
 ```
 
-> 확정 정책: Copy당 $1,500/년. N Copy × $1,500 = 연간 총 비용. 예) 30명 동시접속 → 30 Copy → $45,000/년.
+> 확정 정책: Seat당 $1,500/년. N Seat × $1,500 = 연간 총 비용. 예) 동시접속 10명 → 10 Seat → $15,000/년.
+> Seat 선택은 **프리셋 탭 방식**으로만 제공한다. 스텝퍼 · 슬라이더 · 실시간 비용 계산기는 사용하지 않는다.
+> 프리셋으로 커버되지 않는 규모는 [직접 입력] 탭으로 처리.
 
 ### Section 4 — Verification Process (인증 절차 안내)
 
@@ -111,7 +111,7 @@
 | Step 1 | CompanyID 계정 생성 (기관 대표 이메일로 가입) |
 | Step 2 | Academic 인증 신청 — 교육기관 공식 도메인 등록 또는 서류 제출 |
 | Step 3 | 검토 후 인증 완료 이메일 수신 |
-| Step 4 | Academic Annual 라이선스 구매 및 License ID 생성 |
+| Step 4 | Academic Annual 라이선스 구매(Seat 수 선택) 및 License ID 생성 |
 
 Visual: 4-step 수평 스텝퍼 컴포넌트
 
@@ -130,7 +130,7 @@ Visual: 4-step 수평 스텝퍼 컴포넌트
 | 기능 | 설명 |
 |------|------|
 | License ID 생성 | 이메일 인증 방식 또는 ID 선생성 후 학생 직접 인증 |
-| 동시접속 관리 | 구매한 Copy 수만큼 동시에 수업 진행 가능 |
+| 동시접속 관리 | 구매한 Seat 수만큼 동시에 수업 진행 가능 |
 | 학기 단위 재배정 | 졸업 · 수강 종료 후 License ID 재배정 가능 |
 | CLO-SET 연동 | HQClosetIntegration 설정으로 학생 작업물 공유 관리 |
 
@@ -144,7 +144,7 @@ Visual: 4-step 수평 스텝퍼 컴포넌트
 | 질문 | 답변 요지 |
 |------|---------|
 | 인증까지 얼마나 걸리나요? | 서류 검토 후 이메일로 결과를 안내해 드려요. 처리 기간은 별도 안내하지 않음. |
-| 학생 수보다 Copy 수가 적어도 되나요? | 동시접속 기준 — 수업 시간표 고려해 최적 Copy 수 구매 가능 |
+| 학생 수보다 Seat 수가 적어도 되나요? | 동시접속 기준 — 수업 시간표를 고려해 필요한 Seat 수만 구매 가능 |
 | 매년 갱신해야 하나요? | Academic Annual은 Prepaid — 만료 전 갱신 신청 필요 |
 | Indie 플랜과 다른 점은? | Academic은 교육기관 인증 필요. Indie는 소규모 기업(연 매출 $500K 이하) 전용으로, Enterprise 고객이 별도 인증 후 특가로 이용 가능. |
 
@@ -177,7 +177,7 @@ Visual: 4-step 수평 스텝퍼 컴포넌트
 - 인증 처리 기간은 페이지에 노출하지 않음 (확정된 정책). 인증 결과는 이메일로만 안내.
 - 인증 대기 중 상태에서 "Verification in process" 클릭 시 현재 진행 상태 확인 페이지로 연결 (단순 비활성만이면 CS 문의 폭증)
 - Individual / Student MemberType 진입 시 상단 배너: "교육기관 계정이 아닌 경우 Individual 플랜을 확인해 보세요" + 링크
-- Copy 수 계산기는 MVP 범위 밖으로 우선 정적 텍스트로 처리 검토
+- Seat 수 선택은 프리셋 탭 [1][5][10][직접 입력]로 통일 (plan.md §4-3). 슬라이더 · 스텝퍼 · 실시간 비용 계산기 도입 금지
 
 ---
 

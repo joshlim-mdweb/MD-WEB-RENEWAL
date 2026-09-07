@@ -1,6 +1,7 @@
 # [MD|SITE] Checkout 플로우 리디자인
 
 Epic Key: `MDWEB-634` | 요청: Josh Lim | 출처: MD-WEB-002 | 작성일: 2026-05-07
+Canvas: [[RENEWAL] Order/Checkout](https://clo3d.slack.com/docs/T04BT3VBR/F0BL0SRE4TZ) · 상위 플랜 정책 [[RENEWAL] Plan Renew](https://clo3d.slack.com/docs/T04BT3VBR/F0BCBS8G88N)
 
 ---
 
@@ -67,7 +68,7 @@ Epic Key: `MDWEB-634` | 요청: Josh Lim | 출처: MD-WEB-002 | 작성일: 2026-
 | EU VAT ID 입력 | System은 EU 국가 선택 시 사업자 VAT ID 입력 필드(선택)를 노출한다. VAT ID 입력 시 역과세(0%) 처리한다 |
 | 약관 동의 | 사용자는 이용약관 및 결제조건 체크박스 2개에 동의한 후 결제를 진행한다 |
 | CTA 버튼 동적 텍스트 | System은 선택된 결제수단에 따라 CTA 버튼 텍스트를 변경한다 |
-| 진입 차단 | System은 Student 2회 초과·Academic/Indie 인증 Pending·Non-member 직접 접근 시 Checkout 진입을 차단한다 |
+| 진입 차단 | System은 Student 인증 시점 4년 경과·Academic/Indie 인증 Pending·Non-member 직접 접근 시 Checkout 진입을 차단한다 |
 | 상태 복원 | System은 새로고침·PG 뒤로가기 시 sessionStorage에서 이전 입력값을 복원한다 |
 
 ---
@@ -195,7 +196,7 @@ CTA 버튼 위, 약관 체크박스 아래에 고정 배치한다.
 
 | Step | Actor | Description |
 |------|-------|-------------|
-| E1 | System | Student 2회 초과 감지 시 진입을 차단하고 일반 플랜 CTA를 표시한다 |
+| E1 | System | Student 인증 시점 4년 경과 감지 시 진입을 차단하고 일반 플랜 CTA를 표시한다 |
 | E2 | System | Academic·Indie 인증 Pending 감지 시 진입을 차단하고 "인증 검토 중" 안내를 표시한다 |
 | E3 | System | Non-member 직접 접근 시 로그인 페이지로 리다이렉트한다. `?redirect=/checkout?plan=xxx` 유지 |
 | E4 | System | Country 변경으로 기존 선택 결제수단이 불일치할 경우 선택을 초기화하고 인라인 안내를 표시한다 |

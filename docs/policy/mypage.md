@@ -2,24 +2,39 @@
 
 Source: https://clo.atlassian.net/wiki/spaces/MDT/pages/3851354161/POLICY_MYPAGE
 
+> 2026-08-04: 계정 구조 개편(2026-06-23) 반영 완료. 용어 기준은 docs/policy/member.md
+
 ---
 
-## 1. MemberType 정의
+## 1. 계정 유형 정의
 
-| MemberType | 정의 |
+### 1-1. 기본 구조
+
+| 계정 유형 | 정의 |
 | --- | --- |
-| Individual | 개인 사용자 계정 (구 Personal) |
-| Student | Individual 중 학생 인증 완료 |
-| Company ID | 기업 계정 (관리자 단위) |
-| Academic | Company ID 중 교육기관 인증 완료 |
-| Indie | Company ID 중 Indie 인증 완료 |
-| License ID | Company ID 소속 라이선스 사용자 계정 |
+| Non-Member | 로그인하지 않은 사용자 |
+| Member | 로그인한 모든 사용자. 구 Individual / Student / Company ID / Academic / Indie 통합 |
+| SW Account | Organization Owner가 생성하는 라이선스 할당 전용 계정 (구 License ID) |
 
-> Individual / Student / Company ID / Academic / Indie는 정책상 동일 규칙을 적용하는 경우 `Individual` 또는 `Company ID` 그룹으로 묶어 표기한다.
+> Organization을 생성한 Member = **Organization Owner**. Organization 내 하위 권한 역할은 없다 (Owner 단일).
 
-> **License ID — MD Web 로그인 불가 (확정)**  
-> License ID는 MD Web(marvelousdesigner.com) 로그인이 허용되지 않는다. 데스크톱 앱 전용 계정.  
-> MyPage 포함 모든 웹 기능 접근 불가. 이하 정책에서 License ID 관련 항목은 레거시 참고용으로만 유지한다.
+### 1-2. 인증(Verification)에 따른 분기
+
+계정 유형 자체는 Member 하나이며, 정책 분기는 **인증 상태**로 결정된다.
+
+| 표기 | 정의 | 인증 레이어 |
+| --- | --- | --- |
+| Member (인증 없음) | 인증을 받지 않은 일반 Member | — |
+| Member (Student 인증 완료) | 개인 레벨 Student 인증 완료 | 개인 |
+| Organization Owner (인증 없음) | Organization을 보유한 Member | — |
+| Organization Owner (Academic 인증 완료) | 보유 Organization이 Academic 인증 완료 | Organization |
+| Organization Owner (Indie 인증 완료) | 보유 Organization이 Indie 인증 완료 | Organization |
+
+> 정책상 동일 규칙을 적용하는 경우 `Member 계열` 또는 `Organization Owner 계열`로 묶어 표기한다.
+
+> **SW Account — MD Web 로그인 불가 (확정)**  
+> SW Account는 MD Web(marvelousdesigner.com) 로그인이 허용되지 않는다. 데스크톱 앱 전용 계정.  
+> MyPage 포함 모든 웹 기능 접근 불가. 이하 정책에서 SW Account는 접근 대상에서 제외한다.
 
 ---
 
@@ -32,24 +47,25 @@ MyPage는 LNB 사이드탭 5개로 구성된다.
 | Overview | 계정 상태 · 라이선스 상태 대시보드 |
 | Account | 계정 정보 조회 및 편집 (Identity · Security · Certification) |
 | License / Billing | 라이선스 · 결제 · 인보이스 관리 |
-| Shared License | 나에게 라이선스를 제공하는 Provider 정보 확인 |
+| Invited Projects | 나에게 라이선스를 제공하는 Provider 정보 확인 |
 | Preferences | 언어 · 알림 · 앱 설정 관리 |
 
 ---
 
 ## 3. 탭 노출 매트릭스
 
-| 탭 | Individual | Student | Company ID | Academic | Indie | License ID |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: |
-| Overview | O | O | O | O | O | **—** |
-| Account | O | O | O | O | O | **—** |
-| License / Billing | O | O | O | O | O | **—** |
-| Invited Projects | O | O | O | O | O | **—** |
-| Preferences | O | O | O | O | O | **—** |
+| 탭 | Member (인증 없음 / Student 인증 완료) | Organization Owner (인증 없음 / Academic 인증 완료 / Indie 인증 완료) |
+| --- | :---: | :---: |
+| Overview | O | O |
+| Account | O | O |
+| License / Billing | O | O |
+| Invited Projects | O | O |
+| Preferences | O | O |
 
-> **License ID** = MD Web 로그인 불가. MyPage 전체 탭 접근 불가 (—).  
-> **Invited Projects** = Individual·Student·Company ID 계열에 노출. Userpool Guest 할당 여부와 무관하게 탭 자체는 노출, 데이터 없을 시 빈 상태 표시.  
-> Company ID 계열의 유저풀 관리(License ID 생성 · 삭제 · Guest 초대 등)는 Team Console에서 수행. MyPage 미포함.
+> **SW Account는 컬럼에서 제외한다.** MD Web 로그인 불가 → MyPage 접근 자체가 없다.  
+> 인증 상태에 따라 탭 노출이 달라지지 않으므로 인증별 컬럼을 합쳐 표기한다.  
+> **Invited Projects** = Member 계열 · Organization Owner 계열 모두에 노출. Userpool Guest 할당 여부와 무관하게 탭 자체는 노출, 데이터 없을 시 빈 상태 표시.  
+> Organization Owner 계열의 유저풀 관리(SW Account 생성 · 삭제 · Guest 초대 등)는 Team Console에서 수행. MyPage 미포함.
 
 ---
 
@@ -61,21 +77,21 @@ MyPage는 LNB 사이드탭 5개로 구성된다.
 
 | 섹션 | 표시 내용 | 노출 조건 |
 | --- | --- | --- |
-| Account Summary | MemberType 뱃지 · 이메일 · CLO-SET 통합 상태 | 전체 |
-| My License | 내 구독 플랜명 · 상태 · 만료일 · Auto Renew 상태 | 내 구독 보유 시 (Individual 계열, Company ID 계열, License ID) |
+| Account Summary | 계정 유형 뱃지 (인증 상태 포함) · 이메일 · CLO-SET 통합 상태 | 전체 |
+| My License | 내 구독 플랜명 · 상태 · 만료일 | 내 구독 보유 시 (Member 계열 / Organization Owner 계열) |
 | Quick Actions | 상태 기반 컨텍스트 CTA | 전체 (상태에 따라 CTA 내용 변경) |
 
 > 인보이스는 Overview 미노출. License / Billing 탭에서만 확인 가능.  
-> Shared License 정보는 Shared License 탭에서만 확인 가능.
+> 제공받은 라이선스 정보는 Invited Projects 탭에서만 확인 가능.
 
 ### 4-1. License Account Admin 이동 버튼
 
 | 항목 | 노출 조건 | 동작 |
 | --- | --- | --- |
-| License Account Admin으로 이동 버튼 | Company ID 계열 / Academic / Indie MemberType만 | 클릭 시 License Account Admin 페이지로 이동 |
+| License Account Admin으로 이동 버튼 | Organization Owner (인증 무관)만 | 클릭 시 License Account Admin 페이지로 이동 |
 
-> Overview에서 License Account Admin 직접 접근이 필요한 MemberType에게만 표시.  
-> Individual / Student / License ID에는 미노출.
+> Overview에서 License Account Admin 직접 접근이 필요한 계정 유형에게만 표시.  
+> Member 계열(Organization 미보유)에는 미노출. SW Account는 웹 접근 없음.
 
 ---
 
@@ -85,49 +101,53 @@ MyPage는 LNB 사이드탭 5개로 구성된다.
 
 | 분기 축 | 값 |
 | --- | --- |
-| MemberType | Individual / Student / Company ID / Academic / Indie / License ID |
+| 계정 유형 | Member (인증 없음) / Member (Student 인증 완료) / Organization Owner (인증 없음) / Organization Owner (Academic 인증 완료) / Organization Owner (Indie 인증 완료) |
 | CLO-SET 통합 여부 | Not Integrated / Integrated |
+
+> SW Account는 웹 접근이 없으므로 분기 축에서 제외한다.
 
 ### 5-2. 항목별 노출 조건
 
-Account 탭은 **계정 정보 카드** (Member Type · Email · Nickname · CLO-SET · Password 통합) + **Danger Zone 카드** 2개 카드로 구성된다.
+Account 탭은 **계정 정보 카드** (계정 유형 · Email · Nickname · CLO-SET · Password 통합) + **Danger Zone 카드** 2개 카드로 구성된다.
 
-| 항목 | Individual | Student | Company ID | Academic | Indie |
-| --- | :---: | :---: | :---: | :---: | :---: |
-| 이메일 편집 | O* | O* | O* | O* | O* |
-| 닉네임 편집 | O* | O* | O* | O* | O* |
-| 비밀번호 변경 | O** | O** | O*** | O*** | O*** |
-| CLO-SET 통합 섹션 | O | O | O | O | O |
-| Visit my CLO-SET CTA | O† | O† | O† | O† | O† |
-| CLO-SET 해제 CTA | X | X | O† | O† | O† |
-| 계정 삭제 | O§§ | O§§ | O§§§ | X¶ | X¶ |
-| License Admin 이동 | X | X | O | O | O |
+| 항목 | Member 계열 (인증 없음 / Student 인증 완료) | Organization Owner (인증 없음) | Organization Owner (Academic 인증 완료 / Indie 인증 완료) |
+| --- | :---: | :---: | :---: |
+| 이메일 편집 | O* | O* | O* |
+| 닉네임 편집 | O* | O* | O* |
+| 비밀번호 변경 | O** | O*** | O*** |
+| CLO-SET 통합 섹션 | O | O | O |
+| Visit my CLO-SET CTA | O† | O† | O† |
+| CLO-SET 해제 CTA | X | O† | O† |
+| 계정 삭제 | O§§ | O§§§ | X¶ |
+| License Admin 이동 | X | O | O |
 
-> **Danger Zone 카드** (계정 삭제 + License Admin 이동)는 Academic / Indie에게 카드 자체가 미노출된다.
+> 컬럼 병합 기준: Member (인증 없음)과 Member (Student 인증 완료)는 모든 항목이 동일하여 `Member 계열`로 합쳤다. Organization Owner는 **계정 삭제** 항목만 인증 여부에 따라 달라지므로 `인증 없음` / `Academic 인증 완료 · Indie 인증 완료` 두 컬럼으로 분리했다.
 >
-> **Delete Account 버튼 노출 조건**: Individual / Student, Company ID (CLO-SET 통합)만 표시. Company ID (미통합) / Academic / Indie는 미표시 — Contact Us 링크만 안내.
+> **Danger Zone 카드** (계정 삭제 + License Admin 이동)는 Organization Owner (Academic / Indie 인증 완료)에게 카드 자체가 미노출된다.
 >
-> **카드 내 설명 문구 (MemberType별)**
-> - Individual / Student: "계정 삭제는 CLO-SET에서 진행돼요. Delete Account 클릭 시 CLO-SET으로 이동해요."
-> - Company ID (CLO-SET 통합): "계정 삭제는 CLO-SET에서 진행돼요. Delete Account 클릭 시 CLO-SET으로 이동해요."
-> - Company ID (CLO-SET 미통합): "계정 삭제가 필요한 경우 Contact Us를 통해 문의해 주세요."
-> - Academic / Indie: "계정 삭제가 필요한 경우 Contact Us를 통해 요청해 주세요."
+> **Delete Account 버튼 노출 조건**: Member 계열, Organization Owner (인증 없음, CLO-SET 통합)만 표시. Organization Owner (인증 없음, 미통합) / Organization Owner (Academic / Indie 인증 완료)는 미표시 — Contact Us 링크만 안내.
 >
-> **Contact Us 이동**: Company ID / Academic / Indie 표시.
+> **카드 내 설명 문구 (계정 유형별)**
+> - Member 계열: "계정 삭제는 CLO-SET에서 진행돼요. Delete Account 클릭 시 CLO-SET으로 이동해요."
+> - Organization Owner (인증 없음, CLO-SET 통합): "계정 삭제는 CLO-SET에서 진행돼요. Delete Account 클릭 시 CLO-SET으로 이동해요."
+> - Organization Owner (인증 없음, CLO-SET 미통합): "계정 삭제가 필요한 경우 Contact Us를 통해 문의해 주세요."
+> - Organization Owner (Academic / Indie 인증 완료): "계정 삭제가 필요한 경우 Contact Us를 통해 요청해 주세요."
+>
+> **Contact Us 이동**: Organization Owner 계열 표시.
 
-> \* CLO-SET 통합 시 이메일·닉네임 편집 불가 (CLO-SET에서만 변경 가능). MemberType 무관.  
-> \*\* Individual / Student + CLO-SET 통합 시: CLO-SET PW만 변경 가능 (MD 내 비밀번호 변경 UI 비활성화)  
-> \*\*\* Company ID / Academic / Indie + CLO-SET 통합 시: CLO-SET PW (CLO-SET에서 변경) + MD PW (MD 내에서 별도 변경) — 두 비밀번호 독립 관리  
-> † 통합 상태일 때만 노출. Visit my CLO-SET CTA는 전체 MemberType (Connected 상태). CLO-SET 해제 CTA는 Company ID / Academic / Indie만.
+> \* CLO-SET 통합 시 이메일·닉네임 편집 불가 (CLO-SET에서만 변경 가능). 계정 유형 무관.  
+> \*\* Member 계열 + CLO-SET 통합 시: CLO-SET PW만 변경 가능 (MD 내 비밀번호 변경 UI 비활성화)  
+> \*\*\* Organization Owner 계열 + CLO-SET 통합 시: CLO-SET PW (CLO-SET에서 변경) + MD PW (MD 내에서 별도 변경) — 두 비밀번호 독립 관리  
+> † 통합 상태일 때만 노출. Visit my CLO-SET CTA는 전체 계정 유형 (Connected 상태). CLO-SET 해제 CTA는 Organization Owner 계열만.
 
 ### 5-3. CLO-SET 통합 상태별 UI 분기
 
 > **Not Integrated 케이스는 현재 해당 없음.** 신규 가입 시 CLO-SET 연동 상태로 시작한다. 아래 테이블은 레거시 케이스 참고용으로만 유지한다.
 
-| MemberType | Not Integrated (레거시) | Integrated |
+| 계정 유형 | Not Integrated (레거시) | Integrated |
 | --- | --- | --- |
-| Individual / Student | CLO-SET 통합 유도 CTA 표시. **닉네임·이메일 편집 가능**, 비밀번호 변경 가능 | 연동 정보 조회 + **Visit my CLO-SET CTA**. **이메일·닉네임 CLO-SET에서만 변경**. 비밀번호: CLO-SET PW만 변경 가능 |
-| Company ID / Academic / Indie | CLO-SET 통합 유도 CTA 표시. 닉네임·이메일 편집 가능, 비밀번호 변경 가능 | 연동 정보 + **Visit my CLO-SET CTA** + 통합 해제 CTA. **이메일·닉네임 CLO-SET에서만 변경**. 비밀번호: CLO-SET PW (CLO-SET에서) + MD PW (MD 내에서) 독립 관리 |
+| Member 계열 | CLO-SET 통합 유도 CTA 표시. **닉네임·이메일 편집 가능**, 비밀번호 변경 가능 | 연동 정보 조회 + **Visit my CLO-SET CTA**. **이메일·닉네임 CLO-SET에서만 변경**. 비밀번호: CLO-SET PW만 변경 가능 |
+| Organization Owner 계열 | CLO-SET 통합 유도 CTA 표시. 닉네임·이메일 편집 가능, 비밀번호 변경 가능 | 연동 정보 + **Visit my CLO-SET CTA** + 통합 해제 CTA. **이메일·닉네임 CLO-SET에서만 변경**. 비밀번호: CLO-SET PW (CLO-SET에서) + MD PW (MD 내에서) 독립 관리 |
 
 ---
 
@@ -141,19 +161,18 @@ Account 탭은 **계정 정보 카드** (Member Type · Email · Nickname · CLO
 | --- | --- |
 | 라이선스 정보 (제품명·만료일 + 상태 안내 배너) | 항상 노출. No License 시 빈 상태 표시. **상태 배지 미노출 — 상태는 안내 배너 문구로만 표시 (6-2-1 참조)** |
 | **Student Benefit Active 배너** | Student Benefit Active 상태일 때만. 무료 기간 종료일 및 남은 일수 표시. (e.g., "3개월 무료 혜택 종료까지 D-45") |
-| **Student 인증 만료 임박 배너** | Student MemberType이고 인증 만료 D-30 이내일 때. 경고 배너 노출. (e.g., "학생 인증이 30일 후 만료됩니다. 만료 시 구독이 종료됩니다.") |
-| Pause for Now CTA | Monthly Active 상태일 때만. **Student Benefit Active 상태 제외 (Benefit 기간 중 일시정지 불가).** |
+| Pause for Now CTA | Monthly Active 상태일 때만. **Student Benefit Active 상태 제외 (Benefit 기간 중 일시정지 불가).** **Annual 구독 제외 — Annual은 일시정지를 제공하지 않는다 (6-2-2).** |
 | Undo Pause CTA | Monthly Pause Scheduled 상태일 때만. |
 | Resume Now CTA | Monthly Paused 상태일 때만. |
 | Retry Payment CTA | Monthly Suspended(결제 실패) 상태일 때만. |
 | Verify CTA | Monthly Suspended(3ds 인증 필요) 상태일 때만. |
-| Cancel Subscription CTA | Monthly Active / Paused 또는 Enterprise Single Active일 때. **Student Benefit Active 상태 제외 (Benefit 기간 중 취소 불가).** |
+| Cancel Subscription CTA | Monthly Active / Paused, Enterprise Single Active, **Annual Active**일 때. **Student Benefit Active 상태 제외 (Benefit 기간 중 취소 불가).** |
 | Trial 취소 CTA | Trial 상태일 때만. |
-| 플랜 구매 CTA | No License / Expired / Trial 취소 완료 시. Individual 계열만. **Student 4년 만료 후: TBD (재인증 or 개인 플랜 전환 안내로 대체 여부 미확정).** |
-| 결제 정보 / 청구지 주소 | Individual 계열 O, Company ID 계열 O (조회만. 수정은 License Account Admin > Invoice에서) |
-| 인보이스 목록 | Individual 계열 O, Company ID 계열 O |
+| 플랜 구매 CTA | No License / Expired / Trial 취소 완료 시. Member 계열만. **Student 4년 만료 후: Individual 플랜 전환 안내 (2026-08-21 확정).** |
+| 결제 정보 / 청구지 주소 | Member 계열 O, Organization Owner 계열 O (조회만. 수정은 License Account Admin > Invoice에서) |
+| 인보이스 목록 | Member 계열 O, Organization Owner 계열 O |
 | 인보이스 PDF 다운로드 | 인보이스 목록 내 Paid 행에서 직접 다운로드 가능. |
-| Userpool Guest 섹션 | Individual이 Enterprise Guest로 할당된 경우만 |
+| Userpool Guest 섹션 | Member가 타 Organization의 Userpool Guest로 할당된 경우만 |
 
 ### 6-2. Monthly 라이선스 상태 전이
 
@@ -165,11 +184,28 @@ Account 탭은 **계정 정보 카드** (Member Type · Email · Nickname · CLO
 | Paused | 일시정지 중. | Resume Now / Cancel Subscription | Monthly Active 또는 Suspended / Cancel Scheduled |
 | Suspended | 결제 실패로 인한 접속 제한. 라이선스 즉시 Lock. | Retry Payment | Monthly Active (성공) / Suspended (실패) |
 | Cancel Scheduled | 취소 예약 완료. 만료 대기 중. | — (대기) | No License (만료 후) |
-| No License | 라이선스 없음. | Go to Pricing (Student 4년 만료 후 처리: TBD) | — |
+| No License | 라이선스 없음. | Go to Pricing (Student 4년 만료 후: Individual 플랜 전환 안내) | — |
 
-> **Benefit Active 진입 조건**: Student MemberType이 Checkout에서 Student Benefit을 시작할 때. 결제 정보를 입력하고 $0으로 구독 시작.  
+> **Benefit Active 진입 조건**: Member (Student 인증 완료)가 Checkout에서 Student Benefit을 시작할 때. 결제 정보를 입력하고 $0으로 구독 시작.  
 > **Benefit Active → Monthly Active 전환**: 무료 기간(3개월) 종료 시 자동 전환. 별도 사용자 액션 없음. 전환 시점 D-7/D-3/D-0에 이메일 알림 발송.  
-> **기존 Monthly Active**: Student 이외의 Individual 계열(Monthly 구독 중인 경우) 동일하게 적용.
+> **기존 Monthly Active**: Student 인증이 없는 Member 계열(Monthly 구독 중인 경우) 동일하게 적용.
+
+### 6-2-2. Annual 라이선스 상태 전이 (2026-08-05 신설)
+
+Individual Annual은 Prepaid에서 Subscription으로 전환됐다. **자동 갱신이 기본 동작이며 켜고 끄는 옵션이 아니다.**
+
+| 상태 | 설명 | 가능한 액션 | 다음 상태 |
+| --- | --- | --- | --- |
+| **Annual Active** | 정상 구독 중. 만료일 전 자동 갱신 결제. | Cancel Subscription | Cancel Scheduled |
+| Cancel Scheduled | 해지 예약 완료. 잔여 기간 사용 유지. | — (대기) | No License (만료 후) |
+| Suspended | 갱신 결제 실패로 인한 접속 제한. | Retry Payment | Annual Active (성공) / Suspended (실패) |
+| No License | 라이선스 없음. | Go to Pricing | — |
+
+- **Auto Renew 토글·섹션·취소 CTA를 제공하지 않는다.** 갱신을 원하지 않으면 Cancel Subscription으로 해지한다.
+- **일시정지(Pause)를 제공하지 않는다.** Pause 계열 CTA(Pause for Now · Undo Pause · Resume Now)는 Annual에 노출하지 않는다.
+- **갱신 D-30, D-7에 이메일로 고지한다.** 고지에 갱신 청구 금액을 명시한다 (2026-08-21 확정).
+- Suspended 종결 규칙은 Monthly와 동일하다 — 1주 유예 + 알림 3회, 미해결 시 취소 (6-5).
+- 해지 플로우는 Monthly와 동일하게 Cancel Subscription 풀페이지 3단을 사용한다 (6-3).
 
 ### 6-2-1. 구독 상태 표시 방식 (2026-07-16 변경)
 
@@ -184,7 +220,8 @@ Account 탭은 **계정 정보 카드** (Member Type · Email · Nickname · CLO
 | 상태 (내부) | 안내 배너 문구 (변수) | 노출 버튼 (좌 → 우) |
 | --- | --- | --- |
 | Monthly Active | 배너 미표시 | Pause Subscription / Cancel Subscription |
-| Cancel Scheduled | 구독 종료 예정일 안내 (`{endDate}`) | Pause Subscription / Cancel Subscription |
+| **Annual Active** | 배너 미표시 | Cancel Subscription *(Pause 미제공)* |
+| Cancel Scheduled | 구독 종료 예정일 안내 (`{endDate}`) | — (해지 예약 되돌리기 미제공, 2026-08-21 확정) |
 | Pause Scheduled | 일시정지 시작 예정일 안내 (`{subscriptionPauseStart}`) | Undo Pause |
 | Paused | 자동 재개 예정일 안내 (`{subscriptionResumeDate}`) | Cancel Subscription / Resume Now |
 | Suspended (결제 실패) | 결제 실패 및 결제 수단 업데이트 안내 | Cancel Subscription / Retry Payment |
@@ -235,7 +272,9 @@ License Information 카드 내 Action Row에 **Pause for Now** 와 **Cancel Subs
 ### 6-5. Suspended 상태 정책
 
 - 결제 실패로 인한 접속 제한 상태.
+- **종결 규칙: 1주 유예 + 알림 3회, 미해결 시 구독 취소.** Monthly, Annual, Trial 종료 후 첫 결제에 동일 적용 (2026-08-21 확정).
 - Retry Payment 성공 시 Active 복귀.
+- **결제수단 변경 후 재시도는 Stripe(카드)만 가능하다.** PayPal, AliPay는 기존 수단으로만 재시도한다 (2026-08-21 확정).
 - 결제 실패 유형별 에러 분기: API 오류 / Stripe 잔액 부족 / PayPal·Alipay 오류.
 
 ### 6-6. Student 인증 기간 & 구독 정책
@@ -288,31 +327,32 @@ Benefit Active 상태에서 종료일이 가까워질 때 MyPage License/Billing
 
 ---
 
-## 7. Shared License 탭
+## 7. Invited Projects 탭
 
 나에게 라이선스를 제공하는 Provider 정보를 확인하는 탭.
 
 ### 7-1. 노출 대상
 
-| MemberType | 노출 조건 |
+| 계정 유형 | 노출 조건 |
 | --- | --- |
-| Individual / Student | 타 Company의 Userpool Guest로 할당된 경우 |
-| Company ID / Academic / Indie | 타 Company의 Userpool Guest로 할당된 경우 |
-| License ID | **X** — Provider 소속 사용자로 Shared License 관계의 수혜자가 아님. 이 탭 불필요. |
+| Member 계열 (인증 없음 / Student 인증 완료) | 타 Organization의 Userpool Guest로 할당된 경우 |
+| Organization Owner 계열 (인증 없음 / Academic 인증 완료 / Indie 인증 완료) | 타 Organization의 Userpool Guest로 할당된 경우 |
 
-> **멀티 Provider**: 한 사용자가 여러 Company에 동시에 Guest로 초대받을 수 있다. 이 경우 Provider별로 카드를 나열하여 표시한다.
+> 인증 상태에 따라 노출 조건이 달라지지 않으므로 인증별 행을 합쳐 표기한다. SW Account는 웹 접근이 없어 행에서 제거했다.
+
+> **멀티 Provider**: 한 사용자가 여러 Organization에 동시에 Guest로 초대받을 수 있다. 이 경우 Provider별로 카드를 나열하여 표시한다.
 
 ### 7-2. 표시 내용
 
 | 항목 | 표시 여부 | 비고 |
 | --- | --- | --- |
-| 제공 Company명 | O | 카드 헤더에 표시 |
+| 제공 Organization명 | O | 카드 헤더에 표시 |
 | 라이선스 유형 | O | |
 | 내 상태 (Active / Inactive) | O | |
-| Contact (관리자 이메일) | O | Company ID 라이선스 소유자(관리자) 이메일 |
+| Contact (관리자 이메일) | O | 라이선스를 보유한 Organization Owner 이메일 |
 | 만료일 (Expiry Date) | **X** | Guest에게 미노출 |
 | 금액 / Amount | **X** | Guest에게 미노출 |
-| Seat 수 / 사용 현황 | **X** | Company 사용 규모 유추 방지 |
+| Seat 수 / 사용 현황 | **X** | Organization 사용 규모 유추 방지 |
 
 > 모든 항목 read-only. 관리 액션 없음.
 
@@ -320,7 +360,7 @@ Benefit Active 상태에서 종료일이 가까워질 때 MyPage License/Billing
 
 ## 8. Preferences 탭
 
-사용자 환경 설정을 관리하는 탭. 모든 MemberType에 노출.
+사용자 환경 설정을 관리하는 탭. 웹 접근 가능한 모든 계정 유형에 노출.
 
 ### 8-1. 섹션별 항목
 
@@ -331,7 +371,7 @@ Benefit Active 상태에서 종료일이 가까워질 때 MyPage License/Billing
 | App Settings | AI Studio Plug-In 토글 | MD 앱 재시작 후 적용. 웹에서 설정 저장. 클릭 시 AI Studio 설정 상세 화면으로 이동 |
 
 > AI Studio Plug-In 상태 변경은 Marvelous Designer 앱 재시작 후 반영된다.  
-> License ID는 MD Web 로그인 불가이므로 Preferences 탭 접근 없음. License ID 대상 App Settings 관리자 제어 정책은 데스크톱 앱 범위에서 별도 정의.
+> SW Account는 MD Web 로그인 불가이므로 Preferences 탭 접근 없음. SW Account 대상 App Settings 관리자 제어 정책은 데스크톱 앱 범위에서 별도 정의.
 
 ---
 
@@ -339,14 +379,14 @@ Benefit Active 상태에서 종료일이 가까워질 때 MyPage License/Billing
 
 | 제한 항목 | 대상 | 정책 |
 | --- | --- | --- |
-| **MD Web 로그인** | **License ID** | **불가. 데스크톱 앱 전용 계정. MyPage 전체 접근 없음.** |
-| 계정 삭제 | Academic / Indie | MyPage에서 제공하지 않음 |
-| 계정 삭제 처리 위치 | Individual / Student | MD 내 처리 X — 무조건 CLO-SET으로 이동 |
-| 계정 삭제 처리 위치 | Company ID (CLO-SET 통합) | MD 내 처리 X — CLO-SET으로 이동 |
-| 계정 삭제 처리 위치 | Company ID (CLO-SET 미통합) | MD 내 처리 X — Contact Us로 연락 |
-| Danger Zone 섹션 | Academic / Indie | 미노출 — 계정 삭제·License Admin 이동 모두 해당 없음 |
-| 청구지 수정 | Company ID 계열 | MyPage에서 편집 UI 미제공. 조회만 가능. 수정은 License Account Admin > Invoice에서. MyPage에서 "License Account Admin으로 이동" 버튼 제공 |
-| CLO-SET 통합 해제 | Individual / Student | 해제 CTA 미노출 |
+| **MD Web 로그인** | **SW Account** | **불가. 데스크톱 앱 전용 계정. MyPage 전체 접근 없음.** |
+| 계정 삭제 | Organization Owner (Academic / Indie 인증 완료) | MyPage에서 제공하지 않음 |
+| 계정 삭제 처리 위치 | Member 계열 | MD 내 처리 X — 무조건 CLO-SET으로 이동 |
+| 계정 삭제 처리 위치 | Organization Owner (인증 없음, CLO-SET 통합) | MD 내 처리 X — CLO-SET으로 이동 |
+| 계정 삭제 처리 위치 | Organization Owner (인증 없음, CLO-SET 미통합) | MD 내 처리 X — Contact Us로 연락 |
+| Danger Zone 섹션 | Organization Owner (Academic / Indie 인증 완료) | 미노출 — 계정 삭제·License Admin 이동 모두 해당 없음 |
+| 청구지 수정 | Organization Owner 계열 | MyPage에서 편집 UI 미제공. 조회만 가능. 수정은 License Account Admin > Invoice에서. MyPage에서 "License Account Admin으로 이동" 버튼 제공 |
+| CLO-SET 통합 해제 | Member 계열 | 해제 CTA 미노출 |
 | 유저풀 관리 | MyPage 전체 | Team Console에서만 수행 |
 | Invited Projects Seat 수 조회 | 전체 | 미노출 |
 
@@ -365,56 +405,10 @@ Benefit Active 상태에서 종료일이 가까워질 때 MyPage License/Billing
 | 4 | License/Billing | Student Monthly Active 상태 WF | Benefit 종료 후. Pause / Cancel CTA 노출. 일반 Monthly와 동일 플로우 | P1 |
 | 5 | License/Billing | Student 인증 만료 임박 배너 (D-30) | 경고 배너 신규. "학생 인증이 N일 후 만료됩니다. 만료 시 구독이 종료됩니다." | P2 |
 | 6 | License/Billing | Benefit 만료 임박 배너 (D-7) | 경고 배너 신규. "무료 혜택이 7일 후 종료됩니다. 이후 $8.25/월로 자동 청구됩니다." | P2 |
-| 7 | License/Billing | Auto Renew 섹션 — Student Monthly | 기존 Individual Annual 전용 섹션에 Student Monthly 상태 추가 | P2 |
+| 7 | License/Billing | **Auto Renew 섹션 삭제** | 2026-08-05 확정 — Auto Renew는 옵션이 아니므로 섹션·토글·취소 CTA를 모두 제거. Annual 갱신 중단은 Cancel Subscription으로 통합 | P1 |
 
 > **미포함 항목 (TBD 대기)**  
 > - 4년 만료 후 상태 WF (옵션 A/B/C 미확정)  
 > - 고등학생 인증 기간 정책 관련 WF  
 > - 졸업 후 개인 플랜 전환 할인 WF
 
----
-
-## 11. 업데이트 필요사항
-
-> 기준: `member.md` 2026-06-23 계정 구조 전면 개편. MemberType 폐지 → Member / SW Account / Group 구조로 전환.  
-> 이 문서 전반에 걸쳐 구 MemberType 표현이 남아 있음. 아래 표 기준으로 순차 재작성 필요.
-
-### 11-1. MemberType → 신 계정 구조 명칭 매핑
-
-| 구 MemberType | 신 계정 구조 | 비고 |
-| --- | --- | --- |
-| Individual | Member (인증 없음) | 기본 멤버 |
-| Student | Member (Student 인증 완료) | 개인 레벨 Verification |
-| Company ID | Group Owner (인증 없음) | Group을 보유한 Member |
-| Academic | Group Owner (Academic 인증 완료) | Group 레벨 Verification |
-| Indie | Group Owner (Indie 인증 완료) | Group 레벨 Verification |
-| License ID | SW Account | 웹 로그인 불가 — MyPage 전체 접근 없음 (기존 정책 유지, 명칭만 변경) |
-
-### 11-2. 섹션별 변경 필요 항목
-
-| 섹션 | 변경 항목 | 내용 | 우선순위 |
-| --- | --- | --- | --- |
-| 1. MemberType 정의 | 전체 재작성 | MemberType 폐지. Member / SW Account / Group / Verification 구조로 대체 | P1 |
-| 3. 탭 노출 매트릭스 | 컬럼 헤더 전체 | Individual · Student · Company ID · Academic · Indie · License ID → 신 구조 컬럼으로 교체 | P1 |
-| 4. Overview | License Account Admin 이동 버튼 노출 조건 | "Company ID 계열 / Academic / Indie" → "Group Owner (인증 무관)" | P1 |
-| 4. Overview | Account Summary 섹션 | "MemberType 뱃지" 표현 → 신 구조 용어로 교체 | P2 |
-| 5. Account | 항목별 노출 조건 테이블 | 5개 MemberType 컬럼 → 신 구조 컬럼(Member / Group Owner 등)으로 재작성 | P1 |
-| 5. Account | CLO-SET 통합 상태별 UI 분기 | "Individual / Student" / "Company ID / Academic / Indie" 그룹핑 표현 → 신 구조로 교체 | P2 |
-| 5. Account | 계정 삭제 조건 주석 | License ID 관련 주석 제거. SW Account는 웹 접근 없음으로 단순화 | P2 |
-| 6. License/Billing | Userpool Guest 섹션 노출 조건 | "Individual이 Enterprise Guest로 할당된 경우" → "Member가 타 Group의 SW Account 없이 Guest로 할당된 경우"로 재검토 | P2 |
-| 7. Shared License | 노출 대상 MemberType 컬럼 | Individual · Student · Company ID 계열 → Member / Group Owner로 재표현. SW Account 행 제거 | P1 |
-| 9. 제한 정책 요약 | 전체 항목 | "Individual / Student", "Company ID 계열", "Academic / Indie" 표현 → 신 구조 용어로 일괄 교체 | P2 |
-
-### 11-3. 용어 일관성 교체 목록
-
-| 현재 표현 | 교체 표현 | 적용 범위 |
-| --- | --- | --- |
-| `MemberType` | `계정 유형 (Account Type)` | 문서 전체 |
-| `Individual` | `Member (인증 없음)` | 분기 조건 명시 시 |
-| `Student` | `Member (Student 인증 완료)` | 분기 조건 명시 시 |
-| `Company ID` | `Group Owner` | 분기 조건 명시 시 |
-| `Academic` | `Group Owner (Academic 인증 완료)` | 분기 조건 명시 시 |
-| `Indie` | `Group Owner (Indie 인증 완료)` | 분기 조건 명시 시 |
-| `License ID` | `SW Account` | 문서 전체 |
-| `Individual 계열` | `Member 계열` | 그룹핑 표현 시 |
-| `Company ID 계열` | `Group Owner 계열` | 그룹핑 표현 시 |

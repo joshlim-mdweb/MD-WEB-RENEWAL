@@ -8,9 +8,8 @@ updated: 2026-06-25
 
 ## TODO
 ### 정책 결정 대기
-1. **[정책 결정 필요]** 구세대 Monthly Student 구매 이력이 2회 제한 카운팅에 포함되는지 확인 (Dahye Jang / Layla Jo / 개발팀)
-2. **[정책 결정 필요]** 구세대 Monthly 구매 카운팅 기준 확정 — 월별 1회 vs 기간 전체 1회
-3. 위 정책 확정 후 구세대 Monthly 이력 유저 8개 edge case 정책 정의
+1. ~~구세대 Monthly 구매 이력의 2회 제한 카운팅 포함 여부~~ — **해소됨. 구매 횟수 제한 폐지, 최초 인증 시점 4년 윈도우로 전환**
+2. 구세대 Monthly 이력 유저의 4년 윈도우 기산 기준 정의 (최초 인증일 확인 불가 케이스 처리)
 
 ### Figma 작업
 4. Plan Card CASE VIEW 3종 (Enterprise/Academic/Indie) Figma 그리기 — 보류 (정책 변경으로 재작업)
@@ -36,8 +35,8 @@ updated: 2026-06-25
   - Left Panel 콘텐츠 채움 완료, Description 5개 슬롯 Figma 삽입 완료
 - **Plan Card 분기** — 3축: Org 보유 여부 / 인증 상태 / 라이선스 보유 여부 (기존 MemberType 7종 무효화)
 - **[미결] 구세대 Monthly Student 이력 유저 edge case** — Dahye Jang·Layla Jo에게 공유됨
-  - 구세대 Monthly 구매가 2회 제한 카운팅에 포함되는가 (가장 먼저 결정 필요)
-  - Monthly 여러 달 사용 시 카운팅 기준 (월별 1회 vs 기간 전체 1회)
+  - 구매 횟수 제한이 폐지되면서 카운팅 관련 이슈는 해소됨
+  - 남은 항목: 최초 인증일이 확인되지 않는 유저의 4년 윈도우 기산 기준
   - 상세 기획: `/Users/josh.lim/.claude/plans/compiled-questing-mountain.md`
 - **이메일 템플릿 Figma 파일**: EMAIL-AUTOMATION (`E3Azp4DyASPSK3uQGUrxru`)
   - v2 현행 기준 총 58개 템플릿 (ACCOUNT 17 / Subscription/Payment 21 / Trial 8 / System 13)

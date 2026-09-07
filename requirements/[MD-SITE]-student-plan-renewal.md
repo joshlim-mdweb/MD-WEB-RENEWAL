@@ -1,6 +1,7 @@
 # [MD|SITE] Student Plan Renewal — Monthly Trial 모델 전환
 
 Epic Key: `MDWEB-773` | 출처: 미팅 2026-05-19 + Slack Doc | 작성일: 2026-05-21
+Canvas: [Student Plan Renew](https://clo3d.slack.com/docs/T04BT3VBR/F0B4B5D86J1) · 상위 플랜 정책 [[RENEWAL] Plan Renew](https://clo3d.slack.com/docs/T04BT3VBR/F0BCBS8G88N)
 
 ---
 

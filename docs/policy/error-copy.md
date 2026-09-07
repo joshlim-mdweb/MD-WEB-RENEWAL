@@ -31,6 +31,8 @@ Figma 전체 화면(MyPage 등)에서 실제로 그려져 사용 중인 에러·
 | AI Terms 미동의 | `"Agreement is required to use AI tools"` / `"Consent to AI Terms Required to Use the Plug-in and Activate AI Features"` |
 | Organization Name 필드 미입력 | Figma: `"Organization Name을 입력해 주세요."` → 교체안 `"Enter your organization name."` *(WF EN 위반 — Figma 교체 필요)* |
 | 이메일 변경 — 형식 오류 | Figma: `"이메일 형식을 다시 확인해 주세요."` → 교체안 `"Enter a valid email."` (error-states.md §3.2 예시와 일치) *(WF EN 위반 — Figma 교체 필요)* |
+| 프로필 이미지 — 지원하지 않는 형식 | `"This file type isn't supported. Use JPG, PNG, GIF, or BMP."` (허용 확장자 jpg, jpeg, png, gif, bmp) |
+| 프로필 이미지 — 파일 크기 초과 | `"This file is too large. Choose a file under {maxFileSize}."` *(개발 확인 필요: 파일 크기 상한)* |
 
 ### License/Billing 탭
 

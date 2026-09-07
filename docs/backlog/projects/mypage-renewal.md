@@ -1,6 +1,6 @@
 ---
 project: mypage-renewal
-updated: 2026-07-27
+updated: 2026-09-01
 ---
 
 ## 관련 Jira 티켓
@@ -10,9 +10,26 @@ updated: 2026-07-27
 
 ## TODO
 
-1. **Loading 상태 표기 일괄 재확인** (진행 중) — `figma-description.md`가 "Loading: Skeleton 표시, 로딩 휠 금지"로 개정됨. 이미 작성된 Description 중 "로딩 휠"로 적힌 곳 전부 Skeleton 기준으로 교체 필요
-   - Coupon Card (node `6131:3017`, ③번 노트) — 현재 "Loading: 로딩 휠"
-   - Payment History Table (node `6131:2615`, ①번 노트) — 현재 "Loading: *(정책 확인 필요)*" — 확정 시 Skeleton 기준으로 작성
+1. **파일 크기 상한 확인 (BE)** — 프로필 이미지 업로드 상한값이 원장·Figma 어디에도 없다. Arden 코멘트에 "기존 BE는 파일 크기만 검증"이라고만 있음. 확정되면 노트 ④ `5950:1794`, 모달 `6124:1863`·`6124:1925`, `docs/policy/error-copy.md` 세 곳의 `{maxFileSize}`를 함께 치환 (TODO.md D-22)
+2. **Preferred Language 모달 안내 문구 확정** — 설정이 웹사이트 문구에만 적용되는지 이메일까지 포함하는지 근거가 없어 문구를 쓸 수 없다. clone으로 잘못 들어가 있던 `Please enter a new username.`은 삭제했고 자리가 비어 있다. 모달 `6124:1881` (TODO.md D-23)
+3. **Loading 상태 표기 일괄 재확인** (이월) — 이미 작성된 Description 중 "로딩 휠"로 적힌 곳을 Skeleton 기준으로 교체
+   - Coupon Card (`6131:3017`, ③번 노트) — 현재 "로딩 휠"
+   - Payment History Table (`6131:2615`, ①번 노트) — 현재 "*(정책 확인 필요)*"
+4. **구 노트 `5442:225` 처리 판단** — `Edit v3` 섹션(`4805:5821`)에 모달 없이 hover 오버레이로 업로드하는 옛 설계가 남아 있다. 현행과 불일치하나 폐기 섹션이라 이번 범위에서 제외했다. 삭제할지 유지할지 Josh 판단
+
+## Billing Address Description — 확정 정책 (2026-08-04)
+
+| 항목 | 확정 |
+|---|---|
+| 필드명 | "Address Lable"(오타) → **Address Name** 확정 (목록 카드 `{Address Name}` 표기와 통일) — Figma는 Josh 직접 수정 |
+| 등록 개수 | 현재 1개만 등록 가능. UI는 추후 다중 등록 확장을 고려한 목록형 구성 |
+| Add Address 위치 | Empty: 카드 중앙 / 1개 이상: 상단 타이틀 우측 |
+| Add·Edit 폼 | 별도 폼 페이지 (모달 아님). Edit 진입 시 기존 값 프리필 |
+| Back Button | 입력값 있어도 별도 확인 없이 이동 (입력값 파기) |
+| 인라인 에러 | Save 클릭 시점 검증 — "This field is required." (실시간 검증 아님) |
+| State 분기 | 미국 선택: Dropdown + 필수 / 그 외: Text Input + 선택 |
+| Remove 모달 | 외부 클릭 시 닫히지 않음. X(Close) 버튼 없음 — Cancel/Remove만 |
+| 토스트 | 기본값 사용 (성공 "Changes have been saved." / 실패 "Something went wrong. Please try again.") |
 
 ## License ID 웹 로그인 차단 — 확정 정책 (2026-06-09)
 
@@ -159,6 +176,16 @@ Overview · Account · License/Billing · Invited Projects · Preferences
 ---
 
 ## 완료 로그
+
+### 2026-08-04 (Billing Address Description — 구 파일 `PeCid7uJcg0HenViaaiHUp` MyPage ✅)
+
+- **Billing Address 목록 + Remove 모달 Description 삽입** (node `6131:2762`) — 스크린샷 기반 작성 → 9개 노트로 삽입했으나 Josh가 Remove 모달 3개 노트(모달/Cancel/Remove 버튼)를 1개로 직접 통합 → 최종 7개 노트. 기존 초안 5장(구 인터랙션 모델: 카드 내 인라인 Edit) 덮어씀
+- **Add / Edit Address 폼 Description 삽입** (node `6796:3596`) — 5개 노트: ① Back Button ② Address Form ③ Country Dropdown ④ State Field ⑤ Save Button. 입력 필드 7개는 ② 한 노트로 통합 (분기 있는 Country·State만 분리)
+- **신규 컨벤션 2건 확정** (메모리 + mistakes.md 기록):
+  - "비즈니스 로직:" 레이블 폐기 → **"케이스 분기:"** 사용. 분기 1개면 레이블 없이 단독 불릿
+  - **확인 모달은 노트 하나로 통합** — 모달 설명 + 외부 클릭 + Cancel 닫힘 불릿 + 액션 버튼 성공/실패까지 한 노트. 평탄화 분리는 화면 레벨 컴포넌트에만 적용
+- 필드명 Address Name 확정 (디자인 오타 "Address Lable"은 Josh 직접 수정)
+- native 불릿 + screenshot 검증 완료 (두 노드 모두)
 
 ### 2026-07-27 (TODO 일괄 완료 처리)
 
@@ -309,3 +336,30 @@ Overview · Account · License/Billing · Invited Projects · Preferences
 - `Personal: License/Billing — Student Benefit Active` (`5680:192`): Edit Row 수정
 - `Personal: Account — Individual` (`5665:204`): CLO-SET 칩 스타일 적용
 - `Personal: License/Billing — Annual Active` (`5707:167`) 신규 생성 — Monthly Active clone → Annual 전용 수정
+
+---
+
+## Profile Picture 업로드 제약 — 확정 (2026-09-01)
+
+근거: Arden Figma 코멘트 (노트 `5950:1789`). FE가 확장자를 jpg, jpeg, png, gif, bmp로 제한 중이고 BE도 동일하게 맞춘다. SVG는 XSS 우려로 제외.
+
+| 항목 | 확정 |
+|---|---|
+| 허용 확장자 | jpg, jpeg, png, gif, bmp |
+| 사용자 문구의 형식 표기 | `JPG, PNG, GIF, or BMP` — jpeg는 jpg와 같은 형식이라 화면에서는 4개만 |
+| Description의 형식 표기 | 확장자 5개 전부. 개발 기준을 남긴다 |
+| SVG 제외 사유 | Description에 쓰지 않는다. 부재를 설명하지 않고 허용 형식만 진술 |
+| 형식 불일치 에러 | `"This file type isn't supported. Use JPG, PNG, GIF, or BMP."` |
+| 크기 초과 에러 | `"This file is too large. Choose a file under {maxFileSize}."` — 상한 미확정 |
+| 모달 안내 문구 | `Use a JPG, PNG, GIF, or BMP file under {maxFileSize}.` |
+
+## 완료 로그
+
+### 2026-09-01
+
+- **노트 ④ Profile Picture (`5950:1794`) 재작성** — 허용 형식, 파일 선택 시 검사(유효/무효), 실패 케이스 2종(형식, 크기), Set to Default 노출 조건, Save 성공/실패를 추가. 루트 `spec.md` §7 `applyRichDescription()` 적용(허용 형식 SemiBold, 플래그 `#CC3300`)
+- **모달 clone 오류 3장 정리** — `Please enter a new username.`가 Profile Image 2장(`6124:1863`, `6124:1925`)과 Preferred Language 1장(`6124:1885`)에 복제돼 있었다. 앞 2장은 업로드 안내로 교체, Preferred Language는 근거가 없어 삭제만 하고 미결로 남김
+- **프레임 높이 확장** — 노트가 173에서 407로 늘어 Description이 180px 잘렸다. Contents를 2159로 키우고, Screen은 흰 배경 FILL이라 1979로 고정해 빈 여백을 막았다. 프레임이 2295가 되며 아래 Account 섹션과 겹쳐 부모 섹션 자식 중 `y >= 2463`인 것 전부(섹션 5개 + 낱개 3개)를 180px 하향 이동. 겹침 0건 확인
+- **`docs/policy/error-copy.md`** Account 탭에 에러 문구 2행 추가
+- **`requirements/board/patterns.md`** `파일 업로드 필드` 패턴 신설 + 오버플로 패턴에 섹션 이동·Screen FILL 함정 2줄 추가
+- **`requirements/board/TODO.md`** F-20 등록(검토대기), D-22·D-23 결정 대기 2건 추가
