@@ -8,6 +8,8 @@ user_invocable: true
 
 문구를 처음부터 만들 때 사용. 원문이 있고 번역이 목적이면 `/translate` 사용.
 
+> **출력 전 `/copy-review` 검수 필수.** 말투·버튼 텍스트·용어 기준은 `.claude/rules/ux-writing.md`가 원본이다. 이 스킬은 문구를 만들고, 검수는 `/copy-review`가 맡는다.
+
 ---
 
 ## 호출 방식

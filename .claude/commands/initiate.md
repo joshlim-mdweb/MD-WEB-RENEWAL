@@ -100,8 +100,7 @@
   (두 채널 합계 0건이면 "요청 채널 깨끗해요 — 미티켓 요청 없음" 한 줄로 대체하고 아래 확인 질문 생략)
 
 주요 규칙 (자동 적용)
-  ux-writing · copywriting · figma-annotation · figma-layout
-  atlassian · jira-ticket · prd-writing
+  figma-annotation · figma-layout · atlassian · jira-ticket
 
 사용 가능한 주요 커맨드
   /cowork        기획 루프 (아이디어 → PRD → Jira)
