@@ -1,73 +1,78 @@
 ---
 project: checkout-renewal
-updated: 2026-09-01
+updated: 2026-09-08
 ---
 
 ## 관련 Jira 티켓
-- MDWEB-870 — 결제 페이지 & 흐름 (진행중, `requirements/board/TODO.md` T-01)
+- MDWEB-870 — 결제 페이지 & 흐름 (진행중)
 - MDWEB-916 — BE 개인 연간 구독 상품 (읽기 전용 참조)
 
 ## TODO
 
-### ★ 최우선 — 원장 반영 (Figma 축은 F-19만 남음)
+1. **원장 반영 (Josh OK 대기 2건)** — ①`checkout.md` §11.1 "Academic Seat 할인의 구간별 판정" 개정 초안 (09-07 채팅 제시: Add 구간은 추가 Seat 수, Extend 구간은 총 Seat 수, 각 10석 이상 50%) ②**VAT Number의 Billing Address 편입** (09-08 확정, §7.2와 §8에 standalone 입력 전제 서술이 남아 있으면 개정 필요 — 값 기준 grep 후 초안 제시)
+2. **F-19, F-20 리뷰** — 둘 다 검토대기, Josh 몫. F-24(Case 포맷 + 항목별 노트 + 변수화), F-25(VAT 편입)도 검토대기
+3. 기존 원장 반영 잔여 — `checkout.md` 일괄 정리(Indie 웹 판매 제외, §9 Purchase Type 필터 모델 재작성, CTA 명칭), `plan.md` Academic 단가 300 USD + 구간 할인, 게시본 Canvas(`F0BL0SRE4TZ`) 후속
+4. 미도출 프레임 2종: Single→Team Convert, Individual 재구매(잔여 안내) — Josh 선정 대기
+5. F-01 잔여 갭 (Individual 축 5프레임, RESULT 축 4프레임, BLOCKED 축) — Josh가 고르면 개별 행 등록
 
-**2026-09-01 — Josh가 F-02~F-18을 일괄 완료 처리했다.** Step 2 Description 작업(Team New 노트 검수, Add/Extend 패널, Components 3프레임, SEATS, Individual Monthly, 케이스 매트릭스, Order Summary 이관)은 전부 닫혔다. 남은 Figma 행은 **F-19 Checkout Organization 4프레임 2컬럼 전환**(검토대기) 하나다.
-
-1. **F-19 후속** — 2컬럼 전환에 따른 Description 개정(재계산 트리거 통합, CTA 활성 조건, 약관 체크박스) + Individual 4프레임 적용. Josh 리뷰 후 착수
-2. 미도출 프레임 2종: **Single→Team Convert**, **Individual 재구매(잔여 안내)** — Josh 선정 대기
-
-### 원장 반영 배정 (Policy Writer, Planner가 T- 행 생성)
-5. `checkout.md` 일괄 정리 — ①Indie 웹 판매 제외(§0, §1, §6, §9, §10, §12) ②§9 "만료된 라이선스만 보유" 행 삭제 (만료 = 빈 계정, 상태 자체가 없음 — 08-24 Josh 확정) ③§9를 판정 모델에서 **Purchase Type 필터 모델**로 재작성 (Step 1 화면 확정 구조) ④CTA 명칭 `[다음]` → `Set Order` 정합
-6. `plan.md` — Academic 단가 **$300/Seat + 10석 구매 시 50% 할인** (08-24 확정, 현행 $1,500는 개정 대상) / Indie 웹 판매 제외 / plan-card.md Indie 행 재정의(Start 클릭 시 Create Organization + Indie verification 리다이렉트)
-7. 게시본 Canvas 갱신 (원장 반영 후) — Order/Checkout `F0BL0SRE4TZ` Indie 행, Academic 가격
-
-### 대기·예고
-8. **사용자 플로우 차트** — Josh 예고 (진입점 섹션 구조 기반)
-9. Manager 일괄 보고 발송됨(08-25) — TODO.md 반영은 Manager 몫, 확인만
-10. Page Context 추출 문서/표 만들기 — Josh 예고 (각 프레임 Page Context는 삭제 금지)
-
-### 살아있는 플래그 (결정·정책 확인 대기)
-- Step 1 목록: 다중 Organization 조회 기준 / Reserved, Suspended, Perpetual 라이선스 보유 계정 포함 기준 / 탭 전환 시 선택 유지 여부 / 기본 선택 도입 시 "Select a Purchase type" 안내 문구
-- 교차 플랜: Single→Team Linux 전환 제공 여부 / Team(Win/Mac)↔Linux 병존 기준 (product group 분리)
-- 금액: 연장분 Seat 수가 추가분 포함인지 / Coupon "최초 구매" 판정 기준 / Trial 경유 Coupon / Trial $0 세금 행 / Trial CTA 문구 / Student 재구매 잔여 안내의 "동일 계열" 범위
-- Tax ID 무효 처리 (BE 확인, D-1)
+### 살아있는 플래그
+- Tax ID(VAT Number) 무효 시 처리 — BE 확인 (D-1). 위치가 Add Address 모달로 바뀌어도 쟁점 동일
+- Check out 버튼 문구: 화면은 Check out 고정, 정책은 결제수단별 4종 *(와이어프레임 갱신 필요 플래그가 구성 노트에 있음)*
+- Step 1 목록 기준, 교차 플랜, Coupon 판정 기준 등 기존 플래그 유지 (TODO.md 결정 대기 표 참조)
 
 ## 컨텍스트
 
-### 화면 체계 (2026-08-23~25 확립)
-- **진입점 기준 섹션**: 플랜별 행 세로 나열, 각 행의 프레임들 가로 나열. Indie는 웹 판매 제외(백오더 전용, 가격 미노출, Start 클릭 → Create Organization + Indie verification 리다이렉트만)
-- **Select SW Account 섹션(`7322:4767`)** — 완비: Team 원장 `7319:4177`(근간) / Single `7782:28531`(카드 없음 + Team 전환 프로모 배너 "Save $388 per Seat with Enterprise Team.") / Academics `7798:1436` / Team Linux `7855:1453` + 상태 프레임 3장(`7319:3969` 전환 대상 선택, `7322:4777` 빈 계정 선택, `7319:4374` Add/Extend 탭)
-- **Step 1 화면 모델 = Purchase Type 탭 필터** (판정 표시 아님): Assign 탭 = 빈 계정 + 활성 Single 보유 계정(전환 대상, Team 진입만) / Add·Extend 탭 = 해당 플랜 활성 계정만. 원장 §9 재작성 필요 (TODO 5)
-- **Checkout_Organization(`7793:2634`)**: Team New `7172:3150` / Team Add/Extend `7905:5757`(완성 — Add Seats·Extend by 칩 + Sub Total 분해 박스) / Single `7782:28043` / Academics `7793:2008` + 50% 할인 적용 `7793:2454`
-- **Checkout_Individual(`7854:1641`)**: Trial `7782:28345` / Monthly `7793:1366` / Annual `7892:2882` / Student Benefit `7793:1681` / Student 유료 `7875:2476` — 이름 꼬임 정리 완료
-- **케이스별 노출 매트릭스 Spec Doc 2장**: Individual `7876:1479` / Organization `7876:1897` — 케이스=행, 차이 나는 컴포넌트만 열, 공통은 각주, O/X + 괄호 부연
+### Order Summary 할인 표시 체계 (09-07~08 확정, 이 스트림의 핵심)
+- **쿠폰 외 정책 할인은 Discount를 쓰지 않는다.** Seat 할인(Academic)은 해당 구간 금액에 직접 반영: 정가 회색 취소선 + 할인 후 금액 병기, Subtotal은 할인 반영 후 금액. Discount는 쿠폰 전용(기본 0 USD)
+- 할인 캡션 2종, 구간 아래 우측 정렬: 미달 `Add {n} more Seats for 50% off`, 충족 `50% off applied`. 판정: Add 구간은 추가 Seat 수, Extend 구간은 총 Seat 수, 각 10석 이상 50%
+- 기간 칩(Add/Extend 공통, Enterprise 포함, New 미표기): Extra Seats `Remaining Period`, Extension `Next Period`
+- Subtotal은 Breakdown 박스 위. 합계 라벨 `Total`. USD 소수 2자리, 정수는 소수점 없음
+- **Individual Trial과 Student Benefit applied는 Subtotal에 정가 취소선 + 0 USD 병기** (Trial 280, Benefit 8.25), VAT와 Total 0 USD, 첫 청구는 First Payment 배너가 전달
+- 배너: `Your next/first payment of {금액} USD is due on {날짜}.` 새 디자인(주황 테두리 + 주황 14% 배경 + 주황 Medium 텍스트, Josh 확정) — 12개 전수 통일. 구독 케이스만, 선불(Enterprise Team, Academics) 미노출
+- Academic Add/Extend 4케이스 Total 검산: 1,617 / 1,155 / 4,917 / 5,445 USD
 
-### Description 컨벤션 (전 프레임 공통, 08-24 확정)
-- **Page Context는 무번호** (배지 제거), 넘버링은 다음 노트부터 ①. 노트 제목은 요소명만 담백하게 — (신규 기능) 류 괄호 표기 금지
-- **파생 프레임은 근간(Enterprise Team) 참조**: "Enterprise Team과 동일" + `차이:` 블록만. 단 화면 구조가 다른 파생(Single)은 동일 선언 없이 독립 전문
-- 탭별 노출 기준은 테이블 노트 단일 소관 (중복 기재 금지). 상태 프레임은 액션 중심: Page Context(상태 선언) + 트리거 노트 + Set Order(상황별 문구·버튼 상태 상세, "컨텍스트 전달" 류 추상 표현 금지)
-- **한글 fallback 함정**: 플러그인으로 characters를 쓰면 export에서 한글 미렌더 — 한글 범위에 Noto Sans KR 명시 적용 + scale-1 검증 필수 (mistakes.md 08-23)
+### VAT Number → Billing Address 편입 (09-08 확정)
+- standalone 입력 폐지. 입력은 Add Address 모달의 VAT Number 필드(Enterprise 플랜 + EU 회원국 선택 시에만 노출, Academics 미노출), 표시는 Billing Address 카드 안 `VAT Number: DE123456789` 줄
+- 역과세 로직 유지: 선택 입력, 미입력 시 표준 세율, 입력 시 Reverse Charge 전환, 국가 변경 시 초기화
+- EU 케이스 정본은 COMPONENTS: BILLING INFORMATION의 EU 변형. 미국 더미 주소 화면 카드에는 표시 없음이 정합
 
-### 신규 확정 (08-23~25, 원장 미반영 — TODO 5~7)
-- Purchase Type 값 3종: **New / Add/Extend / Convert** (Add와 Extend 통합). Organization 프레임 전부에 "Purchase Type" 라벨+값을 Product 위에 표기 (컨벤션 통일 완료)
-- Academic 단가 **$300/Seat, 10석 구매 시 50% 할인**
-- **Coupon과 Billing Address는 보유 목록 선택형, 클릭 시 입력 모달**
-- Payment Methods는 화면에 3종(Stripe, Paypal, Alipay) 전시 유지 — 국가 분기는 Description에서 기술
-- "만료된 라이선스 보유 계정" 상태 없음 (만료 = 빈 계정)
-- Seat 프리셋 5/10/20/Custom (1 제거), Enterprise Single은 프리셋 없음
-- Team New의 Seats 카드에 계산 박스 도입 (Seats 산식 행 + Subtotal, Order Summary의 Subtotal과 동일 값)
-
-### 스테일 주의
-- 구 "SW Account 배정 드롭다운" 확정 문구(08-11) — Step 1이 목록 테이블 방식으로 바뀌어 **드롭다운 자체가 사라짐**. 문구 재사용 금지
-- `requirements/board/TODO.md`의 F-01 30프레임 표 — 진입점 섹션 체계로 사실상 대체 진행 중. Manager 반영 대기
+### Description 작성 규약 (이 스트림에서 확정, patterns.md와 메모리에 등재)
+- **계산 케이스는 Case 포맷**: Page Context가 케이스 정의 소유(제목 `Case N: {제목}`, 이유 문장, Add 여부와 Seat 수 필드 서브불릿) + **UI 항목별 번호 노트**(Extra Seats, Extension, Subtotal, VAT) + 항목별 Screen 배지(카드 좌측 거터 정렬)
+- **단어 "행" 금지**: 요소명 그대로, 집합은 "항목", 위치는 "Seats 아래"
+- 노트 본문 첫 줄에 제목 반복 금지("~한 경우의 형태" 류)
+- 배지와 노트는 1:1 절대 조건. 변수 정의는 적용 범위 기준: 공통({total}, {regularPrice}, 쿠폰, 배너)은 구성 노트, Academic 전용({remainingDays}, {totalSeats}, {n} 등)은 쓰이는 프레임 노트에
+- 컴포넌트 시트(`7992:1577`)는 예시 숫자 대신 {} 변수 표기 (규칙값 0 USD는 리터럴), 화면은 더미 데이터
 
 ### Figma — 활성 위치
-파일 `PeCid7uJcg0HenViaaiHUp`, page `Order/Checkout (In progress🔥)` (page-id 237:3132)
-- Spec Doc 15장: `Scope`(`7148:2061`) · `Docs`(`7148:2062`) 섹션 — 좌표·목록은 이전 로그 참조. 신규 2장: 케이스별 노출 (Individual `7876:1479` x8446, Organization `7876:1897` x10506, y2730)
-- Add/Extend 계산 로직 비교 다이어그램 `7910:1543` (참고용 — Josh 판단 후 삭제 가능)
-- Add/Extend Seats 카드 단독 시안 `7907:6002`
+파일 `PeCid7uJcg0HenViaaiHUp`, page `Order/Checkout ✅` (page-id 237:3132)
+- `COMPONENTS: ORDER SUMMARY` `7992:1568` (Screen `7992:1577`, 구성 노트 `8025:1555` = 변수 사전 정본, 케이스 노트 1~10)
+- Academic Add/Extend 4프레임: `8555:1727` / `8556:1745` / `8547:2394` / `8554:1709` (섹션 `Checkout_Organization`), 요약 카드 `8668:1763`
+- `COMPONENTS: BILLING INFORMATION` `7991:1582` (EU 변형에 VAT 카드 표시), Add Address 모달 `8489:1946` (Address 섹션)
+- Canvas: 표기 규칙 `F0BSUTFMMEV`, Academic Checkout UI 변경 `F0BV7UUE84T`, Order/Checkout 게시본 `F0BL0SRE4TZ`
+
+### 스테일 주의
+- 시안 Artifact `8398f512`는 취소선 모델 이전 상태
+- 이 파일 하단 완료 로그의 08월 항목 일부(캡션을 Discount 아래 두는 서술 등)는 09-07 취소선 모델로 대체됨
 
 ## 완료 로그
+### 2026-09-08
+- 규칙 반영(Josh 승인): `spec.md` §6.3에 화면 요소 "행" 호칭 금지, §6.6에 노트 첫 줄 제목 반복 금지 추가
+- **Order Summary 할인 표시 마무리**: Trial과 Student Benefit applied에 Subtotal 정가 취소선 + 0 USD 병기 적용(VAT와 Total 0), 배너 새 디자인(주황) 화면 6곳 통일, 컴포넌트 시트 숫자 전부 {} 변수화(신규 변수와 표기 템플릿은 구성 노트 등재)
+- **Academic Add/Extend Description 재구조화**(Josh 제안): Page Context가 케이스 정의 소유, UI 항목별 노트(Extra Seats, Extension, Subtotal, VAT)와 항목별 배지. 변수 정의는 적용 프레임으로 이동(공통 아님, Josh 지시)
+- **단어 "행" 전면 제거**(Josh 지시) — Description 22곳 + 노트 제목 6곳, 규칙 메모리 등재
+- **VAT Number의 Billing Address 편입 반영**(F-25): standalone 필드 5곳 삭제, Description 9곳 갱신, Case Matrix 라벨 변경
+- F-24, F-25 검토대기 등록
+
+### 2026-09-07
+- **Seat 할인을 Discount에서 분리**(Josh 확정): 정가 취소선 + 할인 후 금액 병기, Subtotal 선반영, Discount 쿠폰 전용, 캡션 우측 정렬, Subtotal을 Breakdown 위로. Student Benefit도 Discount 미사용
+- **F-21(배너), F-22(Academic 4케이스), F-23(Description 정리) 완료 처리** — F-23에서 컴포넌트 배지와 노트 1~10 재번호(중복 5와 결번 해소), 신설 노트 3장(Trial, Benefit applied, Benefit used), 케이스 노트 첫 줄 제목 반복 삭제
+- Case 포맷 확정(Josh 템플릿): 계산 서술은 화면 예시 값 + 필드 + 계산식 + UI 표시 블록
+- 개발과 디자인 공유용 슬랙 초안 2건 전달(변경 대상별 정리, 결정 사항 목록)
+
+### 2026-09-03
+- **Next Payment와 First Payment를 문장형 배너로 전환**(F-21): `Your next payment of {금액} USD is due on {날짜}.`, 첫 결제 전은 first, 날짜 월 3글자 축약(ux-writing §1.1 개정)
+- 합계 라벨 `Total for today`를 `Total`로, USD 소수 표기 규칙 확정. Canvas `F0BSUTFMMEV` 개정
+
 ### 2026-09-01
 - **F-02~F-18 16행 완료 처리** (Josh 일괄 지시) — Figma 축 `검토대기` 적체 해소. F-04·F-05는 기존 완료 표기 유지, F-19는 지시 범위 밖이라 `검토대기` 유지
 - 결정 대기 표에 **D-22**(프로필 이미지 파일 크기 상한), **D-23**(Preferred Language 모달 안내 문구) 추가 — MyPage 건이나 결정 추적은 같은 보드에서 한다
