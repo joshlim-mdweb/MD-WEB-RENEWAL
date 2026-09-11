@@ -1,6 +1,6 @@
 ---
 project: checkout-renewal
-updated: 2026-09-08
+updated: 2026-09-09
 ---
 
 ## 관련 Jira 티켓
@@ -9,18 +9,34 @@ updated: 2026-09-08
 
 ## TODO
 
-1. **원장 반영 (Josh OK 대기 2건)** — ①`checkout.md` §11.1 "Academic Seat 할인의 구간별 판정" 개정 초안 (09-07 채팅 제시: Add 구간은 추가 Seat 수, Extend 구간은 총 Seat 수, 각 10석 이상 50%) ②**VAT Number의 Billing Address 편입** (09-08 확정, §7.2와 §8에 standalone 입력 전제 서술이 남아 있으면 개정 필요 — 값 기준 grep 후 초안 제시)
+1. **F-26 리뷰 (기획 문서 3종)** — Version Table, PRD 1과 2, 기능명세 39행. 검토대기, Josh 몫
 2. **F-19, F-20 리뷰** — 둘 다 검토대기, Josh 몫. F-24(Case 포맷 + 항목별 노트 + 변수화), F-25(VAT 편입)도 검토대기
-3. 기존 원장 반영 잔여 — `checkout.md` 일괄 정리(Indie 웹 판매 제외, §9 Purchase Type 필터 모델 재작성, CTA 명칭), `plan.md` Academic 단가 300 USD + 구간 할인, 게시본 Canvas(`F0BL0SRE4TZ`) 후속
-4. 미도출 프레임 2종: Single→Team Convert, Individual 재구매(잔여 안내) — Josh 선정 대기
-5. F-01 잔여 갭 (Individual 축 5프레임, RESULT 축 4프레임, BLOCKED 축) — Josh가 고르면 개별 행 등록
+3. **User Flow 차트 2개** — 에디터 초안(0.3.00)을 Josh가 직접 수정. PNG 삽입은 이번 라운드 제외(09-09 결정), 별도 지시 대기
+4. **§6 Order Summary 다이어그램 개정 제안** — 확정 체계(Discount 쿠폰 전용에 Coupon 행 통합, Total 라벨, 배너, n USD 표기, Subtotal 위치)와 어긋난 부분이 남아 있다. Josh OK 후 재작성
+5. 기존 원장 반영 잔여 — `checkout.md` 일괄 정리(Indie 웹 판매 제외, §9 Purchase Type 필터 모델 재작성 마무리, CTA 명칭), `plan.md` Academic 단가 300 USD + 구간 할인, 게시본 Canvas(`F0BL0SRE4TZ`) 구 모델 잔재(판정 표, [다음] 버튼명) 정리 — Step 표기는 09-09 해소됨
+6. 미도출 프레임 2종: Single→Team Convert, Individual 재구매(잔여 안내) — Josh 선정 대기
+7. F-01 잔여 갭 (Individual 축 5프레임, RESULT 축 4프레임, BLOCKED 축 + 신규 동일 플랜 차단 모달 CO-100-300-P01) — Josh가 고르면 개별 행 등록
 
-### 살아있는 플래그
+### 살아있는 플래그 (PRD 2 미확정 항목 블록과 동기)
 - Tax ID(VAT Number) 무효 시 처리 — BE 확인 (D-1). 위치가 Add Address 모달로 바뀌어도 쟁점 동일
-- Check out 버튼 문구: 화면은 Check out 고정, 정책은 결제수단별 4종 *(와이어프레임 갱신 필요 플래그가 구성 노트에 있음)*
-- Step 1 목록 기준, 교차 플랜, Coupon 판정 기준 등 기존 플래그 유지 (TODO.md 결정 대기 표 참조)
+- SW Account 생성 모달 입력 필드 (D-10)
+- CTA 명칭: 화면은 Check out 고정, 정책은 결제수단별 4종 *(와이어프레임 갱신 필요 플래그가 구성 노트에 있음)*
+- 동일 플랜 차단 모달의 판정 상태 범위: Trial, Paused, Cancel Scheduled 포함 여부. D-11(진입차단 09)과 같은 케이스인지 확인
+- Convert 시 라이선스 할당 상태 유지 여부 (구 G28)
+- Seat와 Coupon 변경 시 Avalara 재조회와 디바운스 (구 G31, 개발 확인)
+- SW Account 지정 화면 목록 기준, 교차 플랜, Coupon 판정 기준 등 기존 플래그 유지 (TODO.md 결정 대기 표 참조)
 
 ## 컨텍스트
+
+### 기획 문서 3종과 화면 ID 체계 (09-09 신설, F-26)
+- page `Order/Checkout ✅`에 생성: `Order/Checkout Version Table`(`8872:1705`, 1.0.00), `Order/Checkout PRD 1`(`8873:1705`), `Order/Checkout PRD 2`(`8874:1705`), `Order/Checkout 기능명세`(`8875:1705`, FC-CO-001~039)
+- **화면 ID `CO` 최초 발급, PRD Screen Structure가 발급 원본**: SW Account 지정 `CO-100-000`(+P01 생성 모달), 결제 `CO-100-100`(+P01 Add Address, P02 Coupon, P03 Payment Failed), Order Complete `CO-100-200`, 진입 차단 `CO-100-300`(+P01 동일 플랜 차단 모달). 401과 500은 error-states 공용이라 미발급
+- **단어 Step 폐지 (09-09 Josh 확정)**: 화면명으로 쓴다 — SW Account 지정 화면, 결제 화면. 정책 문서 3개(checkout.md 13곳, plan.md, plan-card.md)와 게시본 Canvas 12개 섹션 교체 완료. 메모리 등재
+- **동일 플랜 보유 차단 모달 신설 (09-09 Josh 확정)**: 개인 계열이 동일 플랜 활성 구독 보유 시 Plan 페이지 Start 클릭에서 차단. 제목 `You Already Have This Plan`, 본문 `Your {planName} subscription is already active. Manage renewal and payment details in My Page.`, 버튼 `Close`와 `Go to My Page`. 동일 계열 다른 지불 방식 구매(전환 허용, 잔여 안내)와는 별개 케이스
+- 기능명세 사용자 열: 로그인 주체는 "로그인"이 아니라 **Member** (spec §9.5 반영)
+- checkout.md 하단 관련 문서 블록을 문서 3종 좌표로 교체 (구 Spec Doc 좌표와 구 페이지명 폐기, Josh OK)
+- User Flow: 에디터(`7b03170c-f6e7-486c-9ebc-c0853b802dcd`)에 차트 2개 초안 — 진입 판정과 결제, SW Account 지정과 Purchase Type 판정. 도출 기준은 spec.md §9.8 신설(1.9.00): 후보 4개 중 결제 실패 복구는 골격 분기로 충분, Trial 경과는 시간 축이라 표 소관으로 제외
+- `requirements/mdweb-870-checkout/` 7개 파일은 구조적 스테일 판정(2-step 이전 모델, 축 A와 축 B, Indie 웹 판매 포함) — 재사용 가능한 것은 배경, §1 범위 표, §22.1 에러 패턴 표뿐
 
 ### Order Summary 할인 표시 체계 (09-07~08 확정, 이 스트림의 핵심)
 - **쿠폰 외 정책 할인은 Discount를 쓰지 않는다.** Seat 할인(Academic)은 해당 구간 금액에 직접 반영: 정가 회색 취소선 + 할인 후 금액 병기, Subtotal은 할인 반영 후 금액. Discount는 쿠폰 전용(기본 0 USD)
@@ -55,7 +71,18 @@ updated: 2026-09-08
 - 이 파일 하단 완료 로그의 08월 항목 일부(캡션을 Discount 아래 두는 서술 등)는 09-07 취소선 모델로 대체됨
 
 ## 완료 로그
+### 2026-09-09
+- **F-26 완료(검토대기): 기획 문서 3종 Figma 생성** — 신설 커맨드 `/figma-document` 첫 실행. Version Table(1.0.00), PRD 1과 2(표준 7섹션, 미확정 플래그 6건), 기능명세 39행. 화면 ID `CO` 최초 발급
+- **단어 Step 전면 폐지(Josh)** — 정책 문서 3개 15곳과 게시본 Canvas 12개 섹션을 화면명으로 교체, 재검색 0건 확인
+- **동일 플랜 보유 차단 모달 확정(Josh)** — 문구 3종 확정, `CO-100-300-P01` 발급, PRD와 기능명세 등재
+- checkout.md 관련 문서 블록 갱신(Josh OK): PRD 줄을 Figma 정본 좌표로, 페이지명을 `Order/Checkout ✅`로 현행화
+- spec.md 1.9.00: 플로우 목록 도출 기준 신설(§9.8), 기능명세 사용자 Member 표기(§9.5), 문서 빌더 docText 순서 정정(§11.5 텍스트 폭 0 붕괴 버그)
+- User Flow 에디터에 차트 2개 초안 게시(0.3.00). Josh 직접 수정 예정, PNG 삽입은 이번 라운드 제외
+- 구 미결 재판정: G25(추가 Seat 만료일)와 G22(Indie 대기 표시)는 원장 확인으로 해소, G28(Convert 할당 상태)과 G31(Avalara 재조회)은 PRD 플래그로 이관
+- `/figma-document` 커맨드 신설과 역할 등록(CLAUDE.md, planner-workflow.md) — Figma 축 세 번째 역할
+
 ### 2026-09-08
+- **원장 반영 완료** (Josh OK): `checkout.md` §11.1 신설(Academic 구간별 판정 표 + 예시), §6 각주와 §0 구성, §7.2 Tax ID의 Billing Address 편입, §8.3 필드 표에 VAT Number 추가. `plan.md` §2-1에 §11.1 참조 연결
 - 규칙 반영(Josh 승인): `spec.md` §6.3에 화면 요소 "행" 호칭 금지, §6.6에 노트 첫 줄 제목 반복 금지 추가
 - **Order Summary 할인 표시 마무리**: Trial과 Student Benefit applied에 Subtotal 정가 취소선 + 0 USD 병기 적용(VAT와 Total 0), 배너 새 디자인(주황) 화면 6곳 통일, 컴포넌트 시트 숫자 전부 {} 변수화(신규 변수와 표기 템플릿은 구성 노트 등재)
 - **Academic Add/Extend Description 재구조화**(Josh 제안): Page Context가 케이스 정의 소유, UI 항목별 노트(Extra Seats, Extension, Subtotal, VAT)와 항목별 배지. 변수 정의는 적용 프레임으로 이동(공통 아님, Josh 지시)

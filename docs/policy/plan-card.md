@@ -47,7 +47,7 @@ Plan 카드의 버튼 동작은 6가지 규칙으로 정의됩니다.
 * **Organization**: Enterprise, Academics, Indie 플로우에서 Organization이 없는 경우 생성 단계를 경유합니다. Back Office에서 Enterprise 유형 계정을 생성하는 경우 Member와 Organization이 동시에 생성됩니다.
 * **Verification**: Student, Academics, Indie 플로우에서 인증 미보유인 경우 인증 신청으로 유도합니다. 인증이 필요한 플랜의 구매 자격 판정은 Backend가 처리합니다.
 * **Indie 백오더**: Indie는 웹에서 인증 신청까지만 진행하고 구매는 백오더로 처리합니다. 사이트에 가격을 노출하지 않습니다. (2026-08-25 확정)
-* **기존 라이선스**: Checkout Step 1의 Purchase Type 카드가 계정 목록을 필터하고, 선택에 따라 `New`, `Add/Extend`, `Convert`로 처리합니다. (`checkout.md` §9, §11 — 2026-08-25 필터 모델 전환)
+* **기존 라이선스**: Checkout의 SW Account 지정 화면에서 Purchase Type 카드가 계정 목록을 필터하고, 선택에 따라 `New`, `Add/Extend`, `Convert`로 처리합니다. (`checkout.md` §9, §11 — 2026-08-25 필터 모델 전환)
 
 ---
 

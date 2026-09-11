@@ -24,7 +24,7 @@ Canvas: [[RENEWAL] Plan Renew](https://clo3d.slack.com/docs/T04BT3VBR/F0BCBS8G88
 | Enterprise Single | Network Online | $199 | 월간 | Max 1 | 동시접속 불가, 자동결제 (구 Network Online Monthly) |
 | Enterprise Team | Network Online | $2,000 | 연간 | 구매된 N Seat | Prepaid (구 Network Online Annual) |
 | Enterprise Team Linux | Network Online | $2,300 | 연간 | 구매된 N Seat | Prepaid, Linux 환경 (구 Network Online Linux). 웹 구매 가능 |
-| Academic Annual | Network Online | $300/Seat | 연간 | 구매된 N Seat | Academic 인증 필요. 10석 이상 구매 시 50% 할인 (2026-08-25 개정 — 구 $1,500/Seat 폐기) |
+| Academic Annual | Network Online | $300/Seat | 연간 | 구매된 N Seat | Academic 인증 필요. 10석 이상 구매 시 50% 할인, 구간별 판정은 `checkout.md` §11.1 (2026-08-25 개정 — 구 $1,500/Seat 폐기) |
 | Indie Annual | Network Online | 가격 미노출* | 연간 | Max 5 Seat | Indie 인증 필요, 웹 판매 제외 |
 
 \* Indie는 웹 판매 대상이 아니다 — 백오더 전용으로 판매하며 사이트에 가격을 노출하지 않는다 (2026-08-25 확정, §3 Indie 참조)
@@ -151,7 +151,7 @@ Plan 카드의 Start Indie 클릭 시 Organization 생성과 Indie 인증 신청
 ### 4-2. 구매 유형 (Purchase Type) (2026-08-25 개정)
 
 - Purchase Type은 `New`, `Add/Extend`, `Convert` 3종이다. 정의, 필터 기준, 금액 계산은 `checkout.md` §9~§11을 따른다
-- Step 1에서 Purchase Type 카드가 SW Account 목록을 필터하고, 선택한 카드와 계정에 따라 Purchase Type이 정해진다
+- SW Account 지정 화면에서 Purchase Type 카드가 SW Account 목록을 필터하고, 선택한 카드와 계정에 따라 Purchase Type이 정해진다
 
 ### 4-3. Seat 수 용어 및 UI
 

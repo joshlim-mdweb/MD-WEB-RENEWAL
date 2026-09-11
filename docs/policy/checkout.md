@@ -7,19 +7,19 @@ Canvas: [[RENEWAL] Order/Checkout](https://clo3d.slack.com/docs/T04BT3VBR/F0BL0S
 
 ## 0. 화면 구성
 
-Checkout은 플랜 계열에 따라 단계 구성이 다르다.
+Checkout은 플랜 계열에 따라 화면 구성이 다르다.
 
-| 계열 | 단계 구성 |
+| 계열 | 화면 구성 |
 |---|---|
 | 개인 계열 (Individual · Student) | 단일 화면 |
-| Organization 계열 (Enterprise · Academic) | 2단계 |
+| Organization 계열 (Enterprise · Academic) | SW Account 지정 화면, 결제 화면 순서 |
 
-Organization 계열의 2단계 구성은 아래와 같다.
+Organization 계열의 두 화면 구성은 아래와 같다.
 
-| 단계 | 내용 |
+| 화면 | 내용 |
 |---|---|
-| **Step 1 — SW Account 지정** | Purchase Type 카드(필터) · 계정 선택 · 신규 생성, `Set Order` 버튼 (§9) |
-| **Step 2 — 결제** | Seat (§10) · Purchase Type (§11) · 지불 방식 · 결제수단 (§3) · Order Summary (§6) · Tax ID (§7.2) · Billing Address (§8) · 약관 체크박스 · CTA (§14) |
+| **SW Account 지정 화면** | Purchase Type 카드(필터) · 계정 선택 · 신규 생성, `Set Order` 버튼 (§9) |
+| **결제 화면** | Seat (§10) · Purchase Type (§11) · 지불 방식 · 결제수단 (§3) · Order Summary (§6) · Billing Address (§8, Tax ID는 §7.2) · 약관 체크박스 · CTA (§14) |
 
 ---
 
@@ -35,7 +35,7 @@ Checkout 페이지 접근 전 System이 아래 조건을 순서대로 확인한�
 | Organization 계열 플랜 · Organization 미보유 | Organization 생성 단계로 안내 |
 | 그 외 | 정상 진입 |
 
-정상 진입 시 개인 계열은 결제 화면으로, Organization 계열은 Step 1로 진입한다.
+정상 진입 시 개인 계열은 결제 화면으로, Organization 계열은 SW Account 지정 화면으로 진입한다.
 
 ---
 
@@ -136,7 +136,7 @@ Seat 수를 변경하거나 Coupon·Discount를 적용하면 금액을 다시 �
 | Enterprise Team Linux | $2,300 × Seat 수 |
 | Academic | $300 × Seat 수* |
 
-\* Academic은 10석 이상 구매 시 50% 할인을 적용한다 (2026-08-25 개정 — `plan.md` §2-1)
+\* Academic의 50% 할인은 구간별로 판정한다 (§11.1). 할인은 해당 구간 금액에 반영해 소계를 구하고, Discount에는 반영하지 않는다 (2026-09-07 확정 — `plan.md` §2-1)
 
 Student Benefit 기간 중에는 합계를 $0.00으로 표시한다. Trial로 표기하지 않고 일반 구매와 동일하게 표시한다.
 
@@ -174,8 +174,9 @@ US·EU는 아래 값이 아니라 **Avalara 응답이 기준**이다. 그 외 �
 
 ### 7.2 Tax ID 역과세
 
-- **"사업자이신가요?" 링크는 두지 않는다.** 감면 대상 국가 선택 자체가 Tax ID 입력 행의 트리거다. (`requirements/[MD-SITE]-tax-id-checkout.md` TO-BE)
-- Tax ID 입력란은 Organization 그룹의 Enterprise 플랜 결제에서 청구지 국가가 EU 회원국인 경우에만 노출한다. (2026-08-11 확정, 2026-08-25 Indie 웹 판매 제외로 대상에서 삭제) Academic은 노출하지 않는다.
+- Tax ID(화면 라벨 `VAT Number`)는 Billing Address에 편입한다 (2026-09-08 확정). 입력 필드는 주소 입력 모달 안에 두고, 저장한 값은 Billing Address 카드에 표시한다. Checkout 화면에 별도 입력란을 두지 않는다.
+- **"사업자이신가요?" 링크는 두지 않는다.** 모달에서 감면 대상 국가를 선택하는 것이 필드 노출의 트리거다. (`requirements/[MD-SITE]-tax-id-checkout.md` TO-BE)
+- 필드는 Organization 그룹의 Enterprise 플랜 결제에서 국가를 EU 회원국으로 선택한 경우에만 노출한다. (2026-08-11 확정, 2026-08-25 Indie 웹 판매 제외로 대상에서 삭제) Academic은 노출하지 않는다.
 - Tax ID는 선택 입력이다. 미입력 시 해당 국가 표준 세율을 적용한다.
 - 청구지 국가를 변경하면 입력값을 초기화한다.
 - Tax ID 입력 시 Avalara에 `WithBusinessIdentificationNumber` + `WithTaxOverride(taxAmount: 0)`를 전달해 세율을 0%로 override한다.
@@ -233,6 +234,7 @@ Billing Address는 **보유 주소 목록에서 선택**한다. 주소 항목을
 | 주 (State) — 미국만 | O | O |
 | ZIP · 우편번호 | O (전 국가) | O |
 | Address line 1 · 2 | O | ✖ (인보이스 표기용) |
+| VAT Number (Tax ID) — Enterprise 결제에서 EU 회원국 선택 시만 노출 | ✖ (선택) | O (역과세 — §7.2) |
 
 ### 8.4 유효성 검사
 
@@ -246,9 +248,9 @@ Billing Address는 **보유 주소 목록에서 선택**한다. 주소 항목을
 
 ---
 
-## 9. Step 1 — SW Account 지정 (Organization 계열 전용, 2026-08-25 필터 모델 전환)
+## 9. SW Account 지정 화면 (Organization 계열 전용, 2026-08-25 필터 모델 전환)
 
-Step 1은 결제 대상 SW Account를 지정하는 화면이다. Purchase Type 카드, SW Account 목록, 생성 진입으로 구성한다.
+결제 대상 SW Account를 지정한다. Purchase Type 카드, SW Account 목록, 생성 진입으로 구성한다.
 
 **Purchase Type 카드가 계정 목록을 필터한다.** 카드는 2종이다.
 
@@ -265,9 +267,9 @@ Step 1은 결제 대상 SW Account를 지정하는 화면이다. Purchase Type �
 |---|---|---|
 | Assign 카드에서 빈 계정 선택 | New | 시작일은 결제일 |
 | Assign 카드에서 Enterprise Single 활성 계정 선택 (Team 진입) | Convert | Single을 Team으로 전환 (§11) |
-| Add/Extend 카드에서 계정 선택 | Add/Extend | Step 2에서 추가 수량과 연장 연수 입력 (§10) |
+| Add/Extend 카드에서 계정 선택 | Add/Extend | 결제 화면에서 추가 수량과 연장 연수 입력 (§10) |
 
-보유한 계정이 없는 경우 Step 1 안에서 새로 생성한다. Team Console에서도 생성할 수 있다.
+보유한 계정이 없는 경우 이 화면 안에서 새로 생성한다. Team Console에서도 생성할 수 있다.
 구매한 Seat 전체를 선택한 SW Account 1개에 배정한다.
 
 ### 9.1 화면 상태
@@ -279,16 +281,16 @@ Step 1은 결제 대상 SW Account를 지정하는 화면이다. Purchase Type �
 | Error — 목록 조회 실패 | 인라인 에러와 재시도를 표시한다. 재시도는 목록 조회만 다시 실행한다 |
 | Selected | 선택한 계정과 Purchase Type을 표시한다 |
 
-### 9.2 단계 이동
+### 9.2 화면 이동
 
 `Set Order` 동작은 §14를, 이동 시 입력값 유지는 §13을 따른다.
-Step 2에서 뒤로 가면 Step 1로 돌아온다.
+결제 화면에서 뒤로 가면 SW Account 지정 화면으로 돌아온다.
 
 ---
 
-## 10. Seat (Organization 계열 전용 · Step 2)
+## 10. Seat (Organization 계열 전용 · 결제 화면)
 
-Seat는 구매할 동시접속 허용 수다. Step 2에서 지정한다.
+Seat는 구매할 동시접속 허용 수다. 결제 화면에서 지정한다.
 금액에 단가 × Seat 수로 직접 반영한다.
 
 Seat 컨트롤은 Purchase Type(§9, §11)에 따라 달라진다.
@@ -314,7 +316,7 @@ Enterprise Single은 Seat 1로 고정하며 **신규 할당(New) 단일 여정**
 **Purchase Type**은 주문의 유형이다. 값은 `New`, `Add/Extend`, `Convert` 3종이다 (2026-08-24 확정 — Add와 Extend는 한 타입으로 통합하고, 화면에서 수량과 연수를 선택적으로 입력한다).
 
 Checkout과 Team Console 어느 쪽에서든 시작할 수 있다. Team Console에서 진입한 경우 결제 단계만 Checkout 페이지로 넘어온다.
-진입 경로는 초기 선택값만 정한다. Purchase Type은 Step 1의 카드와 계정 선택이 정하며, 진입 경로와 어긋나면 계정 선택을 우선한다 (§9).
+진입 경로는 초기 선택값만 정한다. Purchase Type은 SW Account 지정 화면의 카드와 계정 선택이 정하며, 진입 경로와 어긋나면 계정 선택을 우선한다 (§9).
 Add/Extend와 Convert의 대상 라이선스·플랜·지불 방식은 기존 라이선스에서 승계한다.
 
 | Purchase Type | 금액 |
@@ -333,6 +335,21 @@ Convert는 Enterprise Single을 Team으로 전환하는 경우에만 발생한�
 새 만료일은 기존 만료일에 1년을 더한 날이다.
 기존 SW Account는 그대로 승계한다. 기존 Single 잔여 기간은 환불하지 않는다.
 선택 영역에 전환 미리보기를 표시한다: `Convert {swAccount} from {currentProductName} to {newProductName}.` — `{swAccount}` = 선택한 SW Account, `{currentProductName}`, `{newProductName}` = 전환 전후 플랜명
+
+### 11.1 Academic Seat 할인의 구간별 판정 (2026-09-07 확정)
+
+Academic의 50% 할인은 주문 전체가 아니라 구간별로 판정한다.
+
+| 구간 | 판정 기준 | 할인 대상 |
+|---|---|---|
+| New | 구매 Seat 수가 10석 이상 | 구매 금액 전체 |
+| Add/Extend — 추가분 | 추가 Seat 수가 10석 이상 | 추가분 일할 금액 |
+| Add/Extend — 연장분 | 총 Seat 수(현재 + 추가)가 10석 이상 | 연장 금액 |
+
+추가분이 기준에 못 미쳐도 총 Seat 수가 기준을 넘으면 연장분에는 할인을 적용한다.
+할인은 해당 구간 금액에 직접 반영해 소계를 구한다. Discount에는 반영하지 않는다 (Discount는 쿠폰 전용).
+
+**예시:** 현재 3 Seats에 7 Seats를 추가하며 2년 연장하는 경우, 추가분은 7석이라 할인하지 않고 연장분은 총 10석 기준으로 50% 할인한다.
 
 ---
 
@@ -360,7 +377,7 @@ Academic 인증 심사 중인 경우 검토 중임을 안내한다.
 ## 13. 상태 복원
 
 - 사용자가 PG 페이지에서 뒤로가기 하거나 페이지를 새로고침해도 Checkout 입력값을 유지한다.
-- Organization 계열의 Step 1 ↔ Step 2 이동에도 저장한 선택값을 유지한다. 새로고침하면 진행 중이던 Step에서 복원한다.
+- Organization 계열의 SW Account 지정 화면과 결제 화면 사이 이동에도 저장한 선택값을 유지한다. 새로고침하면 진행 중이던 화면에서 복원한다.
 - `sessionStorage`에 플랜·지불 방식·SW Account·Purchase Type 카드 선택·Seat 수·연장 연수·결제수단 선택값을 저장한다. Purchase Type 값은 저장하지 않고 카드와 계정 선택에서 다시 계산한다. 기준 국가는 Billing Address에서 다시 읽는다.
 - sessionStorage 데이터는 결제 완료 시 삭제한다.
 
@@ -448,12 +465,12 @@ Checkout 동의 문구는 현재 구매와 직접 관련된 정보만 담는다.
 Tax ID는 선택 입력이므로 활성 조건에 포함하지 않는다.
 세율을 확정할 수 없는 경우 합계가 미확정이므로 CTA를 비활성한다. (§7.3)
 
-Organization 계열 Step 1의 `Set Order` 버튼은 SW Account 선택을 완료하면 활성화된다. 클릭하면 Step 2로 진입한다. (2026-08-25 — 구 `[다음]` 명칭 변경)
+Organization 계열 SW Account 지정 화면의 `Set Order` 버튼은 SW Account 선택을 완료하면 활성화된다. 클릭하면 결제 화면으로 진입한다. (2026-08-25 — 구 `[다음]` 명칭 변경)
 
 ---
 
 ## 관련 문서
 
-- PRD: `requirements/mdweb-870-checkout/prd-draft.md`
-- Figma: `PeCid7uJcg0HenViaaiHUp` / `Order/Checkout (In progress🔥)` — Spec Doc 섹션 `Scope`(`7148:2061`) · `Docs`(`7148:2062`) · 구매 타입 카드 `7276:55`
+- PRD: Figma `Order/Checkout PRD 1, 2`(`8873:1705`, `8874:1705`) + `Order/Checkout 기능명세`(`8875:1705`)
+- Figma: `PeCid7uJcg0HenViaaiHUp` / `Order/Checkout ✅`(`237:3132`)
 - Jira: MDWEB-870
