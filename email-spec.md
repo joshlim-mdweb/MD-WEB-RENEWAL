@@ -19,6 +19,8 @@ Renewal 이메일 작업의 정본이다. 트리거 발굴, 템플릿 재사용 
 | `docs/email/subscriptionEmail.md` | 기존 템플릿 인벤토리: Subscription/Payment 26종 |
 | `docs/email/trialEmail.md` | 기존 템플릿 인벤토리: Trial 8종 |
 | `docs/email/systemEmail.md` | 기존 템플릿 인벤토리: System 13종 (구버전, Subject 7건이 라이브 Figma와 불일치) |
+| **MY-PAGE 파일 `zpwY4fJfCeQtukQXrKeyTZ` EMAIL TEMPLATE 섹션(`109:390`)** | 구독 라이프사이클 템플릿 소스: PauseScheduled, Pause, Resume, ResumeBefore7, Suspend 1~3. 64종 밖의 별도 세트. **Suspend는 이 파일이 정본** (2026-09-08 Josh 확정) |
+| `docs/email/wireframe-email-notes.md` | 와이어프레임 발송 표기 추적표: 어느 프레임 어느 노트에 어떤 템플릿을 적었는지. v2 템플릿 완성 후 이 표 기준으로 템플릿 프레임 링크를 먹인다 |
 | `docs/email/subjectPatterns.md` | 제목 작성 공식: 구조 유형 4가지, 상황별 공식표, 세부 규칙 |
 | `docs/email/renewal-trigger-mapping.md` | 트리거 전수 × 템플릿 매핑: 판정 결과, 신규 3건, 보류 5건, 충돌 3건 |
 | `.claude/rules/ux-writing.md` | 문구 기준: EN 원본 규칙, 금지 표현, 번역 안전 |
@@ -45,14 +47,17 @@ Figma 정본: `EMAIL AUTOMATION` 파일(`E3Azp4DyASPSK3uQGUrxru`) node 2:59. 캔
 | Student 인증 승인 | 인증 완료 메일에 "오늘부터 4년" 고지 포함 필수 | `[MD-SITE]-student-plan-renewal.md:86` |
 | Academic 인증 결과 | 이메일이 유일한 통지 채널. 화면 통지 없음 | `docs/prd/solutions/academics.md:177` |
 | 인증 코드(OTP) | 발송 후 10분 유효, 재발송 쿨다운 60초, 최대 5회, 재발송 시 이전 코드 즉시 무효화 | `verification.md` |
+| 구독 일시정지, 재개 | 예약 확정 즉시, 시작일 오전 10시, 재개 7일 전 예고(신청과 시작이 1주 미만이면 미발송), 재개 확정 시 | MY-PAGE 파일 EMAIL TEMPLATE 섹션, `mypage.md` §6-4 |
+| Retry Payment 성공 | `All_MonthlyPaymentComplete`로 커버 (2026-09-08 Josh 확정) | `mypage.md` §6-2 |
 | 마케팅 발송 | 가입 시 수신 동의가 게이트. 동의 여부로 Welcome 템플릿 분기 | `member.md:34`, `mypage.md:370` |
 | CLO-SET 통합 고지 | 2026-09-01부터 2026-09-30까지 로그인 배너와 이메일로 고지 | `member.md:200` |
 
 ### 2.2 템플릿 운영 원칙
 
 - **신규 제작 최소화.** 트리거가 생기면 먼저 `renewal-trigger-mapping.md`의 매핑표와 인벤토리 4종을 대조한다. 신규 판정은 근접 템플릿과 재사용 불가 사유를 함께 기록한 뒤에만 한다
-- 판정 3등급: 재사용, 문구 수정, 신규. 현재 집계는 재사용 30종, 문구 수정 16종, 신규 1건
-- **확정 신규는 Student 인증 코드(OTP) 이메일 1건뿐이다** (Josh 확정, 2026-09-01). 이메일 변경, 비밀번호 변경 등 다른 코드 인증 플로우도 이 템플릿을 공용으로 재사용한다. Legacy Student 혜택 안내와 CLO-SET 통합 고지는 템플릿 제작 범위에서 제외 (매핑 문서 §신규 참조)
+- 판정 3등급: 재사용, 문구 수정, 신규. 집계와 개별 판정은 `renewal-trigger-mapping.md`가 정본이다
+- **확정 신규는 3건이다** (2026-09-08 Josh 확정): `Student_VerificationCode`(완성, Student 전용), `All_ChangeEmailVerificationCode`(이메일 변경 OTP), `Student_VerificationComplete`(코드 인증 즉시 완료 통지, 4년 시작 고지). **코드 인증 템플릿은 어드민 추적을 위해 용도별 개별 코드로 만든다.** 2026-09-01의 공용 재사용 방침은 폐기. 비밀번호 변경은 이메일을 사용하지 않고, 비밀번호 찾기는 레거시 계정 한정으로 이메일 링크(`Enterprise_ResetPwRequest`)를 유지한다. Legacy Student 혜택 안내와 CLO-SET 통합 고지는 템플릿 제작 범위에서 제외 (매핑 문서 §신규 참조)
+- **`Enterprise_UpgradeOrderComplete` 폐기** (2026-09-08 Josh 확정): Add, Extend, Convert 결제 완료도 신규 구매와 같은 `Enterprise_AnnualOrderComplete`를 쓴다
 - 용어는 Renewal 기준으로 교체한다: Personal은 Individual로, License ID는 SW Account로, Userpool은 Organization 체계로. 폐지 용어 기준은 `localization.md` §2.1
 - 금액은 `n USD` 표기, 날짜는 월을 단어로. 기준은 `ux-writing.md` §1.1
 
@@ -67,16 +72,9 @@ Figma 정본: `EMAIL AUTOMATION` 파일(`E3Azp4DyASPSK3uQGUrxru`) node 2:59. 캔
 
 Renewal 템플릿 세트는 `EMAIL AUTOMATION` 파일의 새 페이지 **`EMAIL CONTENTS v2`**(node `2007:2`)에 와이어프레임으로 구축한다. 레거시 64종은 구 페이지 `EMAIL CONTENTS`(`2:59`)에 그대로 둔다. 프레임 규격은 루트 `spec.md` §2를 따른다 (Outer 2448×1216, Screen 1920, Description 패널).
 
-**페이지 최상위 섹션은 판정 상태 3개다** (2026-09-03 개편, Josh 확정):
+**2026-09-09 캔버스 초기화**: v2 페이지 콘텐츠 전량 삭제 후 재구축한다. 이전 v2 node ID는 전부 무효다.
 
-| 섹션 | 내용 | 배치 |
-|---|---|---|
-| `NEW` | 근접 템플릿이 없어 새로 만든 것 | TO BE 프레임만 |
-| `MODIFIED` | 트리거는 같고 용어와 문구를 고친 것 | 한 행 = 한 템플릿: 왼쪽 AS IS 클론, 오른쪽 TO BE |
-| `UNCHANGED` | 레거시 그대로 재사용 | 레거시 클론 그대로, 재제작 없음 |
-
-- AS IS 클론은 구 페이지 `EMAIL CONTENTS`의 레거시 프레임을 복사한 것이다. v2 셸에 넣지 않고 날것 그대로 두며, 상단에 `ASIS: {템플릿 코드}` 라벨만 붙인다
-- 각 섹션 안에서는 Account, Subscription and Payment, Trial, System 카테고리 순으로 정렬한다. 카테고리는 Board Header Sub Label에 남는다
+**페이지 최상위 섹션은 카테고리 4개다** (2026-09-09 복귀 확정): `Account`, `Subscription and Payment`, `Trial`, `System`. 판정 상태(신규, 수정, 원본 유지)는 §3.1 Border 색과 Board Header 병기로만 표시한다. 상태 3섹션 구조와 AS IS 레거시 클론 나란히 배치(2026-09-08 방식)는 폐기됐다.
 
 ### 3.1 상태 Border 스펙
 
@@ -88,7 +86,7 @@ Outer Frame의 stroke가 템플릿 판정을 표시한다. 페이지 좌상단 �
 | 수정 | `#F5A623` | 8 | 트리거는 같고 용어와 문구를 고친 것 |
 | 원본 유지 | `#D1D1D1` | 2 | 레거시 템플릿 그대로 재사용 |
 
-Board Header Main Label 끝에도 상태를 병기한다: `EMAIL: [템플릿명] — [NEW / MODIFIED / UNCHANGED]`.
+상태 표시는 Border 색이 전부다. Board Header에는 상태를 병기하지 않는다 (2026-09-09 Josh 확정).
 
 ### 3.2 Description 공통 골격 (2026-09-01 4차 확정: 레거시 필드 세트 + TITLE)
 
@@ -102,9 +100,18 @@ Description에는 **레거시 필드 세트만** 들어간다. 번호는 필드 
 | TRIGGER | ② | 발송 조건. 재발송 규칙, 유효 시간 등 발송 동작 전부 (레거시 DESCRIPTION 필드 계승 — 패널 헤더 DESCRIPTION과의 혼동을 피해 개명, 2026-09-03 Josh 확정) |
 | LINK or Button | 3-1 | `[버튼명]:` 클릭 결과. 없으면 `-` |
 | VALUE | 3-2 | `{변수명}: 정의`. 금액 `n USD`, 날짜는 월 단어. 없으면 `-` |
-| COMMENT | ④ | 참고사항과 미결 플래그만. 기본 `-`. 변경 내역은 쓰지 않는다 (옆 AS IS 클론 대조가 담당) |
+| COMMENT | ④ | 참고사항과 미결 플래그만. 기본 `-`. 변경 내역은 쓰지 않는다 (컴포넌트에 연결한 annotation이 담당) |
 
-**변경사항 기록** (2026-09-07 3차 개정, Josh 확정): **텍스트로 기록하지 않는다.** MODIFIED 섹션에서 AS IS 클론과 TO BE를 나란히 놓는 것이 변경 기록의 전부다. **annotation을 달지 않는다** (1차 ASIS/TOBE 전사, 2차 포인터와 이유 컨벤션 모두 폐기: 설명이 대조를 오히려 헷갈리게 한다). 템플릿 차원의 미결 사항은 Description의 COMMENT 필드에 `*(정책 확인 필요: 무엇)*` 형식 플래그로 남긴다.
+**변경사항 기록 (2026-09-09 4차 개정, Josh 확정): Figma native annotation으로 작성한다.** 형식은 두 줄 고정, 실제 문자열이나 상태를 그대로 적는다:
+
+```
+AS IS: {이전 문자열 또는 상태}
+TO BE: {바뀐 문자열 또는 상태}
+```
+
+**annotation은 변경 대상 컴포넌트 노드에 정확히 연결한다. Screen이나 Wrapper에 대충 붙이지 않는다** (절대규칙). 템플릿 차원의 변경도 해당되는 가장 가까운 요소에 단다. 남이 읽는 말로 쓰고 내부 작업 용어(배치, 양산, 스펙 절 번호)는 금지. annotation은 스크린샷과 export에 찍히지 않는다 (Figma 캔버스와 Dev Mode에서만 보임). 미결 사항은 Description의 COMMENT 필드에 `*(정책 확인 필요: 무엇)*` 플래그로.
+
+폐기 이력: 1차 `**수정: 제목**` + ASIS/TOBE 전사(09-03), 2차 포인터와 이유(09-07), 3차 무기록 + AS IS 클론 대조(09-07~08) 전부 이 4차로 대체.
 
 넣지 않는 것: STATUS 카드(Border 색 + Board Header가 담당), Subject 카드(화면에 보임), 제목 유형 등 분석성 줄, 화면 요소별 번호 노트, `→ COMMON 참조` 카드.
 
@@ -118,8 +125,8 @@ Description에는 **레거시 필드 세트만** 들어간다. 번호는 필드 
 
 - **수정, 원본 유지 템플릿은 레거시 코드를 그대로 유지한다** (발송 시스템 식별자이므로 개명 금지, `Personal_` 접두 포함 — 코드는 식별자라 폐지 용어 규칙의 예외)
 - 신규만 같은 컨벤션으로 새 코드를 짓는다. 예: `Student_VerificationCode`
-- Board Header: `EMAIL: {템플릿 코드} — {NEW / MODIFIED / UNCHANGED}` (코드는 대문자 변환하지 않음), Sub Label `{카테고리} | {템플릿 코드}`
-- 최상위 섹션은 상태 3개(`NEW`, `MODIFIED`, `UNCHANGED`)다. 카테고리 4종(Account, Subscription and Payment, Trial, System)은 섹션 내 정렬 순서와 Sub Label로 유지한다
+- Board Header: `{카테고리} | {템플릿 코드}` (2026-09-09 Josh 확정: EMAIL 접두와 상태 병기 제거. Main Label = 카테고리, Sub Label = 템플릿 코드, 코드는 대문자 변환하지 않음)
+- 섹션 4개: `Account`, `Subscription and Payment`, `Trial`, `System` (2026-09-09 카테고리 구조 복귀)
 
 ### 3.4 화면설계 스타일 (2026-09-03 확정)
 
@@ -130,19 +137,41 @@ Description에는 **레거시 필드 세트만** 들어간다. 번호는 필드 
 - Wrapper, Container, Body는 컴포넌트가 아니라 레이아웃 함수(`createEmailWrapper()`)로 만든다: 문단 수가 템플릿마다 달라 구조를 잠그지 않는다
 - 본문 텍스트 스케일: Subject Medium 20, 문단 Regular 14, 버튼 Medium 14, 맺음 14+16, 푸터 11 (실측표는 `email-visual.md` §1)
 
-### 3.5 진행 상태 — 양산 배치 (2026-09-03 순서 확정)
+### 3.5 기획 문서 산출물 규칙 (2026-09-09 Josh 확정)
 
-**캔버스 그룹핑**: 최상위 섹션 = 판정 상태 3개 (§3 표 참조). MODIFIED 섹션은 한 행에 AS IS 클론과 TO BE를 나란히 배치한다.
+- **"판정" 같은 내부 판단어를 산출물에 쓰지 않는다.** 리스트 제목은 내용으로 쓴다: `V1 유지 대상`, `수정 대상`, `신규 제작`, `이관 제외`
+- **문서 프레임의 메인 제목은 내용 제목이다** (`정책 변경사항`, `템플릿 리스트`). 순번 제목은 같은 문서를 분할할 때만 쓴다
+- 개발과 디자인과 비즈니스가 함께 읽는 섹션(정책 변경사항 등)은 고유명사를 제외하고 합니다체로 쓴다
+- 리스트 표는 형식을 통일한다: 한 템플릿이 한 줄, 2컬럼 (템플릿, 설명이나 비고)
+- Jira 에픽 게시는 담백하게: 템플릿 리스트는 유지, 수정, 신규 3종만 싣는다 (이관 제외는 PRD에만)
+
+### 3.6 진행 상태 — 양산 배치 (2026-09-03 순서 확정)
+
+**캔버스 그룹핑**: 카테고리 섹션 4개. 각 섹션 Row 1 = 수정과 신규 (앰버, 그린), Row 2 이하 = 원본 유지 (회색). **원본 유지도 셸은 현행 규격으로 만든다** (2026-09-10 Josh 확정): 본문과 문구는 레거시 원문 그대로 이식하고, Board Header와 Description 7카드는 v2 형식을 따른다. 레거시 클론을 그대로 두는 방식(2026-09-09)은 폐기됐다.
+
+**하위 섹션 (2026-09-09 Josh 확정)**: 템플릿이 많은 카테고리는 섹션 안에 수신 대상별 하위 섹션을 둔다. Subscription and Payment는 `All`, `Individual`, `Enterprise` 3개 (템플릿 코드 접두 기준, Personal_ 코드는 Individual 섹션에). **하위 섹션은 세로로 쌓고, 템플릿은 하위 섹션 안에서 가로로 나열한다.** 원본 유지 이관분도 해당 하위 섹션의 Row 2 이하로 넣는다.
+
+**진행 상태는 2026-09-09 캔버스 초기화로 리셋됐다.** 아래 완료 표시는 문구와 판정 결정의 완료를 뜻하고, 프레임은 전부 재제작 대상이다.
 
 | 배치 | 내용 | 선행 조건 | 상태 |
 |---|---|---|---|
-| 견본 | 신규 `Student_VerificationCode`(`2357:2`), 수정 `All_MonthlyPaymentStart`(`2492:173`) | | 완료 |
-| 1 | 구매·주문 완료 4종: Personal_AnnualOrderComplete(자동갱신 반전), Enterprise_AnnualOrderComplete, Enterprise_UpgradeOrderComplete(Add·Extend 개편), All_MonthlyPaymentCancel | 없음 | 진행중 |
-| 2 | 갱신·만료 고지 4종: Annual 갱신 D-30(전면 재작성), All_MonthlyPaymentNotice(D-7), Enterprise_AnnualExpiring14 CompanyID와 EndUser + **Convert 결제 완료 변형 1장 신설** (Single에서 Team 전환: 새 만료일, Single 잔여 미환불 고지. 2026-09-03 확정) | 없음 | 대기 |
-| 3 | 인증·계정 4종: Student_DocRegisterSuccess(4년 고지), Academic_RegisterApprove, All_UserpoolInvitation(SW Account 개편), Enterprise_UserpoolMemberAdded | 없음 | 대기 |
-| 4 | Enterprise Trial 문의 2종 | 없음 | 대기 |
-| 5 | 시퀀스 6장: Suspend 1(+3DS)과 3, TrialExpiring3Continue 개정, Benefit 종료 시퀀스 3장 | **게이트 A: Benefit 주기 (D-7/D-3/D-0 vs D-7/D-1), 게이트 B: 알림 3회 채널과 시점** | Josh 확정 대기 |
-| 상시 병행 | 원본 유지 30종 이관 (UNCHANGED 섹션에 레거시 클론 그대로, 재제작 없음, 리뷰 게이트 없음). Legacy 유지 8종(Student_Monthly 2, Standalone Expiring 5, 사용하지 않음 1)은 이관 제외 | 없음 | 대기 |
+| 견본 | 수정 `All_MonthlyPaymentStart` (인프라 재구축: 컴포넌트 7종, COMMON, 범례, 카테고리 4섹션 포함). 신규 `Student_VerificationCode`는 배치 3에서 재제작 | 없음 | 완료 (2026-09-09, Josh confirm) |
+| 1 | 구매·주문 완료 3종: Personal_AnnualOrderComplete(자동갱신 반전), Enterprise_AnnualOrderComplete, All_MonthlyPaymentCancel(Annual 겸용). Enterprise_UpgradeOrderComplete는 폐기(2026-09-08)로 제외 | 없음 | 완료 (2026-09-09) |
+| 2 | 갱신·만료 고지 3종: All_MonthlyPaymentNotice(**갱신 고지 통합**: Annual D-30과 D-7, Monthly D-7. Personal_AnnualExpiring14 폐기, 2026-09-09 확정), Enterprise_AnnualExpiring14 CompanyID와 EndUser(버튼 Extend Licenses). ~~Convert 변형 신설~~ 취소 (Upgrade 폐기로 겸용) | 없음 | 완료 (2026-09-09) |
+| 3 | 인증·계정 7종: Student_VerificationCode(재제작), Student_DocRegisterSuccess(4년 고지, 1주 구매 제한 폐지), Academic_RegisterApprove, All_UserpoolInvitation(SW Account 개편, 웹 로그인 오해 방지), Enterprise_UserpoolMemberAdded(코드 공백 오타 정리) + 신설 2장: All_ChangeEmailVerificationCode, Student_VerificationComplete. Account 섹션에 하위 섹션 4개(All, Student, Academic, Enterprise) | 없음 | 완료 (2026-09-09) |
+| 4 | Enterprise Trial 문의 2종: 개선된 신청 폼 필드와 DNS 검증 결과 반영, China 조건부 연락처 | 없음 | 완료 (2026-09-09) |
+| 5 | 시퀀스와 라이프사이클 9장: Suspend 1(+3DS 변형)과 3 (기준 MY-PAGE), TrialExpiring3Continue 개정(24시간 환불 고지 포함), **Student_BenefitEnding 신설 1장** (파생 3장 통합: D-7, D-3, D-0 같은 템플릿 3회 발송, 2026-09-09 확정), Pause와 Resume 4종 | 없음 (미결 2건 해소: D-7/D-3/D-0, 알림 3회 = 이메일 Suspend 구조) | 완료 (2026-09-09) |
+| 상시 병행 | 원본 유지 28종 이관 (해당 카테고리·하위 섹션 Row 2 이하, 현행 셸 + 레거시 본문 원문 이식, 회색 border 2, 리뷰 게이트 없음). 이관 제외 19종(폐기 9, Legacy 소진 대기 7, 확인 필요 3)은 옮기지 않음 | 없음 | 완료 (2026-09-10 현행 셸 재제작까지) |
+
+**원본 유지 이관 기록 (2026-09-09 이관, 2026-09-10 현행 셸로 재제작 완료)**: 28종 전부 v2 셸(Board Header `{카테고리} | {코드}`, Description 7카드, 회색 Border 2)로 다시 만들고, Screen에는 레거시 이메일 본문을 원문 그대로 이식했다. Description은 레거시 노트(UPDATE DATE, TARGET, DESCRIPTION은 ②TRIGGER로, LINK or BUTTON, VALUE, COMMENT)를 7카드에 옮겨 적었고, COMMON LINK 카드는 COMMON 섹션이 담당하므로 제외했다. 레거시에 없는 카드 값은 `-`로 뒀다. 배치는 카테고리·하위 섹션 코드 접두 기준이며, Userpool 계열과 Welcome, Deactivation은 배치 3 전례에 따라 Account에 편입했다.
+
+- Account 14종: All 4 (Welcome 2종, UserpoolSoftwareShared, Deactivation), Student 3, Academic 2, Enterprise 1 (ResetPwRequest), **Indie 하위 섹션 신설**(`2581:2484`) 4
+- Subscription and Payment 3종: All 2 (MonthlyPaymentComplete, MonthlyPaymentFail), Individual 1 (Suspend2)
+- Trial 5종: Personal 하위 섹션에 TrialStart, HelpTrial, TrialExpiring3Cancel, TrialCancel, TrialExpiry
+- System 6종: **하위 섹션 All(`2581:3685`), Personal(`2581:3686`) 신설.** All 3 (ContactUs, ForumComments, OfflineAuth), Personal 3 (LearningContents 1~3)
+- 정정 1건: 레거시 섹션명 중복 `Indie_RequestApproved` 2개 중 내용이 Denied인 판(`1778:2590`)을 클론해 **`Indie_RequestDenied`로 이름 정정** (레거시 페이지는 수정하지 않음)
+- Suspend2: MY-PAGE 판(`1649:786`)과 레거시 판(`2292:988`)이 동일본(2024.11.14 개정)으로 확인돼 레거시 클론 사용
+- 확인 플래그: `Personal_LearningContents3` 레거시 원본에 "보류 중" 오버레이 존재. 문구는 온전하나 발송 운영 여부 확인 필요
 
 ## 4. 문구 스타일 (EN) — 이메일 블록 6종 표준
 
@@ -239,10 +268,16 @@ SW Account: {account name}        Organization만
 
 | 키 | 의미 | 쓰는 템플릿 |
 |---|---|---|
-| `{otpCode}` | 이메일 인증 코드, 6자리 난수 | Student_VerificationCode 등 코드 인증 전체 |
+| `{otpCode}` | 이메일 인증 코드, 6자리 난수 | Student_VerificationCode, All_ChangeEmailVerificationCode |
 | `{seats}` | Seat 수 | Organization 주문 계열 |
 | `{swAccount}` | 라이선스를 배정한 SW Account | Organization 주문 계열 |
 | `{organizationName}` | Organization 이름 | 초대, 멤버 추가 계열 |
+| `{pauseStartDate}`, `{resumeDate}` | 일시정지 시작일과 재개일 | Pause와 Resume 계열 |
+| `{benefitEndDate}` | Student Benefit 마지막 날 | Student_BenefitEnding |
+| `{jobTitle}`, `{companyWebsite}`, `{companyDomain}` | Enterprise Trial 신청 값 | Trial 문의 2종 |
+| `{organizationType}`, `{trialPurpose}`, `{adoptionTimeline}`, `{currentUsage}`, `{additionalNotes}` | 개선된 신청 폼 값 (2026-09-09 등록) | Trial 문의 2종 |
+| `{dnsCheckResult}` | 도메인 DNS 검증 결과 (pass, fail, skip) | Enterprise_TrialInquiryStaff |
+| `{wechatID}`, `{mobileNumberChina}` | 국가가 China인 경우의 연락처 | Trial 문의 2종 |
 
 **폐지 키 (v2 미사용)**
 
@@ -277,14 +312,16 @@ Marvelous Designer Team
 
 | # | 항목 | 쟁점 |
 |---|---|---|
-| 1 | Benefit 종료 알림 주기 | D-7/D-3/D-0 (`mypage.md`) vs D-7/D-1 (`student-license-promotion.md`) 충돌 |
-| 2 | "알림 3회" 채널과 타이밍 | 이메일인지 인앱인지, 1주 유예 중 발송 시점 미정의 |
+| 1 | ~~Benefit 종료 알림 주기~~ 해소 (2026-09-09) | **D-7, D-3, D-0 확정** (`mypage.md` 기준. `student-license-promotion.md`의 D-7/D-1은 폐기) |
+| 2 | ~~"알림 3회" 채널과 타이밍~~ 해소 (2026-09-09) | **이메일 3회, Suspend 구조 확정**: 실패 직후 1차(Suspend1), 유예 중간 2차(Suspend2), 유예 만료에 취소 확정 3차(Suspend3) *(개발 확인 필요: 정확한 재시도 결제 일정)* |
 | 3 | 이메일 언어 | Preferred Language 적용 여부 근거 없음 (TODO.md 결정 대기 D-23) |
 | 4 | Paused에서 Suspended 전환 알림 | 발송 여부 미결 (`[MD-SITE]-mypage-redesign.md:371`) |
 | 5 | 주문 완료 메일의 정책 근거 | `checkout.md`에 이메일 규정 0건. Checkout 정책에 명문화 필요 |
 
 ## 관련 문서
 
+- PRD: Figma `E3Azp4DyASPSK3uQGUrxru` EMAIL CONTENTS v2 페이지. 문서 프레임 4개: `Email Template PRD`(`2536:2`), `정책 변경사항`(`2541:2`), `템플릿 리스트`(`2544:2`), `Email Template Version Table`(`2539:56`)
+- 티켓: MDWEB-955 (에픽, 판정 리스트 게시), 하위 MDWEB-956 UX, 957 PD, 958 FE, 959 BE
 - 매핑: `docs/email/renewal-trigger-mapping.md`
 - 인벤토리: `docs/email/accountEmail.md`, `subscriptionEmail.md`, `trialEmail.md`, `systemEmail.md`
 - 제목 공식: `docs/email/subjectPatterns.md`
