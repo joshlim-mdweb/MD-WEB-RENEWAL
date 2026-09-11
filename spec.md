@@ -16,6 +16,7 @@ Figma 에이전트(figma-wireframe, figma-description 역할, md-figma persona)�
 | 1.6.00 | 2026-09-01 | Josh Lim | 상위 워크플로우 확정: 정책 문서 확정, 기획, 기획 문서 3종 작성, Figma 화면 작업 순. 기획 문서 3종 없이 와이어프레임 착수 금지 게이트 추가. User Flow 차트를 Figma에 그리는 규격(§9.8) 신설 |
 | 1.7.00 | 2026-09-01 | Josh Lim | User Flow 제작 도구를 에디터 아티팩트로 확정: 에디터에서 작성과 수정, Figma에는 2x PNG 삽입. Figma 벡터 렌더러는 보류 |
 | 1.8.00 | 2026-09-01 | Josh Lim | 와이어프레임 셸 색 변경: Outer 배경 #F5F5F5 → #FFFFFF, Screen, Description 패널, Description Header에 #E6E6E6 2px border 신설 (Board Header와 동일). §11.3 코드 반영 |
+| 1.9.00 | 2026-09-09 | Josh Lim | 플로우 목록 도출 기준 신설 (§9.8): 사용자 목표 단위, 도출 소스 3곳, 차트 조건, 분할 기준. 기능명세 사용자 표기 확정: 로그인 주체는 Member (§9.5). 문서 빌더 docText 순서 정정 (§11.5): characters 먼저, 사이징 마지막 |
 
 ---
 
@@ -648,7 +649,7 @@ PRD는 표가 아니라 **읽는 문서**다. 문서 형식으로 읽기 편하�
 | 기능 ID | 아래 ID 체계 참조. Description Numbered Note와 대응 |
 | 기능명 | 명사형. 예: 검색 기능, 목록 노출 기능, 파일 첨부 기능 |
 | 기능상세 | 기능이 하는 일. 불릿, 1불릿 1사실. 상태값 나열은 괄호 안에 `/` 구분. 예: `처리 상태 포함 (접수/처리중/완료)` |
-| 사용자 | 이 기능을 사용할 수 있는 주체. 예: 전체, 로그인, Organization Owner, 관리자. 승인 용어만 사용 |
+| 사용자 | 이 기능을 사용할 수 있는 주체. 예: 전체, Member, Organization Owner, 관리자. 승인 용어만 사용 (로그인 주체는 "로그인"이 아니라 Member로 쓴다, 2026-09-09 확정) |
 
 **ID 체계 (2026-09-01 확정, 화면 ID + 기능 ID 2계층)**
 
@@ -733,7 +734,7 @@ Acceptance Criteria
 
 ```
 | No | 화면 ID | 화면명 | 케이스 | 기능 ID | 기능명 | 기능상세 | 사용자 |
-| 1 | {코드}-100-000 | {화면명} | 공통 | FC-{코드}-001 | {기능명} 기능 | {하는 일} | 로그인 |
+| 1 | {코드}-100-000 | {화면명} | 공통 | FC-{코드}-001 | {기능명} 기능 | {하는 일} | Member |
 ```
 
 **Version Table 행**
@@ -753,6 +754,17 @@ PRD User Flow 섹션의 시각화. 분기 3개 이상이면 필수 첨부(§6.5)
 배경      surface.doc #0A0A0A / radius 12 / pad 64 / 제목 Medium 32
 배치      PRD 프레임 오른쪽에 gap 140으로 나란히
 ```
+
+**플로우 목록 도출 기준 (2026-09-09 확정)**
+
+어떤 플로우가 필요한지를 아래 기준으로 먼저 도출한다. 형식(아래 시각 언어)은 그 다음이다.
+
+| 기준 | 내용 |
+|---|---|
+| 단위 | 사용자 목표 1개 = 플로우 1개. 화면이 아니라 사용자가 끝내려는 일(구매 완료, 계정 지정, 실패 복구) 단위로 자른다 |
+| 도출 소스 | PRD User Flow 불릿(진입, 분기, 완료), Screen Structure의 화면 전이, 기능명세의 케이스 열. 세 곳을 훑어 후보 목록을 만든다 |
+| 차트 조건 | 화면 2개 이상을 지나거나 판단이 3개 이상인 후보만 차트로 만든다. 단일 화면 안의 인터랙션은 Description 몫이다. 시간 축 여정(Trial 경과 등)은 차트가 아니라 표로 쓴다 |
+| 분할 | 한 차트의 노드가 15개를 넘으면 목표 단위로 나눈다. 공통 골격(진입 판정)은 차트 1개로 두고, 각 여정 차트는 그 끝에서 시작점을 이어받는다 |
 
 **시각 언어 (변형 금지)**
 
@@ -1039,16 +1051,18 @@ async function loadDocFonts() {
 }
 
 // width 지정: 고정 폭 텍스트. 생략: FILL
+// 순서 주의 (2026-09-09 정정): characters를 먼저 넣고 사이징을 마지막에 건다.
+// 사이징을 먼저 걸면 빈 텍스트 기준 폭 0으로 붕괴해 글자가 세로로 한 자씩 쌓인다.
 function docText(parent, s, size, style, color, width) {
   const t = figma.createText();
   t.fontName = { family:'Poppins', style };
   t.fontSize = size;
+  t.characters = s;
   t.fills = [{ type:'SOLID', color: hex(color) }];
   parent.appendChild(t);
-  if (width) t.resize(width, 10);
-  else t.layoutSizingHorizontal = 'FILL';
   t.textAutoResize = 'HEIGHT';
-  t.characters = s;
+  if (width) t.resize(width, t.height);
+  else t.layoutSizingHorizontal = 'FILL';
   t.name = s.slice(0, 40);
   return t;
 }

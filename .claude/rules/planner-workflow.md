@@ -30,8 +30,8 @@ Planner는 문서를 완성해 `완료` 처리하면 거기서 끝난다. Figma�
    /planner            [Figma 축 — Josh 직접]   /task-manager
    문서 축 허브                │                (읽기 전용 뷰)
         │ 배정                 ├── /figma-wireframe
-   ┌────┴────┐                 └── /figma-description
-/research  /policy-writer
+   ┌────┴────┐                 ├── /figma-description
+/research  /policy-writer      └── /figma-document
         │                      │
         └──► /manager · /task-manager ◄──┘
           기록 (TODO.md+task list) / 대시보드
@@ -48,6 +48,7 @@ Planner는 문서를 완성해 `완료` 처리하면 거기서 끝난다. Figma�
 | **Policy Writer** | `/policy-writer` | 확정 기능을 정책 문서 문장으로 | Planner |
 | **Figma Wireframe** | `/figma-wireframe` | 화면 그리기 (`md-figma` persona) | **Josh 직접** |
 | **Figma Description** | `/figma-description` | Description Panel + 패턴 라이브러리 축적 | **Josh 직접** |
+| **Figma Document** | `/figma-document` | 기획 문서 3종(PRD, 기능명세, Version Table) Figma 생성 (`md-figma` persona) | **Josh 직접** |
 
 행 ID 접두어로 축을 구분한다 — **`T-` 문서 축** / **`F-` Figma 축**. 둘 다 Manager가 추적한다.
 
@@ -162,7 +163,7 @@ Policy Writer에게 배정할 때 아래를 명시한다.
 4. 완료: 산출물 경로 기재 + 상태 → `검토대기` + Planner·TaskManager 알림. **멈춘다**
 5. 막힘: 상태 → `보류` + 메모에 사유. Planner에게 보고
 
-### Figma 축 — Figma Wireframe / Figma Description
+### Figma 축 — Figma Wireframe / Figma Description / Figma Document
 
 배정 주체가 **Josh**다. 나머지 흐름은 문서 축과 같다.
 

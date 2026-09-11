@@ -46,6 +46,7 @@ Agents: `~/.claude/agents/` (global md-*) · Rules: `.claude/rules/` (경로별 
 | `/policy-writer`     | Policy Writer     | 정책 문서 문장화                         | Planner   |
 | `/figma-wireframe`   | Figma Wireframe   | 화면 그리기 (`md-figma`)                 | **Josh**  |
 | `/figma-description` | Figma Description | Description Panel + 패턴 라이브러리 축적 | **Josh**  |
+| `/figma-document`    | Figma Document    | 기획 문서 3종(PRD, 기능명세, Version Table) Figma 생성 | **Josh**  |
 
 **각 역할은 상태가 바뀌면 `Manager`·`TaskManager` 두 곳에 알린다** (착수·완료·막힘 전부). Manager는 `requirements/board/TODO.md`와 세션 task list **양쪽에** 기록하고, TaskManager는 TODO.md를 다시 읽어 **현황표를 즉시 재출력**한다. 어디로 보낼지 판단하지 않는다 — 항상 둘 다.
 행 ID 접두어로 축을 구분한다: **`T-` 문서 축**(Planner 배정) / **`F-` Figma 축**(Josh 직접). 둘 다 추적한다.
