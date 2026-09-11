@@ -74,7 +74,7 @@ Renewal 템플릿 세트는 `EMAIL AUTOMATION` 파일의 새 페이지 **`EMAIL 
 
 **2026-09-09 캔버스 초기화**: v2 페이지 콘텐츠 전량 삭제 후 재구축한다. 이전 v2 node ID는 전부 무효다.
 
-**페이지 최상위 섹션은 카테고리 4개다** (2026-09-09 복귀 확정): `Account`, `Subscription and Payment`, `Trial`, `System`. 판정 상태(신규, 수정, 원본 유지)는 §3.1 Border 색과 Board Header 병기로만 표시한다. 상태 3섹션 구조와 AS IS 레거시 클론 나란히 배치(2026-09-08 방식)는 폐기됐다.
+**페이지 최상위 섹션은 카테고리 4개에 제거 대상 1개다**: `Account`, `Subscription and Payment`, `Trial`, `System` (2026-09-09 복귀 확정), 그리고 맨 아래 `확인 후 제거 대상` (2026-09-11 신설, §3.1). 판정 상태(신규, 수정, 원본 유지)는 §3.1 Border 색과 Board Header 병기로만 표시한다. 상태 3섹션 구조와 AS IS 레거시 클론 나란히 배치(2026-09-08 방식)는 폐기됐다.
 
 ### 3.1 상태 Border 스펙
 
@@ -82,11 +82,16 @@ Outer Frame의 stroke가 템플릿 판정을 표시한다. 페이지 좌상단 �
 
 | 상태 | HEX | 굵기 | 의미 |
 |---|---|---|---|
-| 신규 | `#2BA84A` | 8 | 근접한 기존 템플릿이 없어 새로 만든 것 |
-| 수정 | `#F5A623` | 8 | 트리거는 같고 용어와 문구를 고친 것 |
-| 원본 유지 | `#D1D1D1` | 2 | 레거시 템플릿 그대로 재사용 |
+| 신규 | `#2BA84A` | 20 | 근접한 기존 템플릿이 없어 새로 만든 것 |
+| 수정 | `#F5A623` | 20 | 트리거는 같고 용어와 문구를 고친 것 |
+| 원본 유지 | `#D1D1D1` | 2 | 레거시 템플릿을 문구 그대로 재사용 |
+| 확인 후 제거 | `#CC3300` | 20 | Renewal에서 쓰지 않는 레거시 (2026-09-11 신설) |
+
+**굵기는 원본 유지만 2이고 나머지 3종은 20이다** (2026-09-11 Josh 확정, 구 8에서 상향). 캔버스를 축소한 상태에서도 손댄 템플릿이 한눈에 구분되게 하려는 것이다. 원본 유지가 가장 많아서 이쪽을 얇게 두면 손댄 것만 도드라진다. stroke는 INSIDE이고 Outer 패딩이 24라 20까지는 내용이 잘리지 않는다.
 
 상태 표시는 Border 색이 전부다. Board Header에는 상태를 병기하지 않는다 (2026-09-09 Josh 확정).
+
+**제거 대상도 캔버스에 남긴다** (2026-09-11 Josh 확정). 빠진 템플릿이 왜 빠졌는지 캔버스만 봐도 알 수 있어야 한다. 최상위 섹션 `확인 후 제거 대상`에 레거시 클론 그대로 두고 붉은 Border를 입힌다. 이 섹션의 프레임은 현행 규격으로 재제작하지 않는다. 하위 섹션은 사유 3개다: `폐기`, `Legacy 소진 대기`, `확인 필요`.
 
 ### 3.2 Description 공통 골격 (2026-09-01 4차 확정: 레거시 필드 세트 + TITLE)
 
@@ -147,7 +152,22 @@ TO BE: {바뀐 문자열 또는 상태}
 
 ### 3.6 진행 상태 — 양산 배치 (2026-09-03 순서 확정)
 
-**캔버스 그룹핑**: 카테고리 섹션 4개. 각 섹션 Row 1 = 수정과 신규 (앰버, 그린), Row 2 이하 = 원본 유지 (회색). **원본 유지도 셸은 현행 규격으로 만든다** (2026-09-10 Josh 확정): 본문과 문구는 레거시 원문 그대로 이식하고, Board Header와 Description 7카드는 v2 형식을 따른다. 레거시 클론을 그대로 두는 방식(2026-09-09)은 폐기됐다.
+**캔버스 그룹핑**: 카테고리 섹션 4개. 각 섹션 Row 1 = 수정과 신규 (앰버, 그린), Row 2 이하 = 원본 유지 (회색). **원본 유지도 셸과 본문을 전부 현행 규격으로 만든다** (2026-09-10 셸, 2026-09-11 본문, Josh 확정): 레거시에서 가져오는 것은 문구뿐이고 담는 그릇은 전부 v2 컴포넌트다. 레거시 클론을 그대로 두는 방식(2026-09-09)과 셸만 바꾸는 방식(2026-09-10)은 폐기됐다.
+
+**본문 이식 규칙 (2026-09-11 확정)**
+
+| 레거시 | v2 |
+|---|---|
+| 통짜 텍스트 한 덩어리 | 문단 단위 `Email/Paragraph` 인스턴스, 간격 16 |
+| 본문 안에 섞인 제목 | `Email/Subject` 인스턴스로 분리 |
+| 독립 동작의 `[레이블]` | `Email/CTA Button` 인스턴스 |
+| 문장 안의 `[레이블]` | 대괄호를 지우고 인라인 링크 색 `#4A9DFF` |
+| `키: 값` 나열 | `Email/Info Block` 인스턴스 |
+| 본문에 적힌 맺음과 푸터 | `Email/Sign-off`, `Email/Footer` 인스턴스 (표준 문구로 통일) |
+| 이미지 | 회색 `#E6E6E6` 프레임에 `Image` 한 줄 (와이어프레임 표기) |
+| 섹션 제목 줄 | Paragraph를 Poppins Medium 14 `#18181E`로 |
+
+문구는 옮겨 적기만 한다. 예외 3가지는 규격이 이기는 항목이라 이식 시 교체한다: **변수 키는 §4.6 사전 표기로 통일**, **더미값은 변수로 교체**(`YYYY.MM.DD`를 `{expiryDate}`로), **명백한 오타는 수정**(2026-09-11 Josh 확정. `charged charged`와 `hesistate` 2건 처리).
 
 **하위 섹션 (2026-09-09 Josh 확정)**: 템플릿이 많은 카테고리는 섹션 안에 수신 대상별 하위 섹션을 둔다. Subscription and Payment는 `All`, `Individual`, `Enterprise` 3개 (템플릿 코드 접두 기준, Personal_ 코드는 Individual 섹션에). **하위 섹션은 세로로 쌓고, 템플릿은 하위 섹션 안에서 가로로 나열한다.** 원본 유지 이관분도 해당 하위 섹션의 Row 2 이하로 넣는다.
 
@@ -161,9 +181,24 @@ TO BE: {바뀐 문자열 또는 상태}
 | 3 | 인증·계정 7종: Student_VerificationCode(재제작), Student_DocRegisterSuccess(4년 고지, 1주 구매 제한 폐지), Academic_RegisterApprove, All_UserpoolInvitation(SW Account 개편, 웹 로그인 오해 방지), Enterprise_UserpoolMemberAdded(코드 공백 오타 정리) + 신설 2장: All_ChangeEmailVerificationCode, Student_VerificationComplete. Account 섹션에 하위 섹션 4개(All, Student, Academic, Enterprise) | 없음 | 완료 (2026-09-09) |
 | 4 | Enterprise Trial 문의 2종: 개선된 신청 폼 필드와 DNS 검증 결과 반영, China 조건부 연락처 | 없음 | 완료 (2026-09-09) |
 | 5 | 시퀀스와 라이프사이클 9장: Suspend 1(+3DS 변형)과 3 (기준 MY-PAGE), TrialExpiring3Continue 개정(24시간 환불 고지 포함), **Student_BenefitEnding 신설 1장** (파생 3장 통합: D-7, D-3, D-0 같은 템플릿 3회 발송, 2026-09-09 확정), Pause와 Resume 4종 | 없음 (미결 2건 해소: D-7/D-3/D-0, 알림 3회 = 이메일 Suspend 구조) | 완료 (2026-09-09) |
-| 상시 병행 | 원본 유지 28종 이관 (해당 카테고리·하위 섹션 Row 2 이하, 현행 셸 + 레거시 본문 원문 이식, 회색 border 2, 리뷰 게이트 없음). 이관 제외 19종(폐기 9, Legacy 소진 대기 7, 확인 필요 3)은 옮기지 않음 | 없음 | 완료 (2026-09-10 현행 셸 재제작까지) |
+| 상시 병행 | 원본 유지 28종 이관 (해당 카테고리·하위 섹션 Row 2 이하, 현행 셸 + 레거시 본문 원문 이식, 회색 border 2, 리뷰 게이트 없음) | 없음 | 완료 (2026-09-11 본문 재조립까지) |
+| 마무리 | 제거 대상 19종을 `확인 후 제거 대상` 섹션으로 이관 (레거시 클론 그대로, 붉은 border 20, 사유별 하위 섹션 3개) | 없음 | 완료 (2026-09-11) |
 
-**원본 유지 이관 기록 (2026-09-09 이관, 2026-09-10 현행 셸로 재제작 완료)**: 28종 전부 v2 셸(Board Header `{카테고리} | {코드}`, Description 7카드, 회색 Border 2)로 다시 만들고, Screen에는 레거시 이메일 본문을 원문 그대로 이식했다. Description은 레거시 노트(UPDATE DATE, TARGET, DESCRIPTION은 ②TRIGGER로, LINK or BUTTON, VALUE, COMMENT)를 7카드에 옮겨 적었고, COMMON LINK 카드는 COMMON 섹션이 담당하므로 제외했다. 레거시에 없는 카드 값은 `-`로 뒀다. 배치는 카테고리·하위 섹션 코드 접두 기준이며, Userpool 계열과 Welcome, Deactivation은 배치 3 전례에 따라 Account에 편입했다.
+**2차 개정 (2026-09-11)**: Klay의 1년 구독 정책 문의를 계기로 신규 필요 템플릿을 재점검해 4종을 더했다. v2는 **57종**(유지 26, 수정 26, 신규 5), 제거 대상은 **16종**이다.
+
+| 변경 | 내용 |
+|---|---|
+| Student 전용 복원 2종 | `Student_MonthlyPaymentStart`, `Student_MonthlyPaymentCancel`을 제거 대상에서 되살려 Renewal 정책으로 재작성. `All_MonthlyPaymentStart`와 `All_MonthlyPaymentCancel`의 Student 겸용은 해제. 레거시 발송 시스템도 All 템플릿에서 Student를 제외하고 있었다 (`docs/email/subscriptionEmail.md:436,612`) |
+| 본문 제작 1종 | `All_MonthlyPaymentFail_3DS`. 레거시 캔버스가 비어 있었고 Jira MDWEB-831이 발송을 요구한다 |
+| 신규 1종 | `Student_DocRegisterReceived` (서류 접수 확인). Academic에는 있고 Student에는 없던 단계 |
+| 재분류 2종 | `Personal_SubscriptionSuspend2`와 `All_ContactUs`를 원본 유지에서 수정으로. 결제수단 변경이 PayPal과 AliPay에서 불가능한 점과 답변 수신 이메일이 별도 필드로 바뀐 점을 반영 |
+| 제거 대상 사유 기재 | 16종 각각에 native annotation `사유: {한 문장}` 부착 |
+
+**Student 전용 템플릿 작성 제약** (`plan.md:71,91,94`, `mypage.md:164,169,263`): Trial 단어 금지, 24시간 환불 고지 금지(Student는 Trial 24시간 룰 미적용), Benefit 기간 중 취소와 일시정지 안내 금지, 평생 1회 할인 문장 금지(구매 횟수 제한 없음).
+
+**캔버스 초기 구성 (2026-09-11 오전 기준)**: 레거시 64종 = v2 이관 45종 + 제거 대상 19종. v2 제작 53종 = 이관 45종 + 신규 8종 (완전 신규 4종, MY-PAGE 파일에서 편입한 구독 라이프사이클 4종). 제거 대상 내역은 폐기 9종(`Enterprise_UpgradeOrderComplete`, `Personal_DeleteUser`, `Student_VerifyStudent`, `EnterpriseVerifyEmail`, `Enterprise_OfflineKeyComplete`, `Personal_AnnualExpiring14`와 `7`과 `3`과 `1`), Legacy 소진 대기 7종(`Student_MonthlyPaymentStart`, `Student_MonthlyPaymentCancel`, `Enterprise_MonthlyExpiring7`, `Enterprise_StandaloneAnnualExpiring14CompanyID`와 `7`과 `3`과 `1`), 확인 필요 3종(`Enterprise_VerifyEmailJoin`, `All_MonthlyPaymentFail_3DS`, `Enterprise_DeleteEndUser`)이다. 레거시 캔버스의 `Enterprise_StandaloneAnnualExpiring1CompanyID` 완전 중복 1건은 옮기지 않았다.
+
+**원본 유지 이관 기록 (2026-09-09 이관, 2026-09-10 셸 재제작, 2026-09-11 본문 재조립 완료)**: 28종 전부 v2 셸(Board Header `{카테고리} | {코드}`, Description 7카드, 회색 Border 2)로 다시 만들고, 본문도 위 이식 규칙에 따라 v2 컴포넌트로 재조립했다. 이로써 53종 전부 동일 규격이고 Poppins 단일 폰트다 (레거시는 Avenir Next 계열 혼용). Description은 레거시 노트(UPDATE DATE, TARGET, DESCRIPTION은 ②TRIGGER로, LINK or BUTTON, VALUE, COMMENT)를 7카드에 옮겨 적었고, COMMON LINK 카드는 COMMON 섹션이 담당하므로 제외했다. 레거시에 없는 카드 값은 `-`로 뒀다. 배치는 카테고리·하위 섹션 코드 접두 기준이며, Userpool 계열과 Welcome, Deactivation은 배치 3 전례에 따라 Account에 편입했다.
 
 - Account 14종: All 4 (Welcome 2종, UserpoolSoftwareShared, Deactivation), Student 3, Academic 2, Enterprise 1 (ResetPwRequest), **Indie 하위 섹션 신설**(`2581:2484`) 4
 - Subscription and Payment 3종: All 2 (MonthlyPaymentComplete, MonthlyPaymentFail), Individual 1 (Suspend2)

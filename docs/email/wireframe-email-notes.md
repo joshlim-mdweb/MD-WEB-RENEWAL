@@ -1,8 +1,18 @@
 # 와이어프레임 이메일 발송 표기 추적표
 
-2026-RENEWAL 파일(`PeCid7uJcg0HenViaaiHUp`) 와이어프레임 Description 노트에 단 이메일 발송 불릿의 위치 기록이다. **EMAIL CONTENTS v2 템플릿이 완성되면 이 표의 본문 노드에서 템플릿 코드 문자열에 해당 템플릿 프레임 링크를 건다** (Josh 지시, 2026-09-08). 판정 근거는 `renewal-trigger-mapping.md`.
+2026-RENEWAL 파일(`PeCid7uJcg0HenViaaiHUp`) 와이어프레임 Description 노트에 단 이메일 발송 불릿의 위치 기록이다. 판정 근거는 `renewal-trigger-mapping.md`.
 
-작성일: 2026-09-08
+작성일: 2026-09-08. **링크 연결 완료: 2026-09-11** (25개 노드, 링크 31곳, 누락 없음)
+
+## 링크 규격
+
+템플릿 코드 문자열 자체에 하이퍼링크를 걸고 링크 색 `#0066CC`를 함께 적용한다 (`spec.md` 텍스트 스타일 4종). 다른 파일을 가리키므로 노드 링크가 아니라 URL 링크를 쓴다.
+
+```
+https://www.figma.com/design/E3Azp4DyASPSK3uQGUrxru/EMAIL-AUTOMATION?page-id=2007%3A2&node-id={노드 ID, 콜론 대신 하이픈}
+```
+
+템플릿을 다시 만들어 node-id가 바뀌면 아래 부록의 매핑을 갱신하고 같은 방식으로 다시 건다.
 
 ## 표기 위치 (본문 노드 = 링크를 걸 텍스트 노드)
 
@@ -69,6 +79,25 @@ Change Password와 Delete Account는 발송 없음(2026-09-08 확정), Undo Paus
 ## 프레임 높이 조정 기록
 
 표기와 함께 잘림을 발견해 수정한 프레임: Indie Verification `4614:5999` (Contents +52), Academic Verfication `4614:6040` (외곽 1378에서 1758로). 둘 다 표기 전부터 Description List가 잘려 있었다.
+
+## 부록: 링크가 가리키는 템플릿 node-id (2026-09-11 기준)
+
+EMAIL CONTENTS v2 페이지(`2007:2`)의 프레임이다. 위 4개 표에 쓰인 24종만 적는다.
+
+| 템플릿 | node-id | 템플릿 | node-id |
+|---|---|---|---|
+| All_MonthlyPaymentStart | `2547:6` | Student_VerificationCode | `2564:227` |
+| Personal_AnnualOrderComplete | `2553:41` | Student_VerificationComplete | `2564:238` |
+| Enterprise_AnnualOrderComplete | `2553:52` | Student_DocRegisterSuccess | `2564:249` |
+| All_MonthlyPaymentCancel | `2553:63` | Student_DocRegisterFail | `2589:1133` |
+| All_MonthlyPaymentComplete | `2588:18` | Academic_RegisterComplete | `2589:1211` |
+| All_ChangeEmailVerificationCode | `2564:216` | Academic_RegisterApprove | `2564:260` |
+| Personal_SubscriptionPauseScheduled | `2572:373` | Academic_RegisterReject | `2589:1286` |
+| Personal_SubscriptionResume | `2572:406` | Indie_RequestSuccess | `2589:1812` |
+| Personal_SubscriptionSuspend1 | `2572:340` | Indie_RequestApproved | `2589:1884` |
+| Personal_TrialStart | `2589:2125` | Indie_RequestDenied | `2589:1956` |
+| All_WelcomeEmail_MarketingYes | `2589:1433` | Indie_VerificationRequestStaff | `2589:2032` |
+| All_WelcomeEmail_MarketingNo | `2589:1538` | Enterprise_ResetPwRequest | `2589:1358` |
 
 ## 관련 문서
 

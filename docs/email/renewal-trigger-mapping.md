@@ -17,10 +17,12 @@ Renewal 기획서(정책 문서, PRD, Figma Description)에서 이메일 발송 
 
 | 판정 | 건수 |
 |---|---|
-| 재사용 (그대로) | 28종 (최종 확정 리스트는 EMAIL CONTENTS v2의 템플릿 리스트 프레임 `2544:2`) |
-| 문구 수정 후 재사용 | 21종 (MY-PAGE 소스 편입 4종 포함, §4) |
-| **신규 필요** | **4건 (Student 인증 코드, 이메일 변경 인증 코드, Student 인증 완료, Student Benefit 종료 알림. 2026-09-09 확정)** |
-| 이관 제외 | 19종 (폐기 9, Legacy 소진 대기 7, 확인 필요 3) + 레거시 캔버스 완전 중복 1건 |
+| 재사용 (그대로) | 26종 (최종 확정 리스트는 EMAIL CONTENTS v2의 템플릿 리스트 프레임 `2544:2`) |
+| 문구 수정 후 재사용 | 26종 (MY-PAGE 소스 편입 4종 포함, §4) |
+| **신규 필요** | **5건** (Student 인증 코드, 이메일 변경 인증 코드, Student 인증 완료, Student Benefit 종료 알림, **Student 서류 접수 확인**) |
+| 이관 제외 | 16종 (폐기 9, Legacy 소진 대기 5, 확인 필요 2) + 레거시 캔버스 완전 중복 1건 |
+
+**2026-09-11 2차 개정 요약**: v2 제작분이 53종에서 **57종**으로 늘었다. ①`Student_MonthlyPaymentStart`와 `Student_MonthlyPaymentCancel`을 제거 대상에서 되살려 Student 전용으로 재작성 ②`All_MonthlyPaymentFail_3DS` 본문 제작 ③`Student_DocRegisterReceived` 신설 ④`Personal_SubscriptionSuspend2`와 `All_ContactUs`를 재사용에서 문구 수정으로 재분류.
 | 판정 보류 (정책 미확정) | 5건 |
 | 폐기 (2026-09-08~09 확정) | `Enterprise_UpgradeOrderComplete`, `Personal_DeleteUser`(CLO-SET 이관), `Personal_AnnualExpiring14`(갱신 고지가 `All_MonthlyPaymentNotice`로 통합). `Enterprise_ResetPwRequest`는 레거시 계정 한정 유지 |
 
@@ -35,7 +37,9 @@ Renewal 기획서(정책 문서, PRD, Figma Description)에서 이메일 발송 
 
 | 트리거 | 근거 | 수신자 | 판정 | 템플릿 | 수정 사항 |
 |---|---|---|---|---|---|
-| Individual Monthly 첫 구매 완료 | checkout 플로우 (정책 문서 규정 없음, 아래 갭 참조) | Individual | 문구 수정 | `All_MonthlyPaymentStart` | Personal 표기를 Individual로, 금액 `n USD` 표기 |
+| Individual Monthly 첫 구매 완료 | checkout 플로우 (정책 문서 규정 없음, 아래 갭 참조) | Individual | 문구 수정 | `All_MonthlyPaymentStart` | Personal 표기를 Individual로, 금액 `n USD` 표기. **Student는 대상에서 제외** (2026-09-11 겸용 해제) |
+| Student 구독 시작 (Benefit 적용 또는 즉시 청구) | `plan.md` §3 Student, `checkout.md` §14 동의 문구 | Student | 문구 수정 | `Student_MonthlyPaymentStart` | **전용 복원 (2026-09-11 Josh 확정)**: Benefit 3개월과 4년 한도를 고지하고, Trial 표기와 24시간 환불 문구는 쓰지 않는다 (`plan.md:71,91`). Benefit 중에는 취소와 일시정지가 불가해 관련 안내도 넣지 않는다 |
+| 추가 인증(3DS) 요구로 결제 보류 | Jira MDWEB-831, `mypage.md` §6-2 Verify CTA | 구독자 전체 | 문구 수정 | `All_MonthlyPaymentFail_3DS` | **본문 제작 (2026-09-11)**: 레거시 캔버스가 비어 있었다. 유예 7일 안에 인증하면 결제 재개, 미인증 시 취소 *(개발 확인 필요: 인증 링크 유효 기간)* |
 | Individual Annual 구매 완료 | 동일 | Individual | 문구 수정 | `Personal_AnnualOrderComplete` | **본문 반전 필수**: 기존 본문이 "Your license will not automatically renew"인데 Renewal Annual은 자동갱신 구독. 갱신 고지 문장으로 교체 |
 | Organization 구매 완료 (Enterprise Team, Single, Academic) | 동일 | Organization Owner | 문구 수정 | `Enterprise_AnnualOrderComplete` | License ID를 SW Account로, Seat 수 표기 추가, Team Console 링크 유지 |
 | Seat 추가, 기간 연장 (Add, Extend) 결제 완료 | `checkout.md` §9~§11 Purchase Type | Organization Owner | 문구 수정 | `Enterprise_AnnualOrderComplete` | `Enterprise_UpgradeOrderComplete` 폐기 (2026-09-08 Josh 확정): 신규 구매와 같은 템플릿 사용, 내역은 변수로 구분 |
@@ -68,7 +72,8 @@ Renewal 기획서(정책 문서, PRD, Figma Description)에서 이메일 발송 
 
 | 트리거 | 근거 | 수신자 | 판정 | 템플릿 | 수정 사항 |
 |---|---|---|---|---|---|
-| 구독 취소 (취소 예약) 확인 | `mypage.md` §6-3 | 구독자 전체 | 문구 수정 | `All_MonthlyPaymentCancel` | Annual 포함으로 대상 확장, 잔여 기간 사용 가능 문구 유지 |
+| 구독 취소 (취소 예약) 확인 | `mypage.md` §6-3 | Individual Monthly와 Annual | 문구 수정 | `All_MonthlyPaymentCancel` | Annual 포함으로 대상 확장, 잔여 기간 사용 가능 문구 유지. **Student는 대상에서 제외** (2026-09-11 겸용 해제) |
+| Student 구독 취소 확인 | `mypage.md` §6-3, `plan.md` §3 Student | Student | 문구 수정 | `Student_MonthlyPaymentCancel` | **전용 복원 (2026-09-11 Josh 확정)**: 레거시의 "학생 할인은 평생 1회" 문장을 폐기했다. `plan.md:94`의 구매 횟수 제한 없음과 충돌한다 |
 | 일시정지 예약 확정 (즉시 발송) | `mypage.md` §6-4, MY-PAGE `216:872` | Monthly 구독자 | 문구 수정 | `Personal_SubscriptionPauseScheduled` | 문구 블록 표준(`email-spec.md` §4) 반영 |
 | 일시정지 시작 (당일 오전 10시) | MY-PAGE `216:974` | Monthly 구독자 | 문구 수정 | `Personal_SubscriptionPause` | 동일 |
 | 재개 7일 전 예고 (신청과 시작이 1주 미만이면 미발송) | MY-PAGE `216:1178` | Paused 구독자 | 문구 수정 | `Personal_SubscriptionResumeBefore7` | 동일 |
@@ -96,6 +101,7 @@ Renewal Trial 정책(`plan.md`, T-06 확정): 계정당 평생 1회, 14일, 종�
 |---|---|---|---|---|---|
 | 학교 이메일 인증 코드 발송 | `verification.md:13`, Plan 페이지 Figma | 학교 이메일 | **신규 (아래 N-1)** | 기존 `Student_VerifyStudent`는 링크 방식이라 코드 방식으로 대체 | |
 | 학교 도메인 등록 승인, 거부 | `docs/prd/solutions/students.md:99` | 신청자 | 재사용 | `Student_SchoolDomainRegisterSuccess`, `Student_SchoolDomainRegisterFail` | *(정책 확인 필요: Renewal 와이어프레임은 미지원 도메인을 서류 인증으로 우회시켜 도메인 등록 신청 화면이 없다. 이 템플릿 2종의 사용 여부 재검토, 2026-09-08 발견)* |
+| 재학 서류 제출 접수 확인 | `docs/prd/solutions/students.md:186` "완료되면 이메일로 알려드릴게요" | 신청자 | **신규 (N-5)** | `Student_DocRegisterReceived` | 검토 기간은 본문에 적지 않는다 (화면에서도 비공개) |
 | 재학 서류 인증 승인 (4년 시작 고지) | `[MD-SITE]-student-plan-renewal.md:86` | 신청자 | 문구 수정 | `Student_DocRegisterSuccess` | "오늘부터 4년간 학생 플랜 이용 가능" 고지 추가 (필수), 기산점은 `plan.md` §3 기준 최초 인증 승인일 |
 | 코드 인증 즉시 완료 (등록 도메인 학교 이메일) | Plan Figma `Student Done`(`4599:5706`) | 신청자 | **신규 (아래 N-3)** | `Student_VerificationComplete` | 4년 시작 고지 포함. 겸용 대신 신규 (2026-09-08 Josh 확정) |
 | 재학 서류 인증 거부 | `docs/prd/solutions/students.md:156` | 신청자 | 재사용 | `Student_DocRegisterFail` | 없음 |
@@ -177,11 +183,28 @@ Renewal Trial 정책(`plan.md`, T-06 확정): 계정당 평생 1회, 14일, 종�
 | Student 4년 도래 시 Individual 전환 안내 | 안내 채널(이메일 또는 화면)이 미정 | `plan.md:96` |
 | 주문 완료 메일의 정책 문서 근거 | `checkout.md`에 이메일 규정 0건. 어떤 시점에 어떤 메일이 나가는지 Checkout 정책에 명문화 필요 | `checkout.md` 전문, Figma Order/Checkout 페이지 0건 |
 
+## 2026-09-11 발굴: 정책에 있는데 템플릿이 없는 지점
+
+정책 문서 전수 조사에서 나온 미커버 지점이다. 이번 라운드 제작 범위에서 제외했고 Josh 결정을 기다린다.
+
+| 지점 | 근거 | 왜 필요한가 |
+|---|---|---|
+| Academic 인증 코드, Indie 인증 코드 | `verification.md:14~15` | §1이 Student, Academic, Indie 세 인증 모두 이메일 코드 방식으로 규정하는데 Student 것만 만들었다. 용도별 개별 코드 원칙상 2장이 더 필요하다. 단 `verification.md:62`에 수신 이메일이 미결이라 정책 확인이 선행된다 |
+| WeChat CN 가입자 통지 | `auth-cn.md:35~38` | 이메일이 선택 입력이라 아예 없을 수 있다. 템플릿 57종 전부 이메일 전제라 구매 완료와 결제 실패 고지가 도달하지 않는다. 대체 채널 규정이 없다 |
+| SW Account 재배정 통지 | `member.md:71`, `plan.md:112` | 재배정되면 기존 사용자가 소프트웨어 접근을 즉시 잃는데 통지 수단이 없다. 삭제 통지와 함께 Team Console 축 소관인지 정리가 먼저다 |
+| Enterprise Trial 계정 발급 완료 | `docs/backlog/todo/MD-WEB-004.md:109` | 신청 접수 2종은 있는데 계정 생성 후 접속 정보를 전달하는 단계가 비어 있다 |
+| Organization 선불 라이선스 만료 당일 | `plan.md:72`, `checkout.md:262` | 만료 임박 고지만 있고 만료 순간 접근이 끊기는 시점의 통지가 없다 |
+| Student Benefit 중 인증 거부 전환 | `requirements/student-license-promotion.md` 미결 A6 | Benefit 이용 중 인증이 뒤집히는 경로가 열려 있는데 통지가 없다 |
+| 통합계정 감지 인증 코드 | `error-copy.md:59,100` | 네 번째 코드 용도인데 정책 문서 자체가 없다 |
+| 마케팅 수신 동의 변경 | `mypage.md:370` | 가입 시 동의만 규정됐고 이후 변경 시점의 처리 결과 통지가 없다 |
+
 ## 문서 간 충돌 (해소는 Josh)
 
 1. ~~Benefit 종료 알림 주기~~ **해소 (2026-09-09 Josh 확정): D-7, D-3, D-0** (`mypage.md` 기준, `student-license-promotion.md:98`의 D-7/D-1은 폐기)
 2. ~~"알림 3회"의 채널과 타이밍~~ **해소 (2026-09-09 Josh 확정): 이메일 3회, Suspend 1~3 구조** (실패 직후, 유예 중간, 유예 만료 취소 확정) *(개발 확인 필요: 재시도 결제 일정과 2차 발송 시점 대응)*
 3. **이메일 언어**: Preferred Language 설정이 이메일에 적용되는지 근거 없음 (TODO.md 결정 대기 D-23). 다국어 제작 범위를 정하는 선결 문제
+4. **Student 인증 재인증 여부**: `plan.md:97`은 재인증 없음(4년 카운터만), `mypage.md:406`과 `docs/prd/solutions/students.md:187`은 재인증 전제로 배너를 규정한다. 인증 만료 예고 메일을 만들지 말지가 여기 달려 있다 (2026-09-11 발견)
+5. **Benefit 3개월 기산점**: `plan.md:92`는 구독 시작 시점(2026-08-21 정정), `requirements/student-license-promotion.md`는 인증 승인 시점. 인증 완료 메일에 무료 기간 시작을 쓰면 틀리므로 인증 메일은 4년 기산만 고지한다 (2026-09-11 발견)
 
 ## 역방향 점검: Renewal 트리거에 매핑되지 않은 템플릿
 
