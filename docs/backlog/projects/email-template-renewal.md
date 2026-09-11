@@ -3,6 +3,8 @@ project: email-template-renewal
 updated: 2026-09-11
 ---
 
+> **다음 세션 집중 3축** (2026-09-11 Josh 지시): ①이메일 템플릿 (이 파일) ②랜딩 페이지 `landing-renewal.md` ③Trial 신규 착수 `trial-renewal.md`. `/initiate`는 가장 최근 파일 하나만 읽으므로 나머지 두 개는 직접 열어야 한다.
+
 ## 관련 Jira 티켓
 - MDWEB-955 — Email Template Renewal (Epic, 진행 중). 하위 MDWEB-956 [UX] / 957 [PD] / 958 [FE] / 959 [BE]
 - MDWEB-831 — Site | 3DS 인증 요구로 인한 Suspended, 인증 링크 이메일 발송 (참조. `All_MonthlyPaymentFail_3DS` 제작 근거)
